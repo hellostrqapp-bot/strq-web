@@ -58,7 +58,7 @@ const unsubscribePageHtml = (success: boolean, locale: string) => {
 <title>${title} — strQ</title></head>
 <body style="margin:0;padding:0;background:#1A1A2E;font-family:'Inter',-apple-system,sans-serif;min-height:100vh;display:flex;align-items:center;justify-content:center;">
   <div style="max-width:400px;margin:0 auto;padding:40px 24px;text-align:center;">
-    <div style="font-size:48px;margin-bottom:16px;">&#129422;</div>
+    <div style="font-size:48px;margin-bottom:16px;">&#128034;</div>
     <h1 style="color:#FFFFFF;font-size:22px;font-weight:700;margin:0 0 12px;">str<span style="color:#6C3483;">Q</span></h1>
     <h2 style="color:#FFFFFF;font-size:18px;font-weight:600;margin:0 0 16px;">${title}</h2>
     <p style="color:rgba(255,255,255,0.6);font-size:15px;line-height:1.6;margin:0;">${body}</p>
