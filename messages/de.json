@@ -1,0 +1,92 @@
+{
+  "meta": {
+    "title": "strQ.app — Duolingo für Sport",
+    "description": "Du kennst diesen Moment. Mitten im Training, und die Couch gewinnt. strQ hilft dir durchzuhalten."
+  },
+  "hero": {
+    "tagline": "Du kennst diesen Moment.",
+    "subtitle": "Mitten im Training, und die Couch gewinnt.",
+    "cta": "strQ hilft dir durchzuhalten."
+  },
+  "waitlist": {
+    "placeholder": "du@email.de",
+    "button": "Anmelden",
+    "success": "Du stehst auf der Liste. Slow and steady. Wir melden uns.",
+    "error": "Ups, da ging etwas schief. Versuch es nochmal.",
+    "sport_label": "Welchen Sport trainierst du?",
+    "sport_options": {
+      "none": "Lieber nicht sagen",
+      "hyrox": "Hyrox",
+      "running": "Laufen",
+      "triathlon": "Triathlon",
+      "cycling": "Radsport",
+      "other": "Anderes"
+    },
+    "referral_label": "Wie hast du von strQ erfahren?",
+    "referral_placeholder": "z.B. Instagram, ein Freund, Google...",
+    "skip": "Überspringen",
+    "send": "Absenden"
+  },
+  "footer": {
+    "privacy": "Keine Cookies. Kein Tracking. Nur eine Schildkröte mit Brille.",
+    "copyright": "© {year} strQ.app"
+  },
+  "language": {
+    "label": "Sprache"
+  },
+  "login": {
+    "subtitle": "Melde dich mit deiner E-Mail an. Kein Passwort nötig.",
+    "email_placeholder": "du@email.de",
+    "cta": "Magic Link senden",
+    "sending": "Senden...",
+    "sent_title": "Prüfe dein Postfach!",
+    "sent_description": "Wir haben dir einen Link geschickt. Klicke darauf zum Einloggen.",
+    "error": "Etwas ist schiefgelaufen. Versuche es erneut.",
+    "back": "Zurück zu strQ.app"
+  },
+  "app": {
+    "streak_label": "Tage Streak",
+    "multiplier": "Bonus",
+    "days_to_go": "Tage noch",
+    "log_training": "Ich habe trainiert!",
+    "log_rest": "Ruhetag — verdient",
+    "already_logged": "Heute ist eingetragen!",
+    "come_back_tomorrow": "Komm morgen wieder für deinen nächsten Streak.",
+    "tap_to_reveal": "Tippen zum Enthüllen",
+    "last_7_days": "Letzte 7 Tage",
+    "surprise_bonus_xp": "Bonus XP!",
+    "surprise_confetti": "Konfetti-Party!",
+    "surprise_streak_shield": "Streak-Schild verdient!"
+  },
+  "event": {
+    "title": "Dein Event",
+    "no_event": "Noch kein Event hinzugefügt.",
+    "add_event": "Event hinzufügen",
+    "event_name": "Name",
+    "event_name_placeholder": "z.B. Hyrox Paris",
+    "event_date": "Datum",
+    "target_time": "Zielzeit (Minuten)",
+    "target_time_placeholder": "z.B. 90",
+    "sport_type": "Sportart",
+    "save": "Speichern",
+    "days_to_go": "Tage noch",
+    "target": "Zielzeit",
+    "minutes": "Min",
+    "delete": "Löschen",
+    "confirm_delete": "Bist du sicher?"
+  },
+  "profile": {
+    "title": "Profil",
+    "total_xp": "Gesamt XP",
+    "current_streak": "Aktueller Streak",
+    "longest_streak": "Längster Streak",
+    "member_since": "Mitglied seit",
+    "sign_out": "Abmelden",
+    "xp_history": "XP Verlauf",
+    "reason_activity": "Aktivität",
+    "reason_streak_bonus": "Streak-Bonus",
+    "reason_multiplier": "2x Multiplikator",
+    "reason_surprise": "Überraschung",
+    "reason_fuzzy_bonus": "Ziel-Bonus"
+  }
+}

@@ -1,0 +1,92 @@
+{
+  "meta": {
+    "title": "strQ.app — Duolingo para fitness",
+    "description": "Você conhece esse momento. No meio do treino, o sofá vence. strQ te ajuda a continuar."
+  },
+  "hero": {
+    "tagline": "Você conhece esse momento.",
+    "subtitle": "No meio do treino, o sofá vence.",
+    "cta": "strQ te ajuda a continuar."
+  },
+  "waitlist": {
+    "placeholder": "voce@email.com.br",
+    "button": "Entrar na lista",
+    "success": "Você está na lista. Devagar e sempre. Entraremos em contato.",
+    "error": "Ops, algo deu errado. Tente novamente.",
+    "sport_label": "Qual esporte você pratica?",
+    "sport_options": {
+      "none": "Prefiro não dizer",
+      "hyrox": "Hyrox",
+      "running": "Corrida",
+      "triathlon": "Triatlo",
+      "cycling": "Ciclismo",
+      "other": "Outro"
+    },
+    "referral_label": "Como ouviu falar do strQ?",
+    "referral_placeholder": "ex. Instagram, um amigo, Google...",
+    "skip": "Pular",
+    "send": "Enviar"
+  },
+  "footer": {
+    "privacy": "Sem cookies. Sem rastreamento. Só uma tartaruga de óculos.",
+    "copyright": "© {year} strQ.app"
+  },
+  "language": {
+    "label": "Idioma"
+  },
+  "login": {
+    "subtitle": "Entre com seu e-mail. Sem senha.",
+    "email_placeholder": "voce@email.com.br",
+    "cta": "Enviar link mágico",
+    "sending": "Enviando...",
+    "sent_title": "Verifique sua caixa de entrada!",
+    "sent_description": "Enviamos um link. Clique nele para entrar.",
+    "error": "Algo deu errado. Tente novamente.",
+    "back": "Voltar para strQ.app"
+  },
+  "app": {
+    "streak_label": "dias de sequência",
+    "multiplier": "bônus",
+    "days_to_go": "dias restantes",
+    "log_training": "Eu treinei hoje!",
+    "log_rest": "Dia de descanso — merecido",
+    "already_logged": "Hoje está registrado!",
+    "come_back_tomorrow": "Volte amanhã para sua próxima sequência.",
+    "tap_to_reveal": "Toque para revelar",
+    "last_7_days": "Últimos 7 dias",
+    "surprise_bonus_xp": "Bônus XP!",
+    "surprise_confetti": "Festa de confete!",
+    "surprise_streak_shield": "Escudo de sequência conquistado!"
+  },
+  "event": {
+    "title": "Seu evento",
+    "no_event": "Nenhum evento adicionado.",
+    "add_event": "Adicionar evento",
+    "event_name": "Nome",
+    "event_name_placeholder": "ex. Hyrox São Paulo",
+    "event_date": "Data",
+    "target_time": "Tempo alvo (minutos)",
+    "target_time_placeholder": "ex. 90",
+    "sport_type": "Esporte",
+    "save": "Salvar",
+    "days_to_go": "dias restantes",
+    "target": "Tempo alvo",
+    "minutes": "min",
+    "delete": "Excluir",
+    "confirm_delete": "Tem certeza?"
+  },
+  "profile": {
+    "title": "Perfil",
+    "total_xp": "XP total",
+    "current_streak": "Sequência atual",
+    "longest_streak": "Maior sequência",
+    "member_since": "Membro desde",
+    "sign_out": "Sair",
+    "xp_history": "Histórico XP",
+    "reason_activity": "Atividade",
+    "reason_streak_bonus": "Bônus de sequência",
+    "reason_multiplier": "Multiplicador 2x",
+    "reason_surprise": "Surpresa",
+    "reason_fuzzy_bonus": "Bônus de chegada"
+  }
+}

@@ -1,0 +1,92 @@
+{
+  "meta": {
+    "title": "strQ.app — Duolingo voor sport",
+    "description": "Je kent dat moment. Halverwege de voorbereiding, en de bank wint. strQ helpt je vol te houden."
+  },
+  "hero": {
+    "tagline": "Je kent dat moment.",
+    "subtitle": "Halverwege de voorbereiding, en de bank wint.",
+    "cta": "strQ helpt je vol te houden."
+  },
+  "waitlist": {
+    "placeholder": "je@email.nl",
+    "button": "Meld aan",
+    "success": "Je staat op de lijst. Slow and steady. We melden ons.",
+    "error": "Oeps, dat ging mis. Probeer het nog eens.",
+    "sport_label": "Welke sport train je?",
+    "sport_options": {
+      "none": "Liever niet zeggen",
+      "hyrox": "Hyrox",
+      "running": "Hardlopen",
+      "triathlon": "Triatlon",
+      "cycling": "Wielrennen",
+      "other": "Anders"
+    },
+    "referral_label": "Hoe hoorde je over strQ?",
+    "referral_placeholder": "bijv. Instagram, een vriend, Google...",
+    "skip": "Overslaan",
+    "send": "Verstuur"
+  },
+  "footer": {
+    "privacy": "Geen cookies. Geen tracking. Wel een schildpad met een bril.",
+    "copyright": "© {year} strQ.app"
+  },
+  "language": {
+    "label": "Taal"
+  },
+  "login": {
+    "subtitle": "Log in met je e-mail. Geen wachtwoord nodig.",
+    "email_placeholder": "je@email.nl",
+    "cta": "Stuur magic link",
+    "sending": "Versturen...",
+    "sent_title": "Check je inbox!",
+    "sent_description": "We hebben je een link gestuurd. Klik erop om in te loggen.",
+    "error": "Er ging iets mis. Probeer het opnieuw.",
+    "back": "Terug naar strQ.app"
+  },
+  "app": {
+    "streak_label": "dagen streak",
+    "multiplier": "bonus",
+    "days_to_go": "dagen te gaan",
+    "log_training": "Ik heb getraind!",
+    "log_rest": "Rustdag — verdiend",
+    "already_logged": "Vandaag staat erin!",
+    "come_back_tomorrow": "Kom morgen terug voor je volgende streak.",
+    "tap_to_reveal": "Tik om te onthullen",
+    "last_7_days": "Afgelopen 7 dagen",
+    "surprise_bonus_xp": "Bonus XP!",
+    "surprise_confetti": "Confetti party!",
+    "surprise_streak_shield": "Streak Shield verdiend!"
+  },
+  "event": {
+    "title": "Je evenement",
+    "no_event": "Nog geen evenement toegevoegd.",
+    "add_event": "Evenement toevoegen",
+    "event_name": "Naam",
+    "event_name_placeholder": "bijv. Hyrox Paris",
+    "event_date": "Datum",
+    "target_time": "Streeftijd (minuten)",
+    "target_time_placeholder": "bijv. 90",
+    "sport_type": "Sport",
+    "save": "Opslaan",
+    "days_to_go": "dagen te gaan",
+    "target": "Streeftijd",
+    "minutes": "min",
+    "delete": "Verwijderen",
+    "confirm_delete": "Weet je het zeker?"
+  },
+  "profile": {
+    "title": "Profiel",
+    "total_xp": "Totaal XP",
+    "current_streak": "Huidige streak",
+    "longest_streak": "Langste streak",
+    "member_since": "Lid sinds",
+    "sign_out": "Uitloggen",
+    "xp_history": "XP Geschiedenis",
+    "reason_activity": "Activiteit",
+    "reason_streak_bonus": "Streak bonus",
+    "reason_multiplier": "2x Multiplier",
+    "reason_surprise": "Verrassing",
+    "reason_fuzzy_bonus": "Finish bonus"
+  }
+}

@@ -1,0 +1,92 @@
+{
+  "meta": {
+    "title": "strQ.app — Duolingo yachachikuypaq",
+    "description": "Chay pachata riqsinki. Yachachikuy chawpinpi, samana tiyanayki atipasunki. strQ yanapasunki ñawpaqman rinaykipaq."
+  },
+  "hero": {
+    "tagline": "Chay pachata riqsinki.",
+    "subtitle": "Yachachikuy chawpinpi, samana tiyanayki atipasunki.",
+    "cta": "strQ yanapasunki ñawpaqman rinaykipaq."
+  },
+  "waitlist": {
+    "placeholder": "qam@email.com",
+    "button": "Suyay listaman yaykuy",
+    "success": "Listapim kanki. Allimanta allimanta. Willasqaykiku.",
+    "error": "Pantay karqan. Watiqmanta ruway.",
+    "sport_label": "¿Ima deportetataq yachachikunkí?",
+    "sport_options": {
+      "none": "Mana niyta munanichu",
+      "hyrox": "Hyrox",
+      "running": "Phaway",
+      "triathlon": "Triatlón",
+      "cycling": "Bicicleta purichiy",
+      "other": "Huk"
+    },
+    "referral_label": "¿Imaynatataq strQ-manta uyarirqanki?",
+    "referral_placeholder": "ahinataq Instagram, huk runa, Google...",
+    "skip": "Saltay",
+    "send": "Kachay"
+  },
+  "footer": {
+    "privacy": "Mana cookies. Mana rastreamiento. Huk tortuga lentesyuqlla.",
+    "copyright": "© {year} strQ.app"
+  },
+  "language": {
+    "label": "Simi"
+  },
+  "login": {
+    "subtitle": "Correo electrónicoykiwan yaykuy. Mana contraseña necesitanchu.",
+    "email_placeholder": "qam@email.com",
+    "cta": "Mágico enlaceta kachay",
+    "sending": "Kachashanmi...",
+    "sent_title": "¡Correoykita qhaway!",
+    "sent_description": "Huk enlaceta kachayku. Chayta ñit'iy yaykunaykipaq.",
+    "error": "Imapas pantay karqan. Watiqmanta ruway.",
+    "back": "strQ.app-man kutiy"
+  },
+  "app": {
+    "streak_label": "punchaw streak",
+    "multiplier": "yapay",
+    "days_to_go": "punchaw falta",
+    "log_training": "¡Kunan yachachikurqani!",
+    "log_rest": "Samay punchaw — ganasqa",
+    "already_logged": "¡Kunan punchaypaq qillqasqaña!",
+    "come_back_tomorrow": "Paqarin kutimuy qatiq streak-niykipaq.",
+    "tap_to_reveal": "Ñit'iy rikuchinaykipaq",
+    "last_7_days": "Qayna 7 punchaw",
+    "surprise_bonus_xp": "¡Yapay XP!",
+    "surprise_confetti": "¡Confeti raymi!",
+    "surprise_streak_shield": "¡Streak escudo ganasqa!"
+  },
+  "event": {
+    "title": "Eventoyki",
+    "no_event": "Manaraq evento yapasqachu.",
+    "add_event": "Eventota yapay",
+    "event_name": "Suti",
+    "event_name_placeholder": "ahinataq Hyrox Lima",
+    "event_date": "Punchaw",
+    "target_time": "Chay pacha munasqa (minuto)",
+    "target_time_placeholder": "ahinataq 90",
+    "sport_type": "Deporte",
+    "save": "Waqaychay",
+    "days_to_go": "punchaw falta",
+    "target": "Chay pacha munasqa",
+    "minutes": "min",
+    "delete": "Pichay",
+    "confirm_delete": "¿Chiqaqtachu?"
+  },
+  "profile": {
+    "title": "Perfilniyki",
+    "total_xp": "Tukuy XP",
+    "current_streak": "Kunan streak",
+    "longest_streak": "Aswan hatun streak",
+    "member_since": "Miembro kaymanta",
+    "sign_out": "Lluqsiy",
+    "xp_history": "XP willakuy",
+    "reason_activity": "Ruwana",
+    "reason_streak_bonus": "Streak yapay",
+    "reason_multiplier": "2x mirachiy",
+    "reason_surprise": "Mana suyasqa",
+    "reason_fuzzy_bonus": "Chayay yapay"
+  }
+}
