@@ -79,7 +79,7 @@ const bodyContent: Record<string, { subject: string; body: string }> = {
     subject: "Welkom bij strQ — je staat op de lijst!",
     body: `
       <p style="color:#FFFFFF;font-size:16px;line-height:1.6;margin:0 0 16px;">Hey! Leuk dat je erbij bent.</p>
-      <p style="color:rgba(255,255,255,0.7);font-size:15px;line-height:1.6;margin:0 0 16px;">Je staat nu op de waitlist van strQ — de app die consistentie beloont op weg naar je sportevenement. Duolingo, maar dan voor sport.</p>
+      <p style="color:rgba(255,255,255,0.7);font-size:15px;line-height:1.6;margin:0 0 16px;">Je staat nu op de waitlist van strQ — de app die consistentie beloont op weg naar je sportevenement.</p>
       <p style="color:rgba(255,255,255,0.7);font-size:15px;line-height:1.6;margin:0 0 16px;">We bouwen nu aan de eerste versie. Zodra die klaar is, ben jij een van de eersten die hem mag testen.</p>
       <div style="border-left:3px solid #6C3483;padding-left:16px;margin:24px 0;">
         <p style="color:#A569BD;font-size:14px;font-style:italic;margin:0;">"Slow and steady wins the race." — Q</p>
@@ -90,7 +90,7 @@ const bodyContent: Record<string, { subject: string; body: string }> = {
     subject: "Welcome to strQ — you're on the list!",
     body: `
       <p style="color:#FFFFFF;font-size:16px;line-height:1.6;margin:0 0 16px;">Hey! Great to have you.</p>
-      <p style="color:rgba(255,255,255,0.7);font-size:15px;line-height:1.6;margin:0 0 16px;">You're now on the strQ waitlist — the app that rewards consistency on your way to your sports event. Duolingo, but for fitness.</p>
+      <p style="color:rgba(255,255,255,0.7);font-size:15px;line-height:1.6;margin:0 0 16px;">You're now on the strQ waitlist — the app that rewards consistency on your way to your sports event.</p>
       <p style="color:rgba(255,255,255,0.7);font-size:15px;line-height:1.6;margin:0 0 16px;">We're building the first version right now. When it's ready, you'll be among the first to try it.</p>
       <div style="border-left:3px solid #6C3483;padding-left:16px;margin:24px 0;">
         <p style="color:#A569BD;font-size:14px;font-style:italic;margin:0;">"Slow and steady wins the race." — Q</p>
@@ -101,7 +101,7 @@ const bodyContent: Record<string, { subject: string; body: string }> = {
     subject: "Bienvenue chez strQ — tu es sur la liste !",
     body: `
       <p style="color:#FFFFFF;font-size:16px;line-height:1.6;margin:0 0 16px;">Salut ! Content de te voir ici.</p>
-      <p style="color:rgba(255,255,255,0.7);font-size:15px;line-height:1.6;margin:0 0 16px;">Tu es sur la waitlist de strQ — l'appli qui recompense la regularite sur le chemin de ton evenement sportif. Duolingo, mais pour le sport.</p>
+      <p style="color:rgba(255,255,255,0.7);font-size:15px;line-height:1.6;margin:0 0 16px;">Tu es sur la waitlist de strQ — l'appli qui recompense la regularite sur le chemin de ton evenement sportif.</p>
       <p style="color:rgba(255,255,255,0.7);font-size:15px;line-height:1.6;margin:0 0 16px;">On construit la premiere version en ce moment. Quand elle sera prete, tu seras parmi les premiers a la tester.</p>
       <div style="border-left:3px solid #6C3483;padding-left:16px;margin:24px 0;">
         <p style="color:#A569BD;font-size:14px;font-style:italic;margin:0;">"Slow and steady wins the race." — Q</p>
@@ -112,7 +112,7 @@ const bodyContent: Record<string, { subject: string; body: string }> = {
     subject: "Willkommen bei strQ — du bist auf der Liste!",
     body: `
       <p style="color:#FFFFFF;font-size:16px;line-height:1.6;margin:0 0 16px;">Hey! Schon, dass du dabei bist.</p>
-      <p style="color:rgba(255,255,255,0.7);font-size:15px;line-height:1.6;margin:0 0 16px;">Du stehst jetzt auf der Warteliste von strQ — die App, die Bestandigkeit auf dem Weg zu deinem Sportevent belohnt. Duolingo, aber fur Sport.</p>
+      <p style="color:rgba(255,255,255,0.7);font-size:15px;line-height:1.6;margin:0 0 16px;">Du stehst jetzt auf der Warteliste von strQ — die App, die Bestandigkeit auf dem Weg zu deinem Sportevent belohnt.</p>
       <p style="color:rgba(255,255,255,0.7);font-size:15px;line-height:1.6;margin:0 0 16px;">Wir bauen gerade die erste Version. Sobald sie fertig ist, bist du einer der Ersten, die sie testen durfen.</p>
       <div style="border-left:3px solid #6C3483;padding-left:16px;margin:24px 0;">
         <p style="color:#A569BD;font-size:14px;font-style:italic;margin:0;">"Slow and steady wins the race." — Q</p>
@@ -123,7 +123,7 @@ const bodyContent: Record<string, { subject: string; body: string }> = {
     subject: "Bienvenido a strQ — estas en la lista!",
     body: `
       <p style="color:#FFFFFF;font-size:16px;line-height:1.6;margin:0 0 16px;">Hola! Que bueno que estas aqui.</p>
-      <p style="color:rgba(255,255,255,0.7);font-size:15px;line-height:1.6;margin:0 0 16px;">Estas en la lista de espera de strQ — la app que premia la constancia en tu camino hacia tu evento deportivo. Duolingo, pero para el deporte.</p>
+      <p style="color:rgba(255,255,255,0.7);font-size:15px;line-height:1.6;margin:0 0 16px;">Estas en la lista de espera de strQ — la app que premia la constancia en tu camino hacia tu evento deportivo.</p>
       <p style="color:rgba(255,255,255,0.7);font-size:15px;line-height:1.6;margin:0 0 16px;">Estamos construyendo la primera version ahora mismo. Cuando este lista, seras de los primeros en probarla.</p>
       <div style="border-left:3px solid #6C3483;padding-left:16px;margin:24px 0;">
         <p style="color:#A569BD;font-size:14px;font-style:italic;margin:0;">"Slow and steady wins the race." — Q</p>
@@ -134,7 +134,7 @@ const bodyContent: Record<string, { subject: string; body: string }> = {
     subject: "Bem-vindo ao strQ — você está na lista!",
     body: `
       <p style="color:#FFFFFF;font-size:16px;line-height:1.6;margin:0 0 16px;">Ei! Que bom ter você aqui.</p>
-      <p style="color:rgba(255,255,255,0.7);font-size:15px;line-height:1.6;margin:0 0 16px;">Você está na lista de espera do strQ — o app que recompensa consistência no caminho do seu evento esportivo. Duolingo, mas para esporte.</p>
+      <p style="color:rgba(255,255,255,0.7);font-size:15px;line-height:1.6;margin:0 0 16px;">Você está na lista de espera do strQ — o app que recompensa consistência no caminho do seu evento esportivo.</p>
       <p style="color:rgba(255,255,255,0.7);font-size:15px;line-height:1.6;margin:0 0 16px;">Estamos construindo a primeira versão agora. Quando estiver pronta, você será um dos primeiros a testar.</p>
       <div style="border-left:3px solid #6C3483;padding-left:16px;margin:24px 0;">
         <p style="color:#A569BD;font-size:14px;font-style:italic;margin:0;">"Slow and steady wins the race." — Q</p>
@@ -145,7 +145,7 @@ const bodyContent: Record<string, { subject: string; body: string }> = {
     subject: "Hamuykuy strQ-man — listapim kanki!",
     body: `
       <p style="color:#FFFFFF;font-size:16px;line-height:1.6;margin:0 0 16px;">Rimaykullayki! Allinmi kaypi kanayki.</p>
-      <p style="color:rgba(255,255,255,0.7);font-size:15px;line-height:1.6;margin:0 0 16px;">Kunanqa strQ suyay listapim kanki — kay app ruwayniykita yupaychan deporteniykiman rishaspa. Duolingo hina, ichaqa deportepaq.</p>
+      <p style="color:rgba(255,255,255,0.7);font-size:15px;line-height:1.6;margin:0 0 16px;">Kunanqa strQ suyay listapim kanki — kay app ruwayniykita yupaychan deporteniykiman rishaspa.</p>
       <p style="color:rgba(255,255,255,0.7);font-size:15px;line-height:1.6;margin:0 0 16px;">Ñawpaq versionta ruwashankiku. Listam kaptin, qamqa ñawpaqmi pruebanki.</p>
       <div style="border-left:3px solid #6C3483;padding-left:16px;margin:24px 0;">
         <p style="color:#A569BD;font-size:14px;font-style:italic;margin:0;">"Allimanta allimanta atipanki." — Q</p>
