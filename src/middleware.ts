@@ -61,5 +61,8 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/', '/(nl|en|fr|de|es|pt|qu)/:path*'],
+  // Match all paths EXCEPT static files, api routes, and auth callback.
+  // Needed because localePrefix: 'as-needed' strips /nl/ from URLs,
+  // so /login (without prefix) must also hit the middleware.
+  matcher: ['/((?!api|_next|auth|.*\\..*).*)', '/(nl|en|fr|de|es|pt|qu)/:path*'],
 };
