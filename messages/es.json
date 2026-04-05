@@ -27,6 +27,14 @@
     "skip": "Saltar",
     "send": "Enviar"
   },
+  "countdown": {
+    "launching_in": "Lanzamiento en",
+    "days": "días",
+    "hours": "horas",
+    "minutes": "min",
+    "seconds": "seg",
+    "event_name": "23 de abril — Hyrox París"
+  },
   "footer": {
     "privacy": "Sin cookies. Sin tracking. Solo una tortuga con gafas.",
     "copyright": "© {year} strQ.app"

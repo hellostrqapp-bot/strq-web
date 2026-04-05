@@ -27,6 +27,14 @@
     "skip": "Pular",
     "send": "Enviar"
   },
+  "countdown": {
+    "launching_in": "Lançamento em",
+    "days": "dias",
+    "hours": "horas",
+    "minutes": "min",
+    "seconds": "seg",
+    "event_name": "23 de abril — Hyrox Paris"
+  },
   "footer": {
     "privacy": "Sem cookies. Sem rastreamento. Só uma tartaruga de óculos.",
     "copyright": "© {year} strQ.app"

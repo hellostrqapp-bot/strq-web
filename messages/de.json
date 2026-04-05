@@ -27,6 +27,14 @@
     "skip": "Überspringen",
     "send": "Absenden"
   },
+  "countdown": {
+    "launching_in": "Launch in",
+    "days": "Tage",
+    "hours": "Std",
+    "minutes": "Min",
+    "seconds": "Sek",
+    "event_name": "23. April — Hyrox Paris"
+  },
   "footer": {
     "privacy": "Keine Cookies. Kein Tracking. Nur eine Schildkröte mit Brille.",
     "copyright": "© {year} strQ.app"

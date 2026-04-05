@@ -27,6 +27,14 @@
     "skip": "Saltay",
     "send": "Kachay"
   },
+  "countdown": {
+    "launching_in": "Qallariy",
+    "days": "p'unchaw",
+    "hours": "hora",
+    "minutes": "min",
+    "seconds": "seg",
+    "event_name": "23 abril — Hyrox Paris"
+  },
   "footer": {
     "privacy": "Mana cookies. Mana rastreamiento. Huk tortuga lentesyuqlla.",
     "copyright": "© {year} strQ.app"

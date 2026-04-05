@@ -27,6 +27,14 @@
     "skip": "Skip",
     "send": "Submit"
   },
+  "countdown": {
+    "launching_in": "Launching in",
+    "days": "days",
+    "hours": "hours",
+    "minutes": "min",
+    "seconds": "sec",
+    "event_name": "April 23 — Hyrox Paris"
+  },
   "footer": {
     "privacy": "No cookies. No tracking. Just a turtle with glasses.",
     "copyright": "© {year} strQ.app"

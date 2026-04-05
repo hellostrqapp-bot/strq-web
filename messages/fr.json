@@ -27,6 +27,14 @@
     "skip": "Passer",
     "send": "Envoyer"
   },
+  "countdown": {
+    "launching_in": "Lancement dans",
+    "days": "jours",
+    "hours": "heures",
+    "minutes": "min",
+    "seconds": "sec",
+    "event_name": "23 avril — Hyrox Paris"
+  },
   "footer": {
     "privacy": "Pas de cookies. Pas de tracking. Juste une tortue avec des lunettes.",
     "copyright": "© {year} strQ.app"

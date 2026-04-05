@@ -27,6 +27,14 @@
     "skip": "Overslaan",
     "send": "Verstuur"
   },
+  "countdown": {
+    "launching_in": "Launch over",
+    "days": "dagen",
+    "hours": "uren",
+    "minutes": "min",
+    "seconds": "sec",
+    "event_name": "23 april — Hyrox Paris"
+  },
   "footer": {
     "privacy": "Geen cookies. Geen tracking. Wel een schildpad met een bril.",
     "copyright": "© {year} strQ.app"

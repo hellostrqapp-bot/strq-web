@@ -343,6 +343,93 @@ function getUtmParams(): Record<string, string> {
   return utm;
 }
 
+// ── Launch Countdown ──
+// Target: 23 april 2026, 11:00 CET (Hyrox Paris)
+const LAUNCH_DATE = new Date("2026-04-23T11:00:00+02:00");
+
+function LaunchCountdown({ t }: { t: (key: string) => string }) {
+  const [now, setNow] = useState(new Date());
+
+  useEffect(() => {
+    const interval = setInterval(() => setNow(new Date()), 1000);
+    return () => clearInterval(interval);
+  }, []);
+
+  const diff = Math.max(0, LAUNCH_DATE.getTime() - now.getTime());
+  const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+  const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+  const minutes = Math.floor((diff / (1000 * 60)) % 60);
+  const seconds = Math.floor((diff / 1000) % 60);
+
+  if (diff <= 0) return null;
+
+  const blocks = [
+    { value: days, label: t("countdown.days") },
+    { value: hours, label: t("countdown.hours") },
+    { value: minutes, label: t("countdown.minutes") },
+    { value: seconds, label: t("countdown.seconds") },
+  ];
+
+  return (
+    <div style={{ textAlign: "center", marginBottom: 32 }}>
+      <div
+        style={{
+          color: "rgba(255,255,255,0.4)",
+          fontSize: 11,
+          fontWeight: 600,
+          letterSpacing: 2.5,
+          textTransform: "uppercase",
+          marginBottom: 14,
+        }}
+      >
+        {t("countdown.launching_in")}
+      </div>
+      <div style={{ display: "flex", gap: 8, justifyContent: "center" }}>
+        {blocks.map(({ value, label }, i) => (
+          <div key={i} style={{ minWidth: 56 }}>
+            <div
+              style={{
+                fontSize: 28,
+                fontWeight: 900,
+                color: W,
+                lineHeight: 1,
+                padding: "10px 0",
+                background: "rgba(108,52,131,0.15)",
+                borderRadius: 10,
+                border: "1px solid rgba(165,105,189,0.15)",
+              }}
+            >
+              {String(value).padStart(2, "0")}
+            </div>
+            <div
+              style={{
+                fontSize: 10,
+                color: "rgba(255,255,255,0.35)",
+                marginTop: 6,
+                fontWeight: 500,
+                letterSpacing: 0.5,
+              }}
+            >
+              {label}
+            </div>
+          </div>
+        ))}
+      </div>
+      <div
+        style={{
+          color: PL,
+          fontSize: 12,
+          fontWeight: 500,
+          marginTop: 14,
+          opacity: 0.7,
+        }}
+      >
+        {t("countdown.event_name")}
+      </div>
+    </div>
+  );
+}
+
 // ── Main Landing Page ──
 export default function Landing() {
   const t = useTranslations();
@@ -504,9 +591,12 @@ export default function Landing() {
         </div>
 
         {/* Rainbow */}
-        <div style={{ marginBottom: 36 }}>
+        <div style={{ marginBottom: 28 }}>
           <Rainbow width={108} />
         </div>
+
+        {/* Launch Countdown */}
+        <LaunchCountdown t={t} />
 
         {/* Waitlist form or confirmation */}
         {state === "done" ? (
