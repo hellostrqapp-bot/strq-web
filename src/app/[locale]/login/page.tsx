@@ -3,10 +3,12 @@
 import { useState } from 'react';
 import { useTranslations, useLocale } from 'next-intl';
 import { createBrowserClient } from '@/lib/supabase-browser';
+import { isAllowedTester } from '@/lib/allowed-testers';
 
 // ═══════════════════════════════════════════════════════════
 // strQ — Login Page
 // Magic link only. No passwords. Simple.
+// Beta gate: only whitelisted testers can log in (Fase 1).
 // ═══════════════════════════════════════════════════════════
 
 const P = '#6C3483';
@@ -27,6 +29,13 @@ export default function LoginPage() {
     e.preventDefault();
     setLoading(true);
     setError('');
+
+    // Beta gate: only whitelisted testers can log in
+    if (!isAllowedTester(email)) {
+      setLoading(false);
+      setError(t('not_allowed'));
+      return;
+    }
 
     const supabase = createBrowserClient();
 

@@ -50,6 +50,7 @@
     "sent_title": "Prüfe dein Postfach!",
     "sent_description": "Wir haben dir einen Link geschickt. Klicke darauf zum Einloggen.",
     "error": "Etwas ist schiefgelaufen. Versuche es erneut.",
+    "not_allowed": "Du stehst noch auf der Warteliste. Wir melden uns, sobald du testen kannst.",
     "back": "Zurück zu strQ.app"
   },
   "app": {

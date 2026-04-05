@@ -50,6 +50,7 @@
     "sent_title": "Vérifiez votre boîte mail !",
     "sent_description": "Nous vous avons envoyé un lien. Cliquez dessus pour vous connecter.",
     "error": "Une erreur est survenue. Réessayez.",
+    "not_allowed": "Tu es encore sur la liste d'attente. On te prévient dès que tu peux tester.",
     "back": "Retour à strQ.app"
   },
   "app": {

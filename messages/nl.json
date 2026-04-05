@@ -50,6 +50,7 @@
     "sent_title": "Check je inbox!",
     "sent_description": "We hebben je een link gestuurd. Klik erop om in te loggen.",
     "error": "Er ging iets mis. Probeer het opnieuw.",
+    "not_allowed": "Je staat nog op de waitlist. We laten je weten wanneer je kunt testen.",
     "back": "Terug naar strQ.app"
   },
   "app": {

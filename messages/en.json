@@ -50,6 +50,7 @@
     "sent_title": "Check your inbox!",
     "sent_description": "We sent you a link. Click it to sign in.",
     "error": "Something went wrong. Please try again.",
+    "not_allowed": "You're still on the waitlist. We'll let you know when you can test.",
     "back": "Back to strQ.app"
   },
   "app": {

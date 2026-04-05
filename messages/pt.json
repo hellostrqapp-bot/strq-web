@@ -50,6 +50,7 @@
     "sent_title": "Verifique sua caixa de entrada!",
     "sent_description": "Enviamos um link. Clique nele para entrar.",
     "error": "Algo deu errado. Tente novamente.",
+    "not_allowed": "Ainda estás na lista de espera. Avisamos quando puderes testar.",
     "back": "Voltar para strQ.app"
   },
   "app": {

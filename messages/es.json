@@ -50,6 +50,7 @@
     "sent_title": "¡Revisa tu bandeja!",
     "sent_description": "Te enviamos un enlace. Haz clic para iniciar sesión.",
     "error": "Algo salió mal. Inténtalo de nuevo.",
+    "not_allowed": "Todavía estás en la lista de espera. Te avisaremos cuando puedas probar.",
     "back": "Volver a strQ.app"
   },
   "app": {
