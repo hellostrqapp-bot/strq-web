@@ -28,7 +28,6 @@ export async function POST(request: NextRequest) {
     const insertData: Record<string, string> = {
       email: email.toLowerCase().trim(),
       locale,
-      source: "landing",
     };
 
     if (sport && sport !== "none") insertData.sport = sport;
