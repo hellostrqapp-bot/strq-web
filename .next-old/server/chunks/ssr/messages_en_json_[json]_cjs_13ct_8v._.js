@@ -1,3 +1,0 @@
-module.exports=[45983,(a,b,c)=>{b.exports={meta:{title:"strQ.app — Duolingo for fitness",description:"You know that moment. Halfway through training, and the couch wins. strQ helps you keep going."},hero:{tagline:"You know that moment.",subtitle:"Halfway through training, and the couch wins.",cta:"strQ helps you keep going."},waitlist:{placeholder:"you@email.com",button:"Join waitlist",success:"You're on the list. Slow and steady. We'll be in touch.",error:"Oops, something went wrong. Try again."},footer:{privacy:"No cookies. No tracking. Just a turtle with glasses.",copyright:"© {year} strQ.app"},language:{label:"Language"}}}];
-
-//# sourceMappingURL=messages_en_json_%5Bjson%5D_cjs_13ct_8v._.js.map

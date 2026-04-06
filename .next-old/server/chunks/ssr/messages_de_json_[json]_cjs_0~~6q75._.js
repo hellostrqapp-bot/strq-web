@@ -1,3 +1,0 @@
-module.exports=[86987,(a,b,c)=>{b.exports={meta:{title:"strQ.app — Duolingo für Sport",description:"Du kennst diesen Moment. Mitten im Training, und die Couch gewinnt. strQ hilft dir durchzuhalten."},hero:{tagline:"Du kennst diesen Moment.",subtitle:"Mitten im Training, und die Couch gewinnt.",cta:"strQ hilft dir durchzuhalten."},waitlist:{placeholder:"du@email.de",button:"Anmelden",success:"Du stehst auf der Liste. Slow and steady. Wir melden uns.",error:"Ups, da ging etwas schief. Versuch es nochmal."},footer:{privacy:"Keine Cookies. Kein Tracking. Nur eine Schildkröte mit Brille.",copyright:"© {year} strQ.app"},language:{label:"Sprache"}}}];
-
-//# sourceMappingURL=messages_de_json_%5Bjson%5D_cjs_0~~6q75._.js.map
