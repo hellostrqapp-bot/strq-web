@@ -95,9 +95,7 @@ export default function EventPage() {
         ? parseInt(formData.target_time_minutes, 10)
         : null,
       sport_type: formData.sport_type,
-      status: 'upcoming',
-      created_at: event?.id ? undefined : new Date().toISOString(),
-      updated_at: new Date().toISOString(),
+      status: 'upcoming' as const,
     };
 
     if (event?.id) {
@@ -108,7 +106,8 @@ export default function EventPage() {
         .eq('id', event.id);
 
       if (err) {
-        setError('Failed to update event');
+        console.error('Event update error:', err.message, err.code);
+        setError(`Failed to update event: ${err.message}`);
         return;
       }
     } else {
@@ -116,7 +115,8 @@ export default function EventPage() {
       const { error: err } = await supabase.from('events').insert([eventPayload]);
 
       if (err) {
-        setError('Failed to create event');
+        console.error('Event insert error:', err.message, err.code);
+        setError(`Failed to create event: ${err.message}`);
         return;
       }
     }
