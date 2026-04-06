@@ -59,7 +59,7 @@ export default async function AppLayout({
           zIndex: 100,
         }}
       >
-        <NavItem href={`/${locale}/app`} icon={<IconStreak size={24} />} label="Streak" />
+        <NavItem href={`/${locale}/app`} icon={<IconStreak size={24} />} label="strQ" />
         <NavItem href={`/${locale}/app/event`} icon={<IconFinish size={24} />} label="Event" />
         <NavItem href={`/${locale}/app/profile`} icon={<IconProfile size={24} />} label="Profiel" />
       </nav>
