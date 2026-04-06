@@ -6,7 +6,7 @@
 
 import { redirect } from 'next/navigation';
 import { createServerClient } from '@/lib/supabase-server';
-import { IconStreak, IconFinish, IconProfile } from '@/components/icons';
+import { BottomNav } from '@/components/bottom-nav';
 
 export default async function AppLayout({
   children,
@@ -42,58 +42,7 @@ export default async function AppLayout({
       </main>
 
       {/* Bottom navigation — fixed */}
-      <nav
-        style={{
-          position: 'fixed',
-          bottom: 0,
-          left: 0,
-          right: 0,
-          height: 72,
-          background: 'rgba(26,26,46,0.95)',
-          backdropFilter: 'blur(20px)',
-          borderTop: '1px solid rgba(255,255,255,0.06)',
-          display: 'flex',
-          justifyContent: 'space-around',
-          alignItems: 'center',
-          paddingBottom: 'env(safe-area-inset-bottom)',
-          zIndex: 100,
-        }}
-      >
-        <NavItem href={`/${locale}/app`} icon={<IconStreak size={24} />} label="strQ" />
-        <NavItem href={`/${locale}/app/event`} icon={<IconFinish size={24} />} label="Event" />
-        <NavItem href={`/${locale}/app/profile`} icon={<IconProfile size={24} />} label="Profiel" />
-      </nav>
+      <BottomNav locale={locale} />
     </div>
-  );
-}
-
-function NavItem({
-  href,
-  icon,
-  label,
-}: {
-  href: string;
-  icon: React.ReactNode;
-  label: string;
-}) {
-  return (
-    <a
-      href={href}
-      style={{
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        gap: 4,
-        textDecoration: 'none',
-        color: 'rgba(255,255,255,0.5)',
-        fontSize: 11,
-        fontWeight: 600,
-        padding: '8px 16px',
-        minWidth: 64,
-      }}
-    >
-      {icon}
-      {label}
-    </a>
   );
 }
