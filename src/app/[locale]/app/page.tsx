@@ -366,16 +366,30 @@ export default function DashboardPage() {
       {/* XP counter removed — now shown in LevelBadge below streak */}
 
       {/* ── STREAK COUNTER ── (het grootste element) */}
-      <div style={{ textAlign: 'center', marginBottom: 32 }}>
+      <div style={{ textAlign: 'center', marginBottom: 32, position: 'relative' }}>
+        {/* Ambient glow behind the number */}
+        <div style={{
+          position: 'absolute',
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -55%)',
+          width: 160,
+          height: 160,
+          borderRadius: '50%',
+          background: `radial-gradient(circle, ${P}44 0%, ${PD}22 40%, transparent 70%)`,
+          animation: 'streak-ambient 4s ease-in-out infinite',
+          pointerEvents: 'none',
+        }} />
         <div
           style={{
-            fontSize: 96,
+            fontSize: 112,
             fontWeight: 900,
             color: W,
             lineHeight: 1,
             letterSpacing: '-0.04em',
-            textShadow: `0 0 60px ${P}88, 0 0 120px ${P}33`,
+            textShadow: `0 0 40px ${PL}66, 0 0 80px ${P}55, 0 0 120px ${P}33`,
             animation: 'streak-glow 3s ease-in-out infinite',
+            position: 'relative',
           }}
         >
           {streak?.currentStreak || 0}
@@ -383,9 +397,12 @@ export default function DashboardPage() {
         <div
           style={{
             fontSize: 15,
-            color: 'rgba(255,255,255,0.5)',
-            fontWeight: 600,
-            marginTop: 4,
+            color: 'rgba(255,255,255,0.55)',
+            fontWeight: 700,
+            marginTop: 6,
+            letterSpacing: '0.06em',
+            textTransform: 'uppercase',
+            position: 'relative',
           }}
         >
           {t('streak_label')}
@@ -413,83 +430,221 @@ export default function DashboardPage() {
       <LevelBadge levelInfo={getLevelInfo(totalXp)} totalXp={totalXp} />
 
       {/* ── EVENT COUNTDOWN ── */}
-      {event && (
+      {event && (() => {
+        const days = daysUntil(event.event_date);
+        const urgency = days <= 7 ? 1 : days <= 14 ? 0.7 : days <= 21 ? 0.45 : 0.25;
+        return (
         <div
           style={{
-            background: 'rgba(255,255,255,0.04)',
-            border: `1px solid rgba(108, 52, 131, 0.12)`,
+            background: `linear-gradient(135deg, rgba(108,52,131,${0.08 + urgency * 0.1}), rgba(74,35,90,${0.04 + urgency * 0.06}))`,
+            border: `1px solid ${PL}${Math.round(20 + urgency * 30).toString(16)}`,
             borderRadius: 14,
-            padding: '16px 20px',
+            padding: '18px 20px',
             marginBottom: 24,
             display: 'flex',
             justifyContent: 'space-between',
             alignItems: 'center',
+            position: 'relative',
+            overflow: 'hidden',
           }}
         >
-          <div>
-            <div style={{ fontSize: 13, color: PL, fontWeight: 700 }}>
+          {/* Subtle urgency pulse on the right side */}
+          <div style={{
+            position: 'absolute',
+            right: -20,
+            top: '50%',
+            transform: 'translateY(-50%)',
+            width: 120,
+            height: 120,
+            borderRadius: '50%',
+            background: `radial-gradient(circle, ${PL}${Math.round(urgency * 20).toString(16).padStart(2, '0')} 0%, transparent 70%)`,
+            animation: 'countdown-pulse 3s ease-in-out infinite',
+            pointerEvents: 'none',
+          }} />
+          <div style={{ position: 'relative' }}>
+            <div style={{ fontSize: 14, color: PL, fontWeight: 800, letterSpacing: '0.02em' }}>
               {event.name}
             </div>
-            <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.4)' }}>
+            <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.45)', marginTop: 2 }}>
               {formatEventDate(event.event_date, locale)}
             </div>
           </div>
-          <div style={{ textAlign: 'right' }}>
+          <div style={{ textAlign: 'right', position: 'relative' }}>
             <div style={{
-              fontSize: 28,
+              fontSize: 40,
               fontWeight: 900,
               color: W,
-              textShadow: `0 0 16px ${PL}44`,
+              lineHeight: 1,
+              textShadow: `0 0 20px ${PL}55, 0 0 40px ${P}33`,
+              letterSpacing: '-0.02em',
             }}>
-              {daysUntil(event.event_date)}
+              {days}
             </div>
-            <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.4)', fontWeight: 600 }}>
+            <div style={{
+              fontSize: 11,
+              color: 'rgba(255,255,255,0.45)',
+              fontWeight: 700,
+              letterSpacing: '0.04em',
+              textTransform: 'uppercase',
+              marginTop: 2,
+            }}>
               {t('days_to_go')}
             </div>
           </div>
         </div>
-      )}
+        );
+      })()}
 
       {/* ── DAILY REVEAL ── */}
       {state === 'reveal' && reveal && (
         <div
           style={{
-            background: `linear-gradient(135deg, ${PD}, ${P})`,
-            borderRadius: 16,
-            padding: '28px 24px',
+            background: `linear-gradient(135deg, ${PD}, ${P}ee, ${PM})`,
+            borderRadius: 20,
+            padding: '36px 24px 32px',
             marginBottom: 24,
             textAlign: 'center',
             cursor: 'pointer',
-            animation: 'pulse 1.5s ease-in-out infinite',
+            animation: 'reveal-breathe 2.5s ease-in-out infinite',
+            position: 'relative',
+            overflow: 'hidden',
+            border: `1px solid ${PL}33`,
+            boxShadow: `0 0 40px ${P}44, 0 0 80px ${PD}33, inset 0 1px 0 ${PL}22`,
           }}
           onClick={doReveal}
         >
-          <div style={{ fontSize: 28, marginBottom: 8 }}><IconGift size={32} /></div>
-          <div style={{ fontSize: 24, fontWeight: 800, color: W }}>
+          {/* Ambient light rings */}
+          <div style={{
+            position: 'absolute',
+            top: '50%', left: '50%',
+            transform: 'translate(-50%, -50%)',
+            width: 200, height: 200,
+            borderRadius: '50%',
+            border: `1px solid ${PL}15`,
+            animation: 'reveal-ring 3s ease-in-out infinite',
+            pointerEvents: 'none',
+          }} />
+          <div style={{
+            position: 'absolute',
+            top: '50%', left: '50%',
+            transform: 'translate(-50%, -50%)',
+            width: 280, height: 280,
+            borderRadius: '50%',
+            border: `1px solid ${PL}0a`,
+            animation: 'reveal-ring 3s ease-in-out 0.5s infinite',
+            pointerEvents: 'none',
+          }} />
+
+          {/* Floating sparkle particles */}
+          <div style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, pointerEvents: 'none' }}>
+            {[
+              { x: 10, y: 20, d: 0, c: PL }, { x: 85, y: 15, d: 0.5, c: SK },
+              { x: 15, y: 70, d: 1.0, c: W }, { x: 90, y: 65, d: 1.5, c: PL },
+              { x: 50, y: 10, d: 2.0, c: SK }, { x: 5, y: 45, d: 2.5, c: PL },
+              { x: 95, y: 40, d: 3.0, c: W }, { x: 40, y: 85, d: 3.5, c: SK },
+            ].map((s, i) => (
+              <div key={i} style={{
+                position: 'absolute',
+                left: `${s.x}%`, top: `${s.y}%`,
+                width: 3, height: 3,
+                borderRadius: '50%',
+                background: s.c,
+                animation: `reveal-sparkle 4s ease-in-out ${s.d}s infinite`,
+              }} />
+            ))}
+          </div>
+
+          {/* Gift icon with glow */}
+          <div style={{
+            position: 'relative',
+            marginBottom: 16,
+            display: 'inline-block',
+          }}>
+            <div style={{
+              position: 'absolute',
+              top: '50%', left: '50%',
+              transform: 'translate(-50%, -50%)',
+              width: 56, height: 56,
+              borderRadius: '50%',
+              background: `radial-gradient(circle, ${PL}33 0%, transparent 70%)`,
+              animation: 'reveal-icon-glow 2s ease-in-out infinite',
+              pointerEvents: 'none',
+            }} />
+            <IconGift size={36} />
+          </div>
+
+          {/* XP amount — the hero */}
+          <div style={{
+            fontSize: 44,
+            fontWeight: 900,
+            color: W,
+            lineHeight: 1,
+            textShadow: `0 0 24px ${PL}88, 0 0 48px ${P}55`,
+            letterSpacing: '-0.02em',
+            position: 'relative',
+            animation: 'reveal-xp-glow 2.5s ease-in-out infinite',
+          }}>
             +{reveal.baseXp + reveal.bonusXp} XP
           </div>
+
+          {/* Surprise label */}
           {reveal.surprise && (
             <div
               style={{
-                marginTop: 8,
+                marginTop: 12,
                 fontSize: 14,
                 color: SL,
-                fontWeight: 600,
+                fontWeight: 700,
+                position: 'relative',
+                textShadow: `0 0 12px ${SK}44`,
               }}
             >
               <IconSparkle size={16} /> {t(`surprise_${reveal.surprise}`)}
             </div>
           )}
+
+          {/* Call to action — the pull */}
           <div
             style={{
-              marginTop: 12,
+              marginTop: 20,
               fontSize: 13,
-              color: 'rgba(255,255,255,0.6)',
+              color: `${PL}cc`,
+              fontWeight: 600,
+              letterSpacing: '0.04em',
+              position: 'relative',
+              animation: 'reveal-cta-pulse 2s ease-in-out infinite',
             }}
           >
             {t('tap_to_reveal')}
           </div>
-          <style>{`@keyframes pulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.02); } }`}</style>
+
+          <style>{`
+            @keyframes reveal-breathe {
+              0%, 100% { transform: scale(1); box-shadow: 0 0 40px ${P}44, 0 0 80px ${PD}33, inset 0 1px 0 ${PL}22; }
+              50% { transform: scale(1.015); box-shadow: 0 0 50px ${P}55, 0 0 100px ${PD}44, inset 0 1px 0 ${PL}33; }
+            }
+            @keyframes reveal-ring {
+              0%, 100% { opacity: 0.4; transform: translate(-50%, -50%) scale(0.95); }
+              50% { opacity: 1; transform: translate(-50%, -50%) scale(1.05); }
+            }
+            @keyframes reveal-sparkle {
+              0%, 100% { opacity: 0; transform: scale(0.3) translateY(0); }
+              30% { opacity: 0.8; transform: scale(1.1) translateY(-4px); }
+              60% { opacity: 0.5; transform: scale(0.9) translateY(-2px); }
+            }
+            @keyframes reveal-icon-glow {
+              0%, 100% { opacity: 0.6; transform: translate(-50%, -50%) scale(1); }
+              50% { opacity: 1; transform: translate(-50%, -50%) scale(1.15); }
+            }
+            @keyframes reveal-xp-glow {
+              0%, 100% { text-shadow: 0 0 24px ${PL}88, 0 0 48px ${P}55; }
+              50% { text-shadow: 0 0 32px ${PL}aa, 0 0 64px ${P}66, 0 0 80px ${PL}33; }
+            }
+            @keyframes reveal-cta-pulse {
+              0%, 100% { opacity: 0.7; }
+              50% { opacity: 1; }
+            }
+          `}</style>
         </div>
       )}
 
@@ -501,16 +656,21 @@ export default function DashboardPage() {
             onClick={() => logActivity('training')}
             style={{
               width: '100%',
-              padding: '18px',
+              padding: '20px',
               fontSize: 17,
               fontWeight: 800,
-              background: `linear-gradient(135deg, ${P}, ${PL})`,
+              background: `linear-gradient(135deg, ${P}, ${PM}, ${PL})`,
               color: W,
               border: 'none',
-              borderRadius: 12,
+              borderRadius: 14,
               cursor: 'pointer',
-              transition: 'transform 0.15s',
+              transition: 'all 0.2s ease',
+              boxShadow: `0 4px 20px ${P}55, 0 0 40px ${P}22`,
+              letterSpacing: '0.02em',
+              position: 'relative',
+              overflow: 'hidden',
             }}
+            className="train-btn"
           >
             <IconTraining size={20} /> {t('log_training')}
           </button>
@@ -523,12 +683,14 @@ export default function DashboardPage() {
               padding: '14px',
               fontSize: 14,
               fontWeight: 600,
-              background: 'rgba(255,255,255,0.04)',
-              color: 'rgba(255,255,255,0.5)',
-              border: '1px solid rgba(255,255,255,0.08)',
-              borderRadius: 12,
+              background: 'rgba(255,255,255,0.03)',
+              color: 'rgba(255,255,255,0.45)',
+              border: `1px solid rgba(255,255,255,0.06)`,
+              borderRadius: 14,
               cursor: 'pointer',
+              transition: 'all 0.2s ease',
             }}
+            className="rest-btn"
           >
             <IconRest size={18} /> {t('log_rest')}
           </button>
@@ -540,42 +702,62 @@ export default function DashboardPage() {
         <div
           style={{
             textAlign: 'center',
-            padding: '28px 20px',
-            background: `${SK}11`,
+            padding: '32px 20px 28px',
+            background: `linear-gradient(135deg, ${SK}14, ${SK}08)`,
             border: `1px solid ${SK}33`,
-            borderRadius: 14,
+            borderRadius: 16,
             position: 'relative',
             overflow: 'hidden',
           }}
         >
-          {/* Subtle sparkle particles in the card */}
+          {/* Sparkle particles */}
           <div style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, pointerEvents: 'none' }}>
             {[
-              { x: 12, y: 18, d: 0 }, { x: 85, y: 12, d: 0.8 },
-              { x: 45, y: 80, d: 1.6 }, { x: 92, y: 65, d: 2.4 },
-              { x: 8, y: 70, d: 3.2 },
+              { x: 8, y: 14, d: 0, s: 4 }, { x: 88, y: 10, d: 0.6, s: 3 },
+              { x: 50, y: 8, d: 1.2, s: 3 }, { x: 92, y: 60, d: 1.8, s: 4 },
+              { x: 6, y: 75, d: 2.4, s: 3 }, { x: 72, y: 82, d: 3.0, s: 3 },
+              { x: 30, y: 88, d: 3.6, s: 4 },
             ].map((s, i) => (
               <div key={i} style={{
                 position: 'absolute',
                 left: `${s.x}%`,
                 top: `${s.y}%`,
-                width: 3,
-                height: 3,
+                width: s.s,
+                height: s.s,
                 borderRadius: '50%',
-                background: SK,
+                background: i % 2 === 0 ? SK : PL,
                 animation: `card-sparkle 3s ease-in-out ${s.d}s infinite`,
               }} />
             ))}
           </div>
-          <div style={{ marginBottom: 8 }}><QCelebrating size={100} /></div>
-          <div style={{ fontSize: 16, fontWeight: 700, color: SK, textShadow: `0 0 12px ${SK}33` }}>
+          {/* Ambient glow behind Q */}
+          <div style={{
+            position: 'absolute',
+            top: '30%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            width: 140,
+            height: 140,
+            borderRadius: '50%',
+            background: `radial-gradient(circle, ${SK}18 0%, transparent 70%)`,
+            pointerEvents: 'none',
+          }} />
+          <div style={{ marginBottom: 12, position: 'relative' }}><QCelebrating size={110} /></div>
+          <div style={{
+            fontSize: 18,
+            fontWeight: 800,
+            color: SK,
+            textShadow: `0 0 16px ${SK}44, 0 0 32px ${SK}22`,
+            position: 'relative',
+          }}>
             {t('already_logged')}
           </div>
           <div
             style={{
               fontSize: 13,
               color: 'rgba(255,255,255,0.4)',
-              marginTop: 4,
+              marginTop: 6,
+              position: 'relative',
             }}
           >
             {t('come_back_tomorrow')}
@@ -585,13 +767,15 @@ export default function DashboardPage() {
 
       {/* ── STREAK HISTORY (last 7 days) ── */}
       {streak && (
-        <div style={{ marginTop: 32 }}>
+        <div style={{ marginTop: 36 }}>
           <div
             style={{
-              fontSize: 13,
+              fontSize: 12,
               fontWeight: 700,
-              color: 'rgba(255,255,255,0.4)',
-              marginBottom: 14,
+              color: 'rgba(255,255,255,0.35)',
+              marginBottom: 16,
+              letterSpacing: '0.06em',
+              textTransform: 'uppercase',
             }}
           >
             {t('last_7_days')}
@@ -776,8 +960,16 @@ function ConfettiOverlay() {
           100% { transform: translateX(120%); }
         }
         @keyframes streak-glow {
-          0%, 100% { filter: brightness(1); }
-          50% { filter: brightness(1.06); }
+          0%, 100% { filter: brightness(1); text-shadow: 0 0 40px #A569BD66, 0 0 80px #6C348355, 0 0 120px #6C348333; }
+          50% { filter: brightness(1.08); text-shadow: 0 0 50px #A569BD88, 0 0 100px #6C348366, 0 0 140px #6C348344; }
+        }
+        @keyframes streak-ambient {
+          0%, 100% { opacity: 0.7; transform: translate(-50%, -55%) scale(1); }
+          50% { opacity: 1; transform: translate(-50%, -55%) scale(1.08); }
+        }
+        @keyframes countdown-pulse {
+          0%, 100% { opacity: 0.5; }
+          50% { opacity: 1; }
         }
         @keyframes card-sparkle {
           0%, 100% { opacity: 0; transform: scale(0.5); }
@@ -791,6 +983,18 @@ function ConfettiOverlay() {
           0%, 100% { opacity: 0; transform: scale(0.3); }
           40% { opacity: 0.9; transform: scale(1.2); }
           60% { opacity: 0.7; transform: scale(1); }
+        }
+        .train-btn:hover {
+          transform: translateY(-1px);
+          box-shadow: 0 6px 28px #6C348377, 0 0 50px #6C348333 !important;
+        }
+        .train-btn:active {
+          transform: translateY(1px) scale(0.98);
+        }
+        .rest-btn:hover {
+          background: rgba(255,255,255,0.06) !important;
+          color: rgba(255,255,255,0.6) !important;
+          border-color: rgba(255,255,255,0.1) !important;
         }
       `}</style>
     </div>
