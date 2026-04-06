@@ -623,7 +623,9 @@ export default function DashboardPage() {
                       height: 42,
                       borderRadius: '50%',
                       background: isActive
-                        ? `linear-gradient(135deg, ${P}, ${PL})`
+                        ? day.isToday
+                          ? `linear-gradient(135deg, ${PM}, ${PL})`
+                          : `linear-gradient(135deg, ${P}, ${PL})`
                         : isRest
                         ? `linear-gradient(135deg, ${SK}22, ${SK}33)`
                         : 'rgba(255,255,255,0.03)',
@@ -634,7 +636,9 @@ export default function DashboardPage() {
                         : isRest
                         ? `2px solid ${SK}44`
                         : '2px solid rgba(255,255,255,0.06)',
-                      boxShadow: isActive
+                      boxShadow: day.isToday && isActive
+                        ? `0 0 18px ${PL}77, 0 0 6px ${P}55, 0 0 30px ${P}33`
+                        : isActive
                         ? `0 0 14px ${P}66, 0 0 4px ${PL}44`
                         : isRest
                         ? `0 0 8px ${SK}22`
@@ -644,11 +648,39 @@ export default function DashboardPage() {
                       justifyContent: 'center',
                       margin: '0 auto 4px',
                       position: 'relative',
+                      overflow: 'visible',
                       animation: day.isToday && isActive
                         ? 'day-pulse 2s ease-in-out infinite'
                         : undefined,
                     }}
                   >
+                    {/* Today sparkle ring */}
+                    {day.isToday && isActive && (
+                      <>
+                        {[0, 60, 120, 180, 240, 300].map((angle, si) => {
+                          const rad = (angle * Math.PI) / 180;
+                          const dist = 24;
+                          const sx = Math.cos(rad) * dist;
+                          const sy = Math.sin(rad) * dist;
+                          return (
+                            <div
+                              key={si}
+                              style={{
+                                position: 'absolute',
+                                width: 3,
+                                height: 3,
+                                borderRadius: '50%',
+                                background: W,
+                                left: `calc(50% + ${sx}px - 1.5px)`,
+                                top: `calc(50% + ${sy}px - 1.5px)`,
+                                animation: `today-sparkle 2.5s ease-in-out ${si * 0.4}s infinite`,
+                                pointerEvents: 'none',
+                              }}
+                            />
+                          );
+                        })}
+                      </>
+                    )}
                     {isActive && (
                       <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
                         {/* Bold checkmark — "done, crushed it" */}
@@ -752,8 +784,13 @@ function ConfettiOverlay() {
           50% { opacity: 0.5; transform: scale(1); }
         }
         @keyframes day-pulse {
-          0%, 100% { box-shadow: 0 0 14px #6C348366, 0 0 4px #A569BD44; }
-          50% { box-shadow: 0 0 20px #6C348388, 0 0 8px #A569BD66; }
+          0%, 100% { box-shadow: 0 0 18px #A569BD77, 0 0 6px #6C348355, 0 0 30px #6C348333; }
+          50% { box-shadow: 0 0 24px #A569BD99, 0 0 10px #6C348377, 0 0 40px #6C348344; }
+        }
+        @keyframes today-sparkle {
+          0%, 100% { opacity: 0; transform: scale(0.3); }
+          40% { opacity: 0.9; transform: scale(1.2); }
+          60% { opacity: 0.7; transform: scale(1); }
         }
       `}</style>
     </div>
