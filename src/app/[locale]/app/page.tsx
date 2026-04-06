@@ -18,6 +18,8 @@ import {
   IconRest,
   IconCheck,
 } from '@/components/icons';
+import { getLevelInfo, type LevelInfo } from '@/lib/levels';
+import { LevelBadge } from '@/components/level-badge';
 
 // ═══════════════════════════════════════════════════════════
 // strQ — Dashboard
@@ -354,18 +356,7 @@ export default function DashboardPage() {
         ))}
       </div>
 
-      {/* XP counter */}
-      <div
-        style={{
-          textAlign: 'right',
-          fontSize: 13,
-          color: PL,
-          fontWeight: 700,
-          marginBottom: 24,
-        }}
-      >
-        {totalXp.toLocaleString()} XP
-      </div>
+      {/* XP counter removed — now shown in LevelBadge below streak */}
 
       {/* ── STREAK COUNTER ── (het grootste element) */}
       <div style={{ textAlign: 'center', marginBottom: 32 }}>
@@ -409,6 +400,9 @@ export default function DashboardPage() {
           </div>
         )}
       </div>
+
+      {/* ── LEVEL BADGE ── */}
+      <LevelBadge levelInfo={getLevelInfo(totalXp)} totalXp={totalXp} />
 
       {/* ── EVENT COUNTDOWN ── */}
       {event && (

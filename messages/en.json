@@ -84,6 +84,16 @@
     "delete": "Delete",
     "confirm_delete": "Are you sure?"
   },
+  "level": {
+    "name_fresh": "Fresh",
+    "name_steady": "Steady",
+    "name_rolling": "Rolling",
+    "name_locked_in": "Locked In",
+    "name_on_fire": "On Fire",
+    "name_relentless": "Relentless",
+    "name_unstoppable": "Unstoppable",
+    "name_legendary": "Legendary"
+  },
   "profile": {
     "title": "Profile",
     "total_xp": "Total XP",
