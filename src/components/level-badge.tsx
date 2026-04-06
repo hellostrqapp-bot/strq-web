@@ -6,7 +6,7 @@
 
 'use client';
 
-import { type LevelInfo } from '@/lib/levels';
+import { type LevelInfo, LEVELS } from '@/lib/levels';
 import { useTranslations } from 'next-intl';
 
 const P = '#6C3483';
@@ -31,6 +31,11 @@ interface LevelBadgeProps {
 export function LevelBadge({ levelInfo, totalXp }: LevelBadgeProps) {
   const t = useTranslations('level');
   const { current, next, progress, xpInLevel, xpForNext } = levelInfo;
+
+  // Past levels (last 3, faded — already conquered)
+  const pastLevels = LEVELS.filter((l) => l.level < current.level).slice(-3);
+  // Next 3 upcoming levels (faded teasers)
+  const upcomingLevels = LEVELS.filter((l) => l.level > current.level).slice(0, 3);
 
   // Progress ring geometry
   const ringSize = 80;
@@ -173,6 +178,99 @@ export function LevelBadge({ levelInfo, totalXp }: LevelBadgeProps) {
             }}
           >
             {totalXp.toLocaleString()} XP — MAX
+          </div>
+        )}
+
+        {/* Level lane — past (faded) → current → future (faded) */}
+        {(pastLevels.length > 0 || upcomingLevels.length > 0) && (
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: 4,
+              marginTop: 8,
+            }}
+          >
+            {/* Past levels — faded, already conquered */}
+            {pastLevels.map((lvl, i) => {
+              // More recent = less faded
+              const fadeIndex = pastLevels.length - 1 - i;
+              const opacity = fadeIndex === 0 ? 0.35 : fadeIndex === 1 ? 0.2 : 0.1;
+              return (
+                <div
+                  key={lvl.level}
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    opacity,
+                  }}
+                >
+                  <QShield
+                    stripes={lvl.shieldStripes}
+                    glow={false}
+                    goldRim={lvl.shieldGoldRim}
+                    sparkles={false}
+                    size={18}
+                  />
+                  <div style={{ fontSize: 7, color: W, fontWeight: 600, marginTop: 1 }}>
+                    {t(lvl.nameKey)}
+                  </div>
+                </div>
+              );
+            })}
+
+            {/* Current level — highlighted */}
+            <div
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                padding: '0 4px',
+              }}
+            >
+              <div style={{
+                width: 4,
+                height: 4,
+                borderRadius: '50%',
+                background: PL,
+                marginBottom: 2,
+              }} />
+              <QShield
+                stripes={current.shieldStripes}
+                glow={false}
+                goldRim={current.shieldGoldRim}
+                sparkles={false}
+                size={22}
+              />
+              <div style={{ fontSize: 7, color: PL, fontWeight: 700, marginTop: 1 }}>
+                {t(current.nameKey)}
+              </div>
+            </div>
+
+            {/* Upcoming levels — progressively faded */}
+            {upcomingLevels.map((lvl, i) => (
+              <div
+                key={lvl.level}
+                style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  opacity: i === 0 ? 0.35 : i === 1 ? 0.2 : 0.1,
+                }}
+              >
+                <QShield
+                  stripes={lvl.shieldStripes}
+                  glow={false}
+                  goldRim={lvl.shieldGoldRim}
+                  sparkles={false}
+                  size={18}
+                />
+                <div style={{ fontSize: 7, color: W, fontWeight: 600, marginTop: 1 }}>
+                  {t(lvl.nameKey)}
+                </div>
+              </div>
+            ))}
           </div>
         )}
       </div>
