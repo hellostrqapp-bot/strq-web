@@ -589,9 +589,9 @@ export default function DashboardPage() {
           <div
             style={{
               fontSize: 13,
-              fontWeight: 600,
+              fontWeight: 700,
               color: 'rgba(255,255,255,0.4)',
-              marginBottom: 12,
+              marginBottom: 14,
             }}
           >
             {t('last_7_days')}
@@ -599,61 +599,102 @@ export default function DashboardPage() {
           <div
             style={{
               display: 'flex',
-              gap: 6,
+              gap: 4,
               justifyContent: 'space-between',
             }}
           >
-            {streak.last7Days.map((day, i) => (
-              <div
-                key={i}
-                style={{
-                  flex: 1,
-                  textAlign: 'center',
-                }}
-              >
+            {streak.last7Days.map((day, i) => {
+              const isActive = day.type === 'training';
+              const isRest = day.type === 'rest';
+              const isEmpty = !isActive && !isRest;
+
+              return (
                 <div
+                  key={i}
                   style={{
-                    width: 38,
-                    height: 38,
-                    borderRadius: '50%',
-                    background:
-                      day.type === 'training'
-                        ? P
-                        : day.type === 'rest'
-                        ? `${SK}33`
-                        : 'rgba(255,255,255,0.04)',
-                    border:
-                      day.isToday
+                    flex: 1,
+                    textAlign: 'center',
+                  }}
+                >
+                  {/* The day orb */}
+                  <div
+                    style={{
+                      width: 42,
+                      height: 42,
+                      borderRadius: '50%',
+                      background: isActive
+                        ? `linear-gradient(135deg, ${P}, ${PL})`
+                        : isRest
+                        ? `linear-gradient(135deg, ${SK}22, ${SK}33)`
+                        : 'rgba(255,255,255,0.03)',
+                      border: day.isToday
                         ? `2px solid ${PL}`
-                        : '2px solid transparent',
-                    boxShadow:
-                      day.type === 'training'
-                        ? `0 0 10px ${P}55`
+                        : isActive
+                        ? `2px solid ${PL}55`
+                        : isRest
+                        ? `2px solid ${SK}44`
+                        : '2px solid rgba(255,255,255,0.06)',
+                      boxShadow: isActive
+                        ? `0 0 14px ${P}66, 0 0 4px ${PL}44`
+                        : isRest
+                        ? `0 0 8px ${SK}22`
                         : 'none',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    margin: '0 auto 4px',
-                    fontSize: 14,
-                  }}
-                >
-                  {day.type === 'training'
-                    ? <IconTraining size={16} />
-                    : day.type === 'rest'
-                    ? <IconRest size={16} />
-                    : null}
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      margin: '0 auto 4px',
+                      position: 'relative',
+                      animation: day.isToday && isActive
+                        ? 'day-pulse 2s ease-in-out infinite'
+                        : undefined,
+                    }}
+                  >
+                    {isActive && (
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                        {/* Bold checkmark — "done, crushed it" */}
+                        <circle cx="12" cy="12" r="9" fill="none" stroke="rgba(255,255,255,0.2)" strokeWidth="1.5" />
+                        <path
+                          d="M7.5 12.5L10.5 15.5L16.5 9"
+                          stroke={W}
+                          strokeWidth="2.5"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                      </svg>
+                    )}
+                    {isRest && (
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                        {/* Zen circle — rest is earned */}
+                        <circle cx="12" cy="12" r="8" fill="none" stroke={SK} strokeWidth="1.5" opacity="0.6" />
+                        <path d="M9 12h6" stroke={SK} strokeWidth="1.5" strokeLinecap="round" opacity="0.8" />
+                      </svg>
+                    )}
+                    {isEmpty && (
+                      <div style={{
+                        width: 6,
+                        height: 6,
+                        borderRadius: '50%',
+                        background: 'rgba(255,255,255,0.08)',
+                      }} />
+                    )}
+                  </div>
+                  <div
+                    style={{
+                      fontSize: 10,
+                      color: isActive
+                        ? PL
+                        : isRest
+                        ? `${SK}99`
+                        : 'rgba(255,255,255,0.2)',
+                      fontWeight: isActive ? 800 : 600,
+                      letterSpacing: isActive ? '0.04em' : undefined,
+                    }}
+                  >
+                    {day.label}
+                  </div>
                 </div>
-                <div
-                  style={{
-                    fontSize: 10,
-                    color: 'rgba(255,255,255,0.3)',
-                    fontWeight: 600,
-                  }}
-                >
-                  {day.label}
-                </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       )}
@@ -709,6 +750,10 @@ function ConfettiOverlay() {
         @keyframes card-sparkle {
           0%, 100% { opacity: 0; transform: scale(0.5); }
           50% { opacity: 0.5; transform: scale(1); }
+        }
+        @keyframes day-pulse {
+          0%, 100% { box-shadow: 0 0 14px #6C348366, 0 0 4px #A569BD44; }
+          50% { box-shadow: 0 0 20px #6C348388, 0 0 8px #A569BD66; }
         }
       `}</style>
     </div>
