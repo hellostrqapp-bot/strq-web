@@ -32,9 +32,7 @@ export function LevelBadge({ levelInfo, totalXp }: LevelBadgeProps) {
   const t = useTranslations('level');
   const { current, next, progress, xpInLevel, xpForNext } = levelInfo;
 
-  // Past levels (last 3, faded — already conquered)
-  const pastLevels = LEVELS.filter((l) => l.level < current.level).slice(-3);
-  // Next 3 upcoming levels (faded teasers)
+  // Next upcoming levels (for teaser lane)
   const upcomingLevels = LEVELS.filter((l) => l.level > current.level).slice(0, 3);
 
   // Progress ring geometry
@@ -181,95 +179,36 @@ export function LevelBadge({ levelInfo, totalXp }: LevelBadgeProps) {
           </div>
         )}
 
-        {/* Level lane — past (faded) → current → future (faded) */}
-        {(pastLevels.length > 0 || upcomingLevels.length > 0) && (
+        {/* Next level teaser — clean, bold, game UI style */}
+        {next && (
           <div
             style={{
               display: 'flex',
               alignItems: 'center',
-              gap: 4,
-              marginTop: 8,
+              gap: 8,
+              marginTop: 10,
             }}
           >
-            {/* Past levels — faded, already conquered */}
-            {pastLevels.map((lvl, i) => {
-              // More recent = less faded
-              const fadeIndex = pastLevels.length - 1 - i;
-              const opacity = fadeIndex === 0 ? 0.35 : fadeIndex === 1 ? 0.2 : 0.1;
-              return (
-                <div
-                  key={lvl.level}
-                  style={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                    opacity,
-                  }}
-                >
-                  <QShield
-                    stripes={lvl.shieldStripes}
-                    glow={false}
-                    goldRim={lvl.shieldGoldRim}
-                    sparkles={false}
-                    size={18}
-                  />
-                  <div style={{ fontSize: 7, color: W, fontWeight: 600, marginTop: 1 }}>
-                    {t(lvl.nameKey)}
-                  </div>
-                </div>
-              );
-            })}
-
-            {/* Current level — highlighted */}
-            <div
-              style={{
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                padding: '0 4px',
-              }}
-            >
-              <div style={{
-                width: 4,
-                height: 4,
-                borderRadius: '50%',
-                background: PL,
-                marginBottom: 2,
-              }} />
-              <QShield
-                stripes={current.shieldStripes}
-                glow={false}
-                goldRim={current.shieldGoldRim}
-                sparkles={false}
-                size={22}
-              />
-              <div style={{ fontSize: 7, color: PL, fontWeight: 700, marginTop: 1 }}>
-                {t(current.nameKey)}
-              </div>
-            </div>
-
-            {/* Upcoming levels — progressively faded */}
-            {upcomingLevels.map((lvl, i) => (
-              <div
+            <svg width="10" height="10" viewBox="0 0 16 16" fill="none" style={{ flexShrink: 0 }}>
+              <rect x="2" y="4" width="12" height="10" rx="1.5" fill="none" stroke="rgba(255,255,255,0.25)" strokeWidth="1.5" />
+              <path d="M5.5 4V2.5a2.5 2.5 0 0 1 5 0V4" fill="none" stroke="rgba(255,255,255,0.25)" strokeWidth="1.5" strokeLinecap="round" />
+            </svg>
+            <span style={{ fontSize: 10, fontWeight: 700, color: 'rgba(255,255,255,0.25)', letterSpacing: '0.04em' }}>
+              {t(next.nameKey)}
+            </span>
+            {/* Show further levels as just names, increasingly faded */}
+            {upcomingLevels.slice(1).map((lvl, i) => (
+              <span
                 key={lvl.level}
                 style={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'center',
-                  opacity: i === 0 ? 0.35 : i === 1 ? 0.2 : 0.1,
+                  fontSize: 10,
+                  fontWeight: 600,
+                  color: 'rgba(255,255,255,0.12)',
+                  letterSpacing: '0.04em',
                 }}
               >
-                <QShield
-                  stripes={lvl.shieldStripes}
-                  glow={false}
-                  goldRim={lvl.shieldGoldRim}
-                  sparkles={false}
-                  size={18}
-                />
-                <div style={{ fontSize: 7, color: W, fontWeight: 600, marginTop: 1 }}>
-                  {t(lvl.nameKey)}
-                </div>
-              </div>
+                → {t(lvl.nameKey)}
+              </span>
             ))}
           </div>
         )}
