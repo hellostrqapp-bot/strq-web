@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useTranslations, useLocale } from 'next-intl';
 import { createBrowserClient } from '@/lib/supabase-browser';
 import { isAllowedTester } from '@/lib/allowed-testers';
+import { IconEnvelope } from '@/components/icons';
 
 // ═══════════════════════════════════════════════════════════
 // strQ — Login Page
@@ -115,7 +116,7 @@ export default function LoginPage() {
               padding: '24px 20px',
             }}
           >
-            <div style={{ fontSize: 32, marginBottom: 12 }}>✉️</div>
+            <div style={{ marginBottom: 12 }}><IconEnvelope size={36} /></div>
             <p style={{ color: '#7BC88C', fontSize: 15, fontWeight: 600 }}>
               {t('sent_title')}
             </p>

@@ -3,6 +3,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useTranslations, useLocale } from 'next-intl';
 import { createBrowserClient } from '@/lib/supabase-browser';
+import { IconEdit, IconDelete, IconFinish, IconSparkle } from '@/components/icons';
 
 // ═══════════════════════════════════════════════════════════
 // strQ — Event Page
@@ -271,7 +272,7 @@ export default function EventPage() {
                 transition: 'background 0.2s',
               }}
             >
-              ✏️ {t('add_event')}
+              <IconEdit size={16} /> {t('add_event')}
             </button>
             <button
               onClick={() => setConfirmDelete(true)}
@@ -288,7 +289,7 @@ export default function EventPage() {
                 transition: 'background 0.2s',
               }}
             >
-              🗑️ {t('delete')}
+              <IconDelete size={16} /> {t('delete')}
             </button>
           </div>
         </div>
@@ -568,7 +569,7 @@ export default function EventPage() {
             marginBottom: 24,
           }}
         >
-          <div style={{ fontSize: 32, marginBottom: 12 }}>🏁</div>
+          <div style={{ marginBottom: 12 }}><IconFinish size={36} /></div>
           <div
             style={{
               fontSize: 15,
@@ -597,7 +598,7 @@ export default function EventPage() {
               cursor: 'pointer',
             }}
           >
-            ✨ {t('add_event')}
+            <IconSparkle size={16} /> {t('add_event')}
           </button>
         </div>
       )}

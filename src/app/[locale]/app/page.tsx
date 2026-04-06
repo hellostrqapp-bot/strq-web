@@ -10,6 +10,14 @@ import {
   rollSurprise,
   type StreakResult,
 } from '@/lib/streak-engine';
+import {
+  IconMultiplier,
+  IconGift,
+  IconSparkle,
+  IconTraining,
+  IconRest,
+  IconCheck,
+} from '@/components/icons';
 
 // ═══════════════════════════════════════════════════════════
 // strQ — Dashboard
@@ -334,7 +342,7 @@ export default function DashboardPage() {
               color: SK,
             }}
           >
-            🔥 {streak.multiplier}x {t('multiplier')}
+            <IconMultiplier /> {streak.multiplier}x {t('multiplier')}
           </div>
         )}
       </div>
@@ -386,7 +394,7 @@ export default function DashboardPage() {
           }}
           onClick={doReveal}
         >
-          <div style={{ fontSize: 28, marginBottom: 8 }}>🎁</div>
+          <div style={{ fontSize: 28, marginBottom: 8 }}><IconGift size={32} /></div>
           <div style={{ fontSize: 24, fontWeight: 800, color: W }}>
             +{reveal.baseXp + reveal.bonusXp} XP
           </div>
@@ -399,7 +407,7 @@ export default function DashboardPage() {
                 fontWeight: 600,
               }}
             >
-              ✨ {t(`surprise_${reveal.surprise}`)}
+              <IconSparkle size={16} /> {t(`surprise_${reveal.surprise}`)}
             </div>
           )}
           <div
@@ -434,7 +442,7 @@ export default function DashboardPage() {
               transition: 'transform 0.15s',
             }}
           >
-            💪 {t('log_training')}
+            <IconTraining size={20} /> {t('log_training')}
           </button>
 
           {/* Secondary: Rest day */}
@@ -452,7 +460,7 @@ export default function DashboardPage() {
               cursor: 'pointer',
             }}
           >
-            😌 {t('log_rest')}
+            <IconRest size={18} /> {t('log_rest')}
           </button>
         </div>
       )}
@@ -468,7 +476,7 @@ export default function DashboardPage() {
             borderRadius: 12,
           }}
         >
-          <div style={{ fontSize: 24, marginBottom: 8 }}>✅</div>
+          <div style={{ marginBottom: 8 }}><IconCheck size={28} /></div>
           <div style={{ fontSize: 15, fontWeight: 600, color: SK }}>
             {t('already_logged')}
           </div>
@@ -535,10 +543,10 @@ export default function DashboardPage() {
                   }}
                 >
                   {day.type === 'training'
-                    ? '💪'
+                    ? <IconTraining size={16} />
                     : day.type === 'rest'
-                    ? '😌'
-                    : ''}
+                    ? <IconRest size={16} />
+                    : null}
                 </div>
                 <div
                   style={{

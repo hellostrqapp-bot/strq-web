@@ -6,6 +6,7 @@
 
 import { redirect } from 'next/navigation';
 import { createServerClient } from '@/lib/supabase-server';
+import { IconStreak, IconFinish, IconProfile } from '@/components/icons';
 
 export default async function AppLayout({
   children,
@@ -58,9 +59,9 @@ export default async function AppLayout({
           zIndex: 100,
         }}
       >
-        <NavItem href={`/${locale}/app`} icon="🔥" label="Streak" />
-        <NavItem href={`/${locale}/app/event`} icon="🏁" label="Event" />
-        <NavItem href={`/${locale}/app/profile`} icon="👤" label="Profiel" />
+        <NavItem href={`/${locale}/app`} icon={<IconStreak size={24} />} label="Streak" />
+        <NavItem href={`/${locale}/app/event`} icon={<IconFinish size={24} />} label="Event" />
+        <NavItem href={`/${locale}/app/profile`} icon={<IconProfile size={24} />} label="Profiel" />
       </nav>
     </div>
   );
@@ -72,7 +73,7 @@ function NavItem({
   label,
 }: {
   href: string;
-  icon: string;
+  icon: React.ReactNode;
   label: string;
 }) {
   return (
@@ -91,7 +92,7 @@ function NavItem({
         minWidth: 64,
       }}
     >
-      <span style={{ fontSize: 22 }}>{icon}</span>
+      {icon}
       {label}
     </a>
   );

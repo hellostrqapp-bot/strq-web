@@ -3,6 +3,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useTranslations, useLocale } from 'next-intl';
 import { createBrowserClient } from '@/lib/supabase-browser';
+import { IconSeedling } from '@/components/icons';
 
 // ═══════════════════════════════════════════════════════════
 // strQ — Profile Page
@@ -422,7 +423,7 @@ export default function ProfilePage() {
             borderRadius: 12,
           }}
         >
-          <div style={{ fontSize: 32, marginBottom: 12 }}>🌱</div>
+          <div style={{ marginBottom: 12 }}><IconSeedling size={36} /></div>
           <div style={{ fontSize: 14, color: 'rgba(255,255,255,0.5)' }}>
             No XP history yet. Start training to see your progress!
           </div>
