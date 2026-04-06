@@ -1,0 +1,3 @@
+module.exports=[56817,(a,b,c)=>{b.exports={meta:{title:"strQ.app — El Duolingo del deporte",description:"Conoces ese momento. A mitad del entrenamiento, y el sofá gana. strQ te ayuda a seguir."},hero:{tagline:"Conoces ese momento.",subtitle:"A mitad del entrenamiento, y el sofá gana.",cta:"strQ te ayuda a seguir."},waitlist:{placeholder:"tu@email.es",button:"Apuntarme",success:"Estás en la lista. Slow and steady. Te avisamos.",error:"Ups, algo salió mal. Inténtalo de nuevo."},footer:{privacy:"Sin cookies. Sin tracking. Solo una tortuga con gafas.",copyright:"© {year} strQ.app"},language:{label:"Idioma"}}}];
+
+//# sourceMappingURL=messages_es_json_%5Bjson%5D_cjs_04nuj04._.js.map

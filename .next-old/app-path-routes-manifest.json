@@ -1,0 +1,8 @@
+{
+  "/[locale]/page": "/[locale]",
+  "/_global-error/page": "/_global-error",
+  "/_not-found/page": "/_not-found",
+  "/api/waitlist/route": "/api/waitlist",
+  "/favicon.ico/route": "/favicon.ico",
+  "/page": "/"
+}

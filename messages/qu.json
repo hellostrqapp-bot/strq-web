@@ -54,18 +54,18 @@
     "back": "strQ.app-man kutiy"
   },
   "app": {
-    "streak_label": "punchaw streak",
+    "streak_label": "punchaw strQ",
     "multiplier": "yapay",
     "days_to_go": "punchaw falta",
     "log_training": "¡Kunan yachachikurqani!",
     "log_rest": "Samay punchaw — ganasqa",
     "already_logged": "¡Kunan punchaypaq qillqasqaña!",
-    "come_back_tomorrow": "Paqarin kutimuy qatiq streak-niykipaq.",
+    "come_back_tomorrow": "Paqarin kutimuy qatiq strQ-niykipaq.",
     "tap_to_reveal": "Ñit'iy rikuchinaykipaq",
     "last_7_days": "Qayna 7 punchaw",
     "surprise_bonus_xp": "¡Yapay XP!",
     "surprise_confetti": "¡Confeti raymi!",
-    "surprise_streak_shield": "¡Streak escudo ganasqa!"
+    "surprise_streak_shield": "¡strQ escudo ganasqa!"
   },
   "event": {
     "title": "Eventoyki",
@@ -87,13 +87,13 @@
   "profile": {
     "title": "Perfilniyki",
     "total_xp": "Tukuy XP",
-    "current_streak": "Kunan streak",
-    "longest_streak": "Aswan hatun streak",
+    "current_streak": "Kunan strQ",
+    "longest_streak": "Aswan hatun strQ",
     "member_since": "Miembro kaymanta",
     "sign_out": "Lluqsiy",
     "xp_history": "XP willakuy",
     "reason_activity": "Ruwana",
-    "reason_streak_bonus": "Streak yapay",
+    "reason_streak_bonus": "strQ yapay",
     "reason_multiplier": "2x mirachiy",
     "reason_surprise": "Mana suyasqa",
     "reason_fuzzy_bonus": "Chayay yapay"

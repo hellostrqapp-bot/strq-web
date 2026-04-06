@@ -279,6 +279,8 @@ const localeFlags: Record<string, string> = {
   fr: "\u{1F1EB}\u{1F1F7}",
   de: "\u{1F1E9}\u{1F1EA}",
   es: "\u{1F1EA}\u{1F1F8}",
+  pt: "\u{1F1E7}\u{1F1F7}",
+  qu: "\u{1F1F5}\u{1F1EA}",
 };
 
 function LanguageSwitcher() {

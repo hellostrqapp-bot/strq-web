@@ -54,18 +54,18 @@
     "back": "Terug naar strQ.app"
   },
   "app": {
-    "streak_label": "dagen streak",
+    "streak_label": "dagen strQ",
     "multiplier": "bonus",
     "days_to_go": "dagen te gaan",
     "log_training": "Ik heb getraind!",
     "log_rest": "Rustdag — verdiend",
     "already_logged": "Vandaag staat erin!",
-    "come_back_tomorrow": "Kom morgen terug voor je volgende streak.",
+    "come_back_tomorrow": "Kom morgen terug voor je volgende strQ.",
     "tap_to_reveal": "Tik om te onthullen",
     "last_7_days": "Afgelopen 7 dagen",
     "surprise_bonus_xp": "Bonus XP!",
     "surprise_confetti": "Confetti party!",
-    "surprise_streak_shield": "Streak Shield verdiend!"
+    "surprise_streak_shield": "strQ Shield verdiend!"
   },
   "event": {
     "title": "Je evenement",
@@ -87,13 +87,13 @@
   "profile": {
     "title": "Profiel",
     "total_xp": "Totaal XP",
-    "current_streak": "Huidige streak",
-    "longest_streak": "Langste streak",
+    "current_streak": "Huidige strQ",
+    "longest_streak": "Langste strQ",
     "member_since": "Lid sinds",
     "sign_out": "Uitloggen",
     "xp_history": "XP Geschiedenis",
     "reason_activity": "Activiteit",
-    "reason_streak_bonus": "Streak bonus",
+    "reason_streak_bonus": "strQ bonus",
     "reason_multiplier": "2x Multiplier",
     "reason_surprise": "Verrassing",
     "reason_fuzzy_bonus": "Finish bonus"

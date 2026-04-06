@@ -1,0 +1,3 @@
+module.exports=[675,(a,b,c)=>{b.exports={meta:{title:"strQ.app — Le Duolingo du sport",description:"Tu connais ce moment. En plein entraînement, et le canapé gagne. strQ t'aide à tenir bon."},hero:{tagline:"Tu connais ce moment.",subtitle:"En plein entraînement, et le canapé gagne.",cta:"strQ t'aide à tenir bon."},waitlist:{placeholder:"toi@email.fr",button:"Rejoindre",success:"Tu es sur la liste. Slow and steady. On te recontacte.",error:"Oups, quelque chose a mal tourné. Réessaie."},footer:{privacy:"Pas de cookies. Pas de tracking. Juste une tortue avec des lunettes.",copyright:"© {year} strQ.app"},language:{label:"Langue"}}}];
+
+//# sourceMappingURL=messages_fr_json_%5Bjson%5D_cjs_0a_j2vu._.js.map

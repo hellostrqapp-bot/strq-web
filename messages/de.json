@@ -54,18 +54,18 @@
     "back": "Zurück zu strQ.app"
   },
   "app": {
-    "streak_label": "Tage Streak",
+    "streak_label": "Tage strQ",
     "multiplier": "Bonus",
     "days_to_go": "Tage noch",
     "log_training": "Ich habe trainiert!",
     "log_rest": "Ruhetag — verdient",
     "already_logged": "Heute ist eingetragen!",
-    "come_back_tomorrow": "Komm morgen wieder für deinen nächsten Streak.",
+    "come_back_tomorrow": "Komm morgen wieder für deinen nächsten strQ.",
     "tap_to_reveal": "Tippen zum Enthüllen",
     "last_7_days": "Letzte 7 Tage",
     "surprise_bonus_xp": "Bonus XP!",
     "surprise_confetti": "Konfetti-Party!",
-    "surprise_streak_shield": "Streak-Schild verdient!"
+    "surprise_streak_shield": "strQ-Schild verdient!"
   },
   "event": {
     "title": "Dein Event",
@@ -87,13 +87,13 @@
   "profile": {
     "title": "Profil",
     "total_xp": "Gesamt XP",
-    "current_streak": "Aktueller Streak",
-    "longest_streak": "Längster Streak",
+    "current_streak": "Aktueller strQ",
+    "longest_streak": "Längster strQ",
     "member_since": "Mitglied seit",
     "sign_out": "Abmelden",
     "xp_history": "XP Verlauf",
     "reason_activity": "Aktivität",
-    "reason_streak_bonus": "Streak-Bonus",
+    "reason_streak_bonus": "strQ-Bonus",
     "reason_multiplier": "2x Multiplikator",
     "reason_surprise": "Überraschung",
     "reason_fuzzy_bonus": "Ziel-Bonus"

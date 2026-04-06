@@ -54,18 +54,18 @@
     "back": "Retour à strQ.app"
   },
   "app": {
-    "streak_label": "jours de streak",
+    "streak_label": "jours de strQ",
     "multiplier": "bonus",
     "days_to_go": "jours restants",
     "log_training": "J'ai entraîné !",
     "log_rest": "Jour de repos — mérité",
     "already_logged": "Aujourd'hui c'est fait !",
-    "come_back_tomorrow": "Revenez demain pour votre prochain streak.",
+    "come_back_tomorrow": "Revenez demain pour votre prochain strQ.",
     "tap_to_reveal": "Appuyez pour révéler",
     "last_7_days": "7 derniers jours",
     "surprise_bonus_xp": "Bonus XP !",
     "surprise_confetti": "Fête de confettis !",
-    "surprise_streak_shield": "Bouclier de streak gagné !"
+    "surprise_streak_shield": "Bouclier strQ gagné !"
   },
   "event": {
     "title": "Votre événement",
@@ -87,13 +87,13 @@
   "profile": {
     "title": "Profil",
     "total_xp": "XP total",
-    "current_streak": "Streak actuel",
-    "longest_streak": "Plus long streak",
+    "current_streak": "strQ actuel",
+    "longest_streak": "Plus long strQ",
     "member_since": "Membre depuis",
     "sign_out": "Se déconnecter",
     "xp_history": "Historique XP",
     "reason_activity": "Activité",
-    "reason_streak_bonus": "Bonus de streak",
+    "reason_streak_bonus": "Bonus strQ",
     "reason_multiplier": "Multiplicateur 2x",
     "reason_surprise": "Surprise",
     "reason_fuzzy_bonus": "Bonus d'arrivée"

@@ -54,18 +54,18 @@
     "back": "Voltar para strQ.app"
   },
   "app": {
-    "streak_label": "dias de sequência",
+    "streak_label": "dias de strQ",
     "multiplier": "bônus",
     "days_to_go": "dias restantes",
     "log_training": "Eu treinei hoje!",
     "log_rest": "Dia de descanso — merecido",
     "already_logged": "Hoje está registrado!",
-    "come_back_tomorrow": "Volte amanhã para sua próxima sequência.",
+    "come_back_tomorrow": "Volte amanhã para seu próximo strQ.",
     "tap_to_reveal": "Toque para revelar",
     "last_7_days": "Últimos 7 dias",
     "surprise_bonus_xp": "Bônus XP!",
     "surprise_confetti": "Festa de confete!",
-    "surprise_streak_shield": "Escudo de sequência conquistado!"
+    "surprise_streak_shield": "Escudo strQ conquistado!"
   },
   "event": {
     "title": "Seu evento",
@@ -87,13 +87,13 @@
   "profile": {
     "title": "Perfil",
     "total_xp": "XP total",
-    "current_streak": "Sequência atual",
-    "longest_streak": "Maior sequência",
+    "current_streak": "strQ atual",
+    "longest_streak": "Maior strQ",
     "member_since": "Membro desde",
     "sign_out": "Sair",
     "xp_history": "Histórico XP",
     "reason_activity": "Atividade",
-    "reason_streak_bonus": "Bônus de sequência",
+    "reason_streak_bonus": "Bônus strQ",
     "reason_multiplier": "Multiplicador 2x",
     "reason_surprise": "Surpresa",
     "reason_fuzzy_bonus": "Bônus de chegada"

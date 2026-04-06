@@ -1,0 +1,3 @@
+module.exports=[53801,(a,b,c)=>{b.exports={meta:{title:"strQ.app — Duolingo voor sport",description:"Je kent dat moment. Halverwege de voorbereiding, en de bank wint. strQ helpt je vol te houden."},hero:{tagline:"Je kent dat moment.",subtitle:"Halverwege de voorbereiding, en de bank wint.",cta:"strQ helpt je vol te houden."},waitlist:{placeholder:"je@email.nl",button:"Meld aan",success:"Je staat op de lijst. Slow and steady. We melden ons.",error:"Oeps, dat ging mis. Probeer het nog eens."},footer:{privacy:"Geen cookies. Geen tracking. Wel een schildpad met een bril.",copyright:"© {year} strQ.app"},language:{label:"Taal"}}}];
+
+//# sourceMappingURL=messages_nl_json_%5Bjson%5D_cjs_0~wu51j._.js.map
