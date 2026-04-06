@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useTranslations, useLocale } from "next-intl";
 import { useRouter, usePathname } from "@/i18n/routing";
 import { locales, localeNames, type Locale } from "@/i18n/config";
@@ -345,6 +345,127 @@ function getUtmParams(): Record<string, string> {
   return utm;
 }
 
+// ── Flip Tile ──
+// Eén getal-blokje dat met een flapje omslaat als de waarde verandert
+function FlipTile({ value }: { value: string }) {
+  const [display, setDisplay] = useState(value);
+  const [prev, setPrev] = useState(value);
+  const [flipping, setFlipping] = useState(false);
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => {
+    if (value !== display) {
+      setPrev(display);
+      setFlipping(true);
+      if (timeoutRef.current) clearTimeout(timeoutRef.current);
+      timeoutRef.current = setTimeout(() => {
+        setDisplay(value);
+        setFlipping(false);
+      }, 400);
+    }
+  }, [value, display]);
+
+  const tileBase: React.CSSProperties = {
+    position: "relative",
+    width: 56,
+    height: 64,
+    borderRadius: 10,
+    overflow: "hidden",
+    perspective: 200,
+  };
+
+  const halfBase: React.CSSProperties = {
+    position: "absolute",
+    left: 0,
+    right: 0,
+    height: "50%",
+    overflow: "hidden",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+  };
+
+  const numStyle: React.CSSProperties = {
+    fontSize: 30,
+    fontWeight: 900,
+    color: W,
+    lineHeight: "64px",
+    textShadow: `0 0 12px ${PL}33`,
+    fontFamily: "'Inter', -apple-system, sans-serif",
+    letterSpacing: "-0.02em",
+  };
+
+  return (
+    <div style={tileBase}>
+      {/* ── Static bottom half: shows NEW value ── */}
+      <div style={{
+        ...halfBase,
+        bottom: 0,
+        background: "rgba(88,38,112,0.18)",
+        borderRadius: "0 0 10px 10px",
+        borderTop: "1px solid rgba(0,0,0,0.25)",
+      }}>
+        <span style={{ ...numStyle, transform: "translateY(-50%)" }}>{value}</span>
+      </div>
+
+      {/* ── Static top half: shows NEW value (revealed after flip) ── */}
+      <div style={{
+        ...halfBase,
+        top: 0,
+        background: "rgba(108,52,131,0.20)",
+        borderRadius: "10px 10px 0 0",
+      }}>
+        <span style={{ ...numStyle, transform: "translateY(50%)" }}>{value}</span>
+      </div>
+
+      {/* ── Flipping top half: shows OLD value, flips down ── */}
+      {flipping && (
+        <div style={{
+          ...halfBase,
+          top: 0,
+          background: "rgba(108,52,131,0.20)",
+          borderRadius: "10px 10px 0 0",
+          transformOrigin: "bottom center",
+          animation: "flip-top 0.4s ease-in forwards",
+          zIndex: 3,
+          backfaceVisibility: "hidden",
+        }}>
+          <span style={{ ...numStyle, transform: "translateY(50%)" }}>{prev}</span>
+        </div>
+      )}
+
+      {/* ── Flipping bottom half: shows NEW value, flips up into place ── */}
+      {flipping && (
+        <div style={{
+          ...halfBase,
+          bottom: 0,
+          background: "rgba(88,38,112,0.18)",
+          borderRadius: "0 0 10px 10px",
+          borderTop: "1px solid rgba(0,0,0,0.25)",
+          transformOrigin: "top center",
+          animation: "flip-bottom 0.4s 0.2s ease-out forwards",
+          zIndex: 2,
+          transform: "rotateX(90deg)",
+          backfaceVisibility: "hidden",
+        }}>
+          <span style={{ ...numStyle, transform: "translateY(-50%)" }}>{value}</span>
+        </div>
+      )}
+
+      {/* Subtle border glow */}
+      <div style={{
+        position: "absolute",
+        inset: 0,
+        borderRadius: 10,
+        border: `1px solid rgba(165,105,189,0.18)`,
+        pointerEvents: "none",
+        animation: "countdown-glow 4s ease-in-out infinite",
+        zIndex: 4,
+      }} />
+    </div>
+  );
+}
+
 // ── Launch Countdown ──
 // Target: 23 april 2026, 11:00 CET (Hyrox Paris)
 const LAUNCH_DATE = new Date("2026-04-23T11:00:00+02:00");
@@ -374,6 +495,16 @@ function LaunchCountdown({ t }: { t: (key: string) => string }) {
 
   return (
     <div style={{ textAlign: "center", marginBottom: 32 }}>
+      <style>{`
+        @keyframes flip-top {
+          0% { transform: rotateX(0deg); }
+          100% { transform: rotateX(-90deg); }
+        }
+        @keyframes flip-bottom {
+          0% { transform: rotateX(90deg); }
+          100% { transform: rotateX(0deg); }
+        }
+      `}</style>
       <div
         style={{
           color: "rgba(255,255,255,0.4)",
@@ -388,29 +519,13 @@ function LaunchCountdown({ t }: { t: (key: string) => string }) {
       </div>
       <div style={{ display: "flex", gap: 8, justifyContent: "center" }}>
         {blocks.map(({ value, label }, i) => (
-          <div key={i} style={{ minWidth: 56 }}>
-            <div
-              style={{
-                fontSize: 28,
-                fontWeight: 900,
-                color: W,
-                lineHeight: 1,
-                padding: "10px 0",
-                background: "rgba(108,52,131,0.15)",
-                borderRadius: 10,
-                border: "1px solid rgba(165,105,189,0.15)",
-                animation: "countdown-glow 4s ease-in-out infinite",
-                animationDelay: `${i * 0.3}s`,
-                textShadow: `0 0 12px ${PL}33`,
-              }}
-            >
-              {String(value).padStart(2, "0")}
-            </div>
+          <div key={i} style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+            <FlipTile value={String(value).padStart(2, "0")} />
             <div
               style={{
                 fontSize: 10,
                 color: "rgba(255,255,255,0.35)",
-                marginTop: 6,
+                marginTop: 8,
                 fontWeight: 500,
                 letterSpacing: 0.5,
               }}
@@ -513,9 +628,11 @@ export default function Landing() {
           50% { transform: translateY(-6px); }
         }
         @keyframes wordmark-shimmer {
-          0% { transform: translateX(-200%); }
-          60% { transform: translateX(200%); }
-          100% { transform: translateX(200%); }
+          0% { transform: translateX(-250%); opacity: 0; }
+          15% { opacity: 1; }
+          45% { opacity: 1; }
+          60% { transform: translateX(250%); opacity: 0; }
+          100% { transform: translateX(250%); opacity: 0; }
         }
         @keyframes countdown-glow {
           0%, 100% { border-color: rgba(165,105,189,0.15); box-shadow: none; }
@@ -647,14 +764,21 @@ export default function Landing() {
             >
               .app
             </span>
-            {/* Shimmer overlay on wordmark */}
+            {/* Shimmer overlay on wordmark — thin streak */}
             <div style={{
               position: "absolute",
               top: 0, left: 0, right: 0, bottom: 0,
-              background: `linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.08) 50%, transparent 100%)`,
-              animation: "wordmark-shimmer 6s ease-in-out infinite",
+              overflow: "hidden",
               pointerEvents: "none",
-            }} />
+            }}>
+              <div style={{
+                position: "absolute",
+                top: 0, bottom: 0,
+                width: "30%",
+                background: `linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.06) 50%, transparent 100%)`,
+                animation: "wordmark-shimmer 8s ease-in-out infinite",
+              }} />
+            </div>
           </span>
         </div>
 
