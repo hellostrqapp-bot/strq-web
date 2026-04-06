@@ -399,6 +399,9 @@ function LaunchCountdown({ t }: { t: (key: string) => string }) {
                 background: "rgba(108,52,131,0.15)",
                 borderRadius: 10,
                 border: "1px solid rgba(165,105,189,0.15)",
+                animation: "countdown-glow 4s ease-in-out infinite",
+                animationDelay: `${i * 0.3}s`,
+                textShadow: `0 0 12px ${PL}33`,
               }}
             >
               {String(value).padStart(2, "0")}
@@ -500,6 +503,33 @@ export default function Landing() {
       <style>{`
         @keyframes wig { 0%,100% { transform: rotate(0deg); } 25% { transform: rotate(2deg); } 75% { transform: rotate(-2deg); } }
         @keyframes glow { 0%,100% { opacity: 0.08; } 50% { opacity: 0.14; } }
+        @keyframes landing-sparkle {
+          0%, 100% { opacity: 0; transform: scale(0.3); }
+          40% { opacity: 0.7; transform: scale(1.1); }
+          60% { opacity: 0.4; transform: scale(0.9); }
+        }
+        @keyframes landing-float {
+          0%, 100% { transform: translateY(0); }
+          50% { transform: translateY(-6px); }
+        }
+        @keyframes wordmark-shimmer {
+          0% { transform: translateX(-200%); }
+          60% { transform: translateX(200%); }
+          100% { transform: translateX(200%); }
+        }
+        @keyframes countdown-glow {
+          0%, 100% { border-color: rgba(165,105,189,0.15); box-shadow: none; }
+          50% { border-color: rgba(165,105,189,0.25); box-shadow: 0 0 12px rgba(108,52,131,0.2); }
+        }
+        @keyframes rainbow-landing-shimmer {
+          0% { transform: translateX(-150%); }
+          50% { transform: translateX(150%); }
+          100% { transform: translateX(150%); }
+        }
+        @keyframes cta-glow {
+          0%, 100% { box-shadow: 0 2px 12px rgba(108,52,131,0.3); }
+          50% { box-shadow: 0 4px 20px rgba(108,52,131,0.5), 0 0 30px rgba(108,52,131,0.15); }
+        }
         * { box-sizing: border-box; margin: 0; padding: 0; }
         ::selection { background: ${P}88; color: white; }
         input::placeholder { color: rgba(255,255,255,0.2); }
@@ -539,14 +569,35 @@ export default function Landing() {
           transition: "opacity 1.2s ease-out, transform 1.2s ease-out",
         }}
       >
-        {/* Q — waiting pose */}
+        {/* Q — waiting pose with sparkles */}
         <div
           style={{
             animation: "wig 3s ease-in-out infinite",
             marginBottom: 28,
+            position: "relative",
           }}
         >
           <QWaiting size={140} />
+          {/* Floating sparkle particles around Q */}
+          {[
+            { x: -12, y: 20, d: 0, c: PL },
+            { x: 85, y: 12, d: 0.8, c: W },
+            { x: 92, y: 55, d: 1.6, c: PL },
+            { x: -8, y: 70, d: 2.4, c: SK },
+            { x: 50, y: -4, d: 3.2, c: W },
+          ].map((s, i) => (
+            <div key={i} style={{
+              position: "absolute",
+              left: `${s.x}%`,
+              top: `${s.y}%`,
+              width: 3,
+              height: 3,
+              borderRadius: "50%",
+              background: s.c,
+              animation: `landing-sparkle 4s ease-in-out ${s.d}s infinite`,
+              pointerEvents: "none",
+            }} />
+          ))}
         </div>
 
         {/* Tagline */}
@@ -567,7 +618,7 @@ export default function Landing() {
         </p>
 
         {/* strQ.app wordmark */}
-        <div style={{ textAlign: "center", marginBottom: 6 }}>
+        <div style={{ textAlign: "center", marginBottom: 6, position: "relative" }}>
           <span
             style={{
               fontSize: 32,
@@ -575,10 +626,17 @@ export default function Landing() {
               color: W,
               letterSpacing: 1,
               fontFamily: "'Inter', -apple-system, sans-serif",
+              position: "relative",
+              display: "inline-block",
             }}
           >
             str
-            <span style={{ color: PL, fontSize: 38, fontWeight: 900 }}>
+            <span style={{
+              color: PL,
+              fontSize: 38,
+              fontWeight: 900,
+              textShadow: `0 0 20px ${PL}44, 0 0 40px ${P}22`,
+            }}>
               Q
             </span>
             <span
@@ -589,12 +647,27 @@ export default function Landing() {
             >
               .app
             </span>
+            {/* Shimmer overlay on wordmark */}
+            <div style={{
+              position: "absolute",
+              top: 0, left: 0, right: 0, bottom: 0,
+              background: `linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.08) 50%, transparent 100%)`,
+              animation: "wordmark-shimmer 6s ease-in-out infinite",
+              pointerEvents: "none",
+            }} />
           </span>
         </div>
 
-        {/* Rainbow */}
-        <div style={{ marginBottom: 28 }}>
+        {/* Rainbow with shimmer */}
+        <div style={{ marginBottom: 28, position: "relative", overflow: "hidden", borderRadius: 3 }}>
           <Rainbow width={108} />
+          <div style={{
+            position: "absolute",
+            top: 0, left: 0, right: 0, bottom: 0,
+            background: "linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.35) 50%, transparent 100%)",
+            animation: "rainbow-landing-shimmer 5s ease-in-out infinite",
+            pointerEvents: "none",
+          }} />
         </div>
 
         {/* Launch Countdown */}
@@ -647,12 +720,14 @@ export default function Landing() {
                 padding: "13px 22px",
                 borderRadius: 12,
                 border: "none",
-                background: P,
+                background: `linear-gradient(135deg, ${P}, ${PM})`,
                 color: W,
                 fontSize: 15,
                 fontWeight: 700,
                 cursor: "pointer",
                 fontFamily: "inherit",
+                animation: "cta-glow 3s ease-in-out infinite",
+                transition: "transform 0.15s ease",
               }}
             >
               {t("waitlist.button")}
