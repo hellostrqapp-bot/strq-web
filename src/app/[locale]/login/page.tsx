@@ -50,7 +50,8 @@ export default function LoginPage() {
     setLoading(false);
 
     if (authError) {
-      setError(t('error'));
+      console.error('Supabase auth error:', authError.message, authError.status);
+      setError(`${t('error')} (${authError.message})`);
     } else {
       setSent(true);
     }

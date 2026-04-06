@@ -27,14 +27,21 @@ CREATE POLICY "Users can insert own profile"
   ON profiles FOR INSERT WITH CHECK (auth.uid() = id);
 
 -- Auto-create profile on signup via trigger
+-- IMPORTANT: SET search_path = public is required because GoTrue
+-- (supabase_auth_admin role) uses a different search_path than postgres.
+-- Without it: "Database error saving new user" on signup.
 CREATE OR REPLACE FUNCTION handle_new_user()
 RETURNS TRIGGER AS $$
 BEGIN
-  INSERT INTO profiles (id, locale)
-  VALUES (NEW.id, COALESCE(NEW.raw_user_meta_data->>'locale', 'nl'));
+  INSERT INTO public.profiles (id, locale)
+  VALUES (NEW.id, COALESCE(NEW.raw_user_meta_data->>'locale', 'nl'))
+  ON CONFLICT (id) DO NOTHING;
+  RETURN NEW;
+EXCEPTION WHEN OTHERS THEN
+  RAISE WARNING 'handle_new_user failed for %: %', NEW.id, SQLERRM;
   RETURN NEW;
 END;
-$$ LANGUAGE plpgsql SECURITY DEFINER;
+$$ LANGUAGE plpgsql SECURITY DEFINER SET search_path = public;
 
 CREATE OR REPLACE TRIGGER on_auth_user_created
   AFTER INSERT ON auth.users
@@ -187,13 +194,18 @@ CREATE INDEX idx_reveals_user_date
   ON daily_reveals(user_id, reveal_date DESC);
 
 -- ── Auto-create streak_state on profile creation ───────────
+-- Same search_path fix as handle_new_user — cascading trigger context.
 CREATE OR REPLACE FUNCTION handle_new_profile()
 RETURNS TRIGGER AS $$
 BEGIN
-  INSERT INTO streak_state (user_id) VALUES (NEW.id);
+  INSERT INTO public.streak_state (user_id) VALUES (NEW.id)
+  ON CONFLICT (user_id) DO NOTHING;
+  RETURN NEW;
+EXCEPTION WHEN OTHERS THEN
+  RAISE WARNING 'handle_new_profile failed for %: %', NEW.id, SQLERRM;
   RETURN NEW;
 END;
-$$ LANGUAGE plpgsql SECURITY DEFINER;
+$$ LANGUAGE plpgsql SECURITY DEFINER SET search_path = public;
 
 CREATE OR REPLACE TRIGGER on_profile_created
   AFTER INSERT ON profiles
