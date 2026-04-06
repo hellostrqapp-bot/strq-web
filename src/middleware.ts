@@ -2,6 +2,7 @@ import { NextResponse, type NextRequest } from 'next/server';
 import { createServerClient } from '@supabase/ssr';
 import createIntlMiddleware from 'next-intl/middleware';
 import { routing } from './i18n/routing';
+import { isAllowedTester } from './lib/allowed-testers';
 
 const intlMiddleware = createIntlMiddleware(routing);
 
@@ -17,11 +18,16 @@ function isProtectedPath(pathname: string): boolean {
   return protectedPaths.some((p) => pathWithoutLocale.startsWith(p));
 }
 
+function getLocale(pathname: string): string {
+  const match = pathname.match(/^\/(nl|en|fr|de|es|pt|qu)/);
+  return match ? match[1] : 'nl';
+}
+
 export async function middleware(request: NextRequest) {
   // First: run i18n middleware for locale routing
   const response = intlMiddleware(request);
 
-  // If this is a protected route, check auth
+  // If this is a protected route, check auth + whitelist
   if (isProtectedPath(request.nextUrl.pathname)) {
     const supabase = createServerClient(
       process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -44,15 +50,22 @@ export async function middleware(request: NextRequest) {
       data: { user },
     } = await supabase.auth.getUser();
 
-    if (!user) {
-      // Detect locale from URL or default to 'nl'
-      const localeMatch = request.nextUrl.pathname.match(
-        /^\/(nl|en|fr|de|es|pt|qu)/
-      );
-      const locale = localeMatch ? localeMatch[1] : 'nl';
+    const locale = getLocale(request.nextUrl.pathname);
 
+    // Not authenticated → redirect to login
+    if (!user) {
       const loginUrl = new URL(`/${locale}/login`, request.url);
       loginUrl.searchParams.set('redirect', request.nextUrl.pathname);
+      return NextResponse.redirect(loginUrl);
+    }
+
+    // Authenticated but not on whitelist → redirect to login
+    // Server-side gate: prevents bypass via direct API calls
+    if (!isAllowedTester(user.email || '')) {
+      // Sign them out so they don't get stuck in a loop
+      await supabase.auth.signOut();
+      const loginUrl = new URL(`/${locale}/login`, request.url);
+      loginUrl.searchParams.set('error', 'not_allowed');
       return NextResponse.redirect(loginUrl);
     }
   }

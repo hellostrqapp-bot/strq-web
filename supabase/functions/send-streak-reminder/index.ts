@@ -218,23 +218,48 @@ Deno.serve(async () => {
     ])
   );
 
+  // 5. Filter to users eligible for reminder in this window
+  const eligibleProfiles = profiles.filter((p: { id: string }) => {
+    if (loggedToday.has(p.id) || sentToday.has(p.id)) return false;
+    const userMinute = reminderMinuteUTC(p.id, todayStr);
+    return Math.abs(nowMinutesUTC - userMinute) <= 7; // ±7 min tolerance = 15 min window
+  });
+
+  if (!eligibleProfiles.length) {
+    return new Response(JSON.stringify({ sent: 0, checked: profiles.length, eligible: 0 }), {
+      headers: { "Content-Type": "application/json" },
+    });
+  }
+
+  // 6. Batch-fetch all emails in one query (replaces N+1 getUserById calls)
+  const eligibleIds = eligibleProfiles.map((p: { id: string }) => p.id);
+  const { data: authUsers } = await supabase
+    .from("auth_user_emails")
+    .select("id, email")
+    .in("id", eligibleIds);
+
+  // Fallback: if the view doesn't exist, use individual lookups
+  let emailMap: Map<string, string>;
+  if (authUsers) {
+    emailMap = new Map(authUsers.map((u: { id: string; email: string }) => [u.id, u.email]));
+  } else {
+    // Graceful fallback to sequential lookups (until view is created)
+    emailMap = new Map();
+    for (const p of eligibleProfiles) {
+      const { data: authUser } = await supabase.auth.admin.getUserById(p.id);
+      if (authUser?.user?.email) emailMap.set(p.id, authUser.user.email);
+    }
+  }
+
   let totalSent = 0;
 
-  for (const profile of profiles) {
-    // Skip if already logged today or already reminded
-    if (loggedToday.has(profile.id) || sentToday.has(profile.id)) continue;
-
-    // Check if now is this user's reminder time (within 15-min window)
-    const userMinute = reminderMinuteUTC(profile.id, todayStr);
-    if (Math.abs(nowMinutesUTC - userMinute) > 7) continue; // ±7 min tolerance = 15 min window
+  for (const profile of eligibleProfiles) {
+    const email = emailMap.get(profile.id);
+    if (!email) continue;
 
     const locale = profile.locale || "nl";
     const template = templates[locale] || templates["nl"];
     const streak = streakMap.get(profile.id) || 0;
-
-    // Get user email from auth
-    const { data: authUser } = await supabase.auth.admin.getUserById(profile.id);
-    if (!authUser?.user?.email) continue;
 
     try {
       const res = await fetch("https://api.resend.com/emails", {
@@ -245,7 +270,7 @@ Deno.serve(async () => {
         },
         body: JSON.stringify({
           from: FROM_EMAIL,
-          to: [authUser.user.email],
+          to: [email],
           subject: template.subject,
           html: wrapEmail(template.body(streak, profile.display_name || "")),
           tags: [
@@ -263,10 +288,10 @@ Deno.serve(async () => {
           sent_at: now.toISOString(),
         });
         totalSent++;
-        console.log(`Reminder sent to ${authUser.user.email} (streak: ${streak})`);
+        console.log(`Reminder sent to ${email} (streak: ${streak})`);
       } else {
         const errText = await res.text();
-        console.error(`Resend error for ${authUser.user.email}:`, errText);
+        console.error(`Resend error for ${email}:`, errText);
       }
     } catch (err) {
       console.error(`Failed reminder for ${profile.id}:`, err);
