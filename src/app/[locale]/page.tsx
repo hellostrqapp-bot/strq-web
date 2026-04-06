@@ -346,121 +346,130 @@ function getUtmParams(): Record<string, string> {
 }
 
 // ── Flip Tile ──
-// Eén getal-blokje dat met een flapje omslaat als de waarde verandert
+// Split-flap display: bovenhelft en onderhelft met flip-animatie bij waarde-wissel
 function FlipTile({ value }: { value: string }) {
-  const [display, setDisplay] = useState(value);
-  const [prev, setPrev] = useState(value);
+  const [current, setCurrent] = useState(value);
+  const [previous, setPrevious] = useState(value);
   const [flipping, setFlipping] = useState(false);
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
-    if (value !== display) {
-      setPrev(display);
+    if (value !== current) {
+      setPrevious(current);
       setFlipping(true);
       if (timeoutRef.current) clearTimeout(timeoutRef.current);
       timeoutRef.current = setTimeout(() => {
-        setDisplay(value);
+        setCurrent(value);
         setFlipping(false);
-      }, 400);
+      }, 450);
     }
-  }, [value, display]);
+  }, [value, current]);
 
-  const tileBase: React.CSSProperties = {
-    position: "relative",
-    width: 56,
-    height: 64,
-    borderRadius: 10,
-    overflow: "hidden",
-    perspective: 200,
-  };
+  // Shared number style — positioned absolutely so both halves clip the same text
+  const numPos = (top: boolean): React.CSSProperties => ({
+    position: "absolute",
+    left: 0,
+    right: 0,
+    top: top ? 0 : "-100%",
+    height: "200%",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    fontSize: 30,
+    fontWeight: 900,
+    color: W,
+    textShadow: `0 0 10px ${PL}33`,
+    fontFamily: "'Inter', -apple-system, sans-serif",
+    letterSpacing: "-0.02em",
+  });
 
-  const halfBase: React.CSSProperties = {
+  const halfClip: React.CSSProperties = {
     position: "absolute",
     left: 0,
     right: 0,
     height: "50%",
     overflow: "hidden",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-  };
-
-  const numStyle: React.CSSProperties = {
-    fontSize: 30,
-    fontWeight: 900,
-    color: W,
-    lineHeight: "64px",
-    textShadow: `0 0 12px ${PL}33`,
-    fontFamily: "'Inter', -apple-system, sans-serif",
-    letterSpacing: "-0.02em",
   };
 
   return (
-    <div style={tileBase}>
-      {/* ── Static bottom half: shows NEW value ── */}
+    <div style={{
+      position: "relative",
+      width: 56,
+      height: 64,
+      perspective: 300,
+    }}>
+      {/* ── Static top half: current value ── */}
       <div style={{
-        ...halfBase,
-        bottom: 0,
-        background: "rgba(88,38,112,0.18)",
-        borderRadius: "0 0 10px 10px",
-        borderTop: "1px solid rgba(0,0,0,0.25)",
-      }}>
-        <span style={{ ...numStyle, transform: "translateY(-50%)" }}>{value}</span>
-      </div>
-
-      {/* ── Static top half: shows NEW value (revealed after flip) ── */}
-      <div style={{
-        ...halfBase,
+        ...halfClip,
         top: 0,
         background: "rgba(108,52,131,0.20)",
         borderRadius: "10px 10px 0 0",
       }}>
-        <span style={{ ...numStyle, transform: "translateY(50%)" }}>{value}</span>
+        <div style={numPos(true)}>{current}</div>
       </div>
 
-      {/* ── Flipping top half: shows OLD value, flips down ── */}
+      {/* ── Static bottom half: current value ── */}
+      <div style={{
+        ...halfClip,
+        bottom: 0,
+        background: "rgba(88,38,112,0.18)",
+        borderRadius: "0 0 10px 10px",
+      }}>
+        <div style={numPos(false)}>{current}</div>
+      </div>
+
+      {/* ── Center line ── */}
+      <div style={{
+        position: "absolute",
+        left: 2, right: 2,
+        top: "50%",
+        height: 1,
+        background: "rgba(0,0,0,0.3)",
+        zIndex: 5,
+      }} />
+
+      {/* ── Flipping top half: OLD value folds down ── */}
       {flipping && (
         <div style={{
-          ...halfBase,
+          ...halfClip,
           top: 0,
           background: "rgba(108,52,131,0.20)",
           borderRadius: "10px 10px 0 0",
           transformOrigin: "bottom center",
-          animation: "flip-top 0.4s ease-in forwards",
-          zIndex: 3,
+          animation: "flip-top 0.45s ease-in forwards",
+          zIndex: 4,
           backfaceVisibility: "hidden",
         }}>
-          <span style={{ ...numStyle, transform: "translateY(50%)" }}>{prev}</span>
+          <div style={numPos(true)}>{previous}</div>
         </div>
       )}
 
-      {/* ── Flipping bottom half: shows NEW value, flips up into place ── */}
+      {/* ── Flipping bottom half: NEW value unfolds up ── */}
       {flipping && (
         <div style={{
-          ...halfBase,
+          ...halfClip,
           bottom: 0,
           background: "rgba(88,38,112,0.18)",
           borderRadius: "0 0 10px 10px",
-          borderTop: "1px solid rgba(0,0,0,0.25)",
           transformOrigin: "top center",
-          animation: "flip-bottom 0.4s 0.2s ease-out forwards",
-          zIndex: 2,
+          animation: "flip-bottom 0.45s 0.15s ease-out forwards",
+          zIndex: 3,
           transform: "rotateX(90deg)",
           backfaceVisibility: "hidden",
         }}>
-          <span style={{ ...numStyle, transform: "translateY(-50%)" }}>{value}</span>
+          <div style={numPos(false)}>{value}</div>
         </div>
       )}
 
-      {/* Subtle border glow */}
+      {/* Border glow */}
       <div style={{
         position: "absolute",
         inset: 0,
         borderRadius: 10,
-        border: `1px solid rgba(165,105,189,0.18)`,
+        border: "1px solid rgba(165,105,189,0.18)",
         pointerEvents: "none",
         animation: "countdown-glow 4s ease-in-out infinite",
-        zIndex: 4,
+        zIndex: 6,
       }} />
     </div>
   );
@@ -627,13 +636,6 @@ export default function Landing() {
           0%, 100% { transform: translateY(0); }
           50% { transform: translateY(-6px); }
         }
-        @keyframes wordmark-shimmer {
-          0% { transform: translateX(-250%); opacity: 0; }
-          15% { opacity: 1; }
-          45% { opacity: 1; }
-          60% { transform: translateX(250%); opacity: 0; }
-          100% { transform: translateX(250%); opacity: 0; }
-        }
         @keyframes countdown-glow {
           0%, 100% { border-color: rgba(165,105,189,0.15); box-shadow: none; }
           50% { border-color: rgba(165,105,189,0.25); box-shadow: 0 0 12px rgba(108,52,131,0.2); }
@@ -743,8 +745,6 @@ export default function Landing() {
               color: W,
               letterSpacing: 1,
               fontFamily: "'Inter', -apple-system, sans-serif",
-              position: "relative",
-              display: "inline-block",
             }}
           >
             str
@@ -764,21 +764,6 @@ export default function Landing() {
             >
               .app
             </span>
-            {/* Shimmer overlay on wordmark — thin streak */}
-            <div style={{
-              position: "absolute",
-              top: 0, left: 0, right: 0, bottom: 0,
-              overflow: "hidden",
-              pointerEvents: "none",
-            }}>
-              <div style={{
-                position: "absolute",
-                top: 0, bottom: 0,
-                width: "30%",
-                background: `linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.06) 50%, transparent 100%)`,
-                animation: "wordmark-shimmer 8s ease-in-out infinite",
-              }} />
-            </div>
           </span>
         </div>
 
