@@ -13,6 +13,7 @@ import { IconEdit, IconDelete, IconFinish, IconSparkle } from '@/components/icon
 const P = '#6C3483';
 const PL = '#A569BD';
 const PD = '#4A235A';
+const PM = '#7D3C98';
 const SK = '#7BC88C';
 const BG = '#1A1A2E';
 const W = '#FFFFFF';
@@ -166,7 +167,7 @@ export default function EventPage() {
 
   return (
     <div style={{ maxWidth: 420, margin: '0 auto', paddingBottom: 40 }}>
-      {/* Rainbow bar */}
+      {/* Rainbow bar with shimmer */}
       <div
         style={{
           display: 'flex',
@@ -174,11 +175,18 @@ export default function EventPage() {
           marginBottom: 24,
           borderRadius: 3,
           overflow: 'hidden',
+          position: 'relative',
         }}
       >
         {RB.map((c, i) => (
           <div key={i} style={{ flex: 1, height: 3, background: c }} />
         ))}
+        <div style={{
+          position: 'absolute',
+          top: 0, left: 0, right: 0, bottom: 0,
+          background: 'linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.35) 50%, transparent 100%)',
+          animation: 'rainbow-shimmer 4s ease-in-out infinite',
+        }} />
       </div>
 
       {/* Title */}
@@ -189,6 +197,7 @@ export default function EventPage() {
           color: W,
           marginBottom: 24,
           letterSpacing: '-0.02em',
+          textShadow: `0 0 20px ${P}44`,
         }}
       >
         {t('title')}
@@ -202,9 +211,29 @@ export default function EventPage() {
             borderRadius: 16,
             padding: '20px 24px',
             marginBottom: 24,
+            border: `1px solid rgba(108, 52, 131, 0.3)`,
+            position: 'relative',
+            overflow: 'hidden',
           }}
         >
-          <div style={{ fontSize: 20, fontWeight: 800, color: W, marginBottom: 8 }}>
+          {/* Subtle sparkle dots */}
+          {[
+            { x: 90, y: 10, d: 0 }, { x: 95, y: 45, d: 1.2 },
+            { x: 88, y: 80, d: 2.4 },
+          ].map((s, i) => (
+            <div key={i} style={{
+              position: 'absolute',
+              left: `${s.x}%`,
+              top: `${s.y}%`,
+              width: 3,
+              height: 3,
+              borderRadius: '50%',
+              background: PL,
+              animation: `event-sparkle 3s ease-in-out ${s.d}s infinite`,
+              pointerEvents: 'none',
+            }} />
+          ))}
+          <div style={{ fontSize: 20, fontWeight: 900, color: W, marginBottom: 8, textShadow: `0 0 16px ${PL}33` }}>
             {event.name}
           </div>
           <div
@@ -229,19 +258,19 @@ export default function EventPage() {
             }}
           >
             <div>
-              <div style={{ fontSize: 32, fontWeight: 900, color: W }}>
+              <div style={{ fontSize: 36, fontWeight: 900, color: W, textShadow: `0 0 20px ${PL}55` }}>
                 {daysUntil(event.event_date)}
               </div>
-              <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.6)' }}>
+              <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.6)', fontWeight: 600 }}>
                 {t('days_to_go')}
               </div>
             </div>
             {event.target_time_minutes && (
               <div>
-                <div style={{ fontSize: 28, fontWeight: 900, color: SK }}>
+                <div style={{ fontSize: 30, fontWeight: 900, color: SK, textShadow: `0 0 12px ${SK}33` }}>
                   {event.target_time_minutes}
                 </div>
-                <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.6)' }}>
+                <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.6)', fontWeight: 600 }}>
                   {t('minutes')}
                 </div>
               </div>
@@ -353,8 +382,8 @@ export default function EventPage() {
           onSubmit={saveEvent}
           style={{
             background: 'rgba(255,255,255,0.04)',
-            border: '1px solid rgba(255,255,255,0.06)',
-            borderRadius: 12,
+            border: `1px solid rgba(108, 52, 131, 0.12)`,
+            borderRadius: 14,
             padding: '20px',
             marginBottom: 24,
           }}
@@ -557,6 +586,19 @@ export default function EventPage() {
         </form>
       )}
 
+      {/* Keyframes */}
+      <style>{`
+        @keyframes rainbow-shimmer {
+          0% { transform: translateX(-120%); }
+          50% { transform: translateX(120%); }
+          100% { transform: translateX(120%); }
+        }
+        @keyframes event-sparkle {
+          0%, 100% { opacity: 0; transform: scale(0.5); }
+          50% { opacity: 0.5; transform: scale(1); }
+        }
+      `}</style>
+
       {/* ── EMPTY STATE ── */}
       {!event && formState === 'closed' && (
         <div
@@ -564,8 +606,8 @@ export default function EventPage() {
             textAlign: 'center',
             padding: '40px 20px',
             background: 'rgba(255,255,255,0.04)',
-            border: '1px solid rgba(255,255,255,0.06)',
-            borderRadius: 12,
+            border: `1px solid rgba(108, 52, 131, 0.12)`,
+            borderRadius: 14,
             marginBottom: 24,
           }}
         >

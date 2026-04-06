@@ -341,7 +341,7 @@ export default function DashboardPage() {
       {/* Confetti overlay */}
       {showConfetti && <ConfettiOverlay />}
 
-      {/* Rainbow bar */}
+      {/* Rainbow bar — with subtle traveling shimmer */}
       <div
         style={{
           display: 'flex',
@@ -349,11 +349,18 @@ export default function DashboardPage() {
           marginBottom: 24,
           borderRadius: 3,
           overflow: 'hidden',
+          position: 'relative',
         }}
       >
         {RB.map((c, i) => (
           <div key={i} style={{ flex: 1, height: 3, background: c }} />
         ))}
+        <div style={{
+          position: 'absolute',
+          top: 0, left: 0, right: 0, bottom: 0,
+          background: 'linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.35) 50%, transparent 100%)',
+          animation: 'rainbow-shimmer 4s ease-in-out infinite',
+        }} />
       </div>
 
       {/* XP counter removed — now shown in LevelBadge below streak */}
@@ -367,7 +374,8 @@ export default function DashboardPage() {
             color: W,
             lineHeight: 1,
             letterSpacing: '-0.04em',
-            textShadow: `0 0 60px ${P}66`,
+            textShadow: `0 0 60px ${P}88, 0 0 120px ${P}33`,
+            animation: 'streak-glow 3s ease-in-out infinite',
           }}
         >
           {streak?.currentStreak || 0}
@@ -409,8 +417,8 @@ export default function DashboardPage() {
         <div
           style={{
             background: 'rgba(255,255,255,0.04)',
-            border: '1px solid rgba(255,255,255,0.06)',
-            borderRadius: 12,
+            border: `1px solid rgba(108, 52, 131, 0.12)`,
+            borderRadius: 14,
             padding: '16px 20px',
             marginBottom: 24,
             display: 'flex',
@@ -419,7 +427,7 @@ export default function DashboardPage() {
           }}
         >
           <div>
-            <div style={{ fontSize: 13, color: PL, fontWeight: 600 }}>
+            <div style={{ fontSize: 13, color: PL, fontWeight: 700 }}>
               {event.name}
             </div>
             <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.4)' }}>
@@ -427,10 +435,15 @@ export default function DashboardPage() {
             </div>
           </div>
           <div style={{ textAlign: 'right' }}>
-            <div style={{ fontSize: 28, fontWeight: 800, color: W }}>
+            <div style={{
+              fontSize: 28,
+              fontWeight: 900,
+              color: W,
+              textShadow: `0 0 16px ${PL}44`,
+            }}>
               {daysUntil(event.event_date)}
             </div>
-            <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.4)' }}>
+            <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.4)', fontWeight: 600 }}>
               {t('days_to_go')}
             </div>
           </div>
@@ -527,14 +540,35 @@ export default function DashboardPage() {
         <div
           style={{
             textAlign: 'center',
-            padding: '24px 20px',
+            padding: '28px 20px',
             background: `${SK}11`,
             border: `1px solid ${SK}33`,
-            borderRadius: 12,
+            borderRadius: 14,
+            position: 'relative',
+            overflow: 'hidden',
           }}
         >
-          <div style={{ marginBottom: 4 }}><QCelebrating size={72} /></div>
-          <div style={{ fontSize: 15, fontWeight: 600, color: SK }}>
+          {/* Subtle sparkle particles in the card */}
+          <div style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, pointerEvents: 'none' }}>
+            {[
+              { x: 12, y: 18, d: 0 }, { x: 85, y: 12, d: 0.8 },
+              { x: 45, y: 80, d: 1.6 }, { x: 92, y: 65, d: 2.4 },
+              { x: 8, y: 70, d: 3.2 },
+            ].map((s, i) => (
+              <div key={i} style={{
+                position: 'absolute',
+                left: `${s.x}%`,
+                top: `${s.y}%`,
+                width: 3,
+                height: 3,
+                borderRadius: '50%',
+                background: SK,
+                animation: `card-sparkle 3s ease-in-out ${s.d}s infinite`,
+              }} />
+            ))}
+          </div>
+          <div style={{ marginBottom: 8 }}><QCelebrating size={100} /></div>
+          <div style={{ fontSize: 16, fontWeight: 700, color: SK, textShadow: `0 0 12px ${SK}33` }}>
             {t('already_logged')}
           </div>
           <div
@@ -579,8 +613,8 @@ export default function DashboardPage() {
               >
                 <div
                   style={{
-                    width: 36,
-                    height: 36,
+                    width: 38,
+                    height: 38,
                     borderRadius: '50%',
                     background:
                       day.type === 'training'
@@ -592,6 +626,10 @@ export default function DashboardPage() {
                       day.isToday
                         ? `2px solid ${PL}`
                         : '2px solid transparent',
+                    boxShadow:
+                      day.type === 'training'
+                        ? `0 0 10px ${P}55`
+                        : 'none',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
@@ -658,6 +696,19 @@ function ConfettiOverlay() {
         @keyframes confetti-fall {
           0% { transform: translateY(0) rotate(0deg); opacity: 1; }
           100% { transform: translateY(100vh) rotate(${360 + Math.random() * 360}deg); opacity: 0; }
+        }
+        @keyframes rainbow-shimmer {
+          0% { transform: translateX(-120%); }
+          50% { transform: translateX(120%); }
+          100% { transform: translateX(120%); }
+        }
+        @keyframes streak-glow {
+          0%, 100% { filter: brightness(1); }
+          50% { filter: brightness(1.06); }
+        }
+        @keyframes card-sparkle {
+          0%, 100% { opacity: 0; transform: scale(0.5); }
+          50% { opacity: 0.5; transform: scale(1); }
         }
       `}</style>
     </div>

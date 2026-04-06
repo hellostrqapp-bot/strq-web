@@ -4,6 +4,8 @@ import { useState, useEffect, useCallback } from 'react';
 import { useTranslations, useLocale } from 'next-intl';
 import { createBrowserClient } from '@/lib/supabase-browser';
 import { IconSeedling } from '@/components/icons';
+import { getLevelInfo } from '@/lib/levels';
+import { LevelBadge } from '@/components/level-badge';
 
 // ═══════════════════════════════════════════════════════════
 // strQ — Profile Page
@@ -13,6 +15,7 @@ import { IconSeedling } from '@/components/icons';
 const P = '#6C3483';
 const PL = '#A569BD';
 const PD = '#4A235A';
+const PM = '#7D3C98';
 const SK = '#7BC88C';
 const SL = '#A2D8AE';
 const BG = '#1A1A2E';
@@ -117,7 +120,7 @@ export default function ProfilePage() {
 
   return (
     <div style={{ maxWidth: 420, margin: '0 auto', paddingBottom: 40 }}>
-      {/* Rainbow bar */}
+      {/* Rainbow bar with shimmer */}
       <div
         style={{
           display: 'flex',
@@ -125,11 +128,18 @@ export default function ProfilePage() {
           marginBottom: 24,
           borderRadius: 3,
           overflow: 'hidden',
+          position: 'relative',
         }}
       >
         {RB.map((c, i) => (
           <div key={i} style={{ flex: 1, height: 3, background: c }} />
         ))}
+        <div style={{
+          position: 'absolute',
+          top: 0, left: 0, right: 0, bottom: 0,
+          background: 'linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.35) 50%, transparent 100%)',
+          animation: 'rainbow-shimmer 4s ease-in-out infinite',
+        }} />
       </div>
 
       {/* Title */}
@@ -140,10 +150,18 @@ export default function ProfilePage() {
           color: W,
           marginBottom: 24,
           letterSpacing: '-0.02em',
+          textShadow: `0 0 20px ${P}44`,
         }}
       >
         {t('title')}
       </div>
+
+      {/* ── LEVEL BADGE ── */}
+      {stats && (
+        <div style={{ marginBottom: 24 }}>
+          <LevelBadge levelInfo={getLevelInfo(stats.total_xp || 0)} totalXp={stats.total_xp || 0} />
+        </div>
+      )}
 
       {/* ── STATS GRID ── */}
       <div
@@ -158,19 +176,21 @@ export default function ProfilePage() {
         <div
           style={{
             background: `linear-gradient(135deg, ${PD}, ${P})`,
-            borderRadius: 12,
+            borderRadius: 14,
             padding: '16px',
             textAlign: 'center',
+            border: `1px solid rgba(108, 52, 131, 0.3)`,
           }}
         >
           <div
             style={{
-              fontSize: 12,
-              color: 'rgba(255,255,255,0.6)',
-              fontWeight: 600,
+              fontSize: 10,
+              color: PL,
+              fontWeight: 800,
               marginBottom: 8,
               textTransform: 'uppercase',
-              letterSpacing: '0.5px',
+              letterSpacing: '0.1em',
+              opacity: 0.8,
             }}
           >
             {t('total_xp')}
@@ -181,6 +201,7 @@ export default function ProfilePage() {
               fontWeight: 900,
               color: W,
               lineHeight: 1,
+              textShadow: `0 0 16px ${PL}44`,
             }}
           >
             {stats?.total_xp?.toLocaleString() || 0}
@@ -190,21 +211,23 @@ export default function ProfilePage() {
         {/* Current Streak */}
         <div
           style={{
-            background: `linear-gradient(135deg, ${SK}33, ${SL}33)`,
+            background: `linear-gradient(135deg, ${SK}22, ${SL}22)`,
             border: `2px solid ${SK}`,
-            borderRadius: 12,
+            borderRadius: 14,
             padding: '16px',
             textAlign: 'center',
+            boxShadow: `0 0 12px ${SK}22`,
           }}
         >
           <div
             style={{
-              fontSize: 12,
-              color: 'rgba(255,255,255,0.6)',
-              fontWeight: 600,
+              fontSize: 10,
+              color: SK,
+              fontWeight: 800,
               marginBottom: 8,
               textTransform: 'uppercase',
-              letterSpacing: '0.5px',
+              letterSpacing: '0.1em',
+              opacity: 0.8,
             }}
           >
             {t('current_streak')}
@@ -215,6 +238,7 @@ export default function ProfilePage() {
               fontWeight: 900,
               color: SK,
               lineHeight: 1,
+              textShadow: `0 0 12px ${SK}33`,
             }}
           >
             {stats?.current_streak || 0}
@@ -225,20 +249,21 @@ export default function ProfilePage() {
         <div
           style={{
             background: 'rgba(255,255,255,0.04)',
-            border: '1px solid rgba(255,255,255,0.06)',
-            borderRadius: 12,
+            border: `1px solid rgba(108, 52, 131, 0.12)`,
+            borderRadius: 14,
             padding: '16px',
             textAlign: 'center',
           }}
         >
           <div
             style={{
-              fontSize: 12,
-              color: 'rgba(255,255,255,0.6)',
-              fontWeight: 600,
+              fontSize: 10,
+              color: PL,
+              fontWeight: 800,
               marginBottom: 8,
               textTransform: 'uppercase',
-              letterSpacing: '0.5px',
+              letterSpacing: '0.1em',
+              opacity: 0.7,
             }}
           >
             {t('longest_streak')}
@@ -259,8 +284,8 @@ export default function ProfilePage() {
         <div
           style={{
             background: 'rgba(255,255,255,0.04)',
-            border: '1px solid rgba(255,255,255,0.06)',
-            borderRadius: 12,
+            border: `1px solid rgba(108, 52, 131, 0.12)`,
+            borderRadius: 14,
             padding: '16px',
             textAlign: 'center',
           }}
@@ -294,8 +319,8 @@ export default function ProfilePage() {
       <div
         style={{
           background: 'rgba(255,255,255,0.04)',
-          border: '1px solid rgba(255,255,255,0.06)',
-          borderRadius: 12,
+          border: `1px solid rgba(108, 52, 131, 0.12)`,
+          borderRadius: 14,
           padding: '16px',
           marginBottom: 24,
         }}
@@ -369,8 +394,8 @@ export default function ProfilePage() {
                 key={entry.id}
                 style={{
                   background: 'rgba(255,255,255,0.04)',
-                  border: '1px solid rgba(255,255,255,0.06)',
-                  borderRadius: 10,
+                  border: `1px solid rgba(108, 52, 131, 0.1)`,
+                  borderRadius: 12,
                   padding: '12px 14px',
                   display: 'flex',
                   justifyContent: 'space-between',
@@ -402,6 +427,7 @@ export default function ProfilePage() {
                     fontSize: 16,
                     fontWeight: 800,
                     color: SK,
+                    textShadow: `0 0 8px ${SK}22`,
                   }}
                 >
                   +{entry.amount}
@@ -412,6 +438,15 @@ export default function ProfilePage() {
         </div>
       )}
 
+      {/* Keyframes */}
+      <style>{`
+        @keyframes rainbow-shimmer {
+          0% { transform: translateX(-120%); }
+          50% { transform: translateX(120%); }
+          100% { transform: translateX(120%); }
+        }
+      `}</style>
+
       {/* ── EMPTY STATE ── */}
       {xpHistory.length === 0 && (
         <div
@@ -419,8 +454,8 @@ export default function ProfilePage() {
             textAlign: 'center',
             padding: '40px 20px',
             background: 'rgba(255,255,255,0.04)',
-            border: '1px solid rgba(255,255,255,0.06)',
-            borderRadius: 12,
+            border: `1px solid rgba(108, 52, 131, 0.12)`,
+            borderRadius: 14,
           }}
         >
           <div style={{ marginBottom: 12 }}><IconSeedling size={36} /></div>
