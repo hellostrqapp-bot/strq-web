@@ -97,12 +97,13 @@ export function BottomNav({ locale }: { locale: string }) {
           height: 68,
         }}
       >
-        {tabs.map((tab) => {
+        {tabs.map((tab, idx) => {
           const active = isActive(tab);
           return (
             <a
               key={tab.href}
               href={tab.href}
+              className={`nav-tab ${active ? 'nav-tab-active' : 'nav-tab-inactive'}`}
               style={{
                 display: 'flex',
                 flexDirection: 'column',
@@ -112,7 +113,6 @@ export function BottomNav({ locale }: { locale: string }) {
                 padding: '6px 20px',
                 minWidth: 72,
                 position: 'relative',
-                transition: 'all 0.2s ease',
               }}
             >
               {/* Active glow behind icon */}
@@ -130,9 +130,8 @@ export function BottomNav({ locale }: { locale: string }) {
               )}
 
               {/* Icon */}
-              <div style={{
+              <div className="nav-icon" style={{
                 position: 'relative',
-                transition: 'transform 0.2s ease',
                 transform: active ? 'scale(1)' : 'scale(0.9)',
                 opacity: active ? 1 : 0.4,
                 filter: active ? `drop-shadow(0 0 6px ${PL}66)` : 'none',
@@ -141,12 +140,11 @@ export function BottomNav({ locale }: { locale: string }) {
               </div>
 
               {/* Label */}
-              <span style={{
+              <span className="nav-label" style={{
                 fontSize: active ? 11 : 10,
                 fontWeight: active ? 800 : 600,
                 color: active ? PL : 'rgba(255,255,255,0.35)',
                 letterSpacing: active ? '0.04em' : undefined,
-                transition: 'all 0.2s ease',
               }}>
                 {tab.label}
               </span>
@@ -177,6 +175,21 @@ export function BottomNav({ locale }: { locale: string }) {
         @keyframes nav-glow {
           0%, 100% { opacity: 0.6; }
           50% { opacity: 1; }
+        }
+        .nav-tab {
+          transition: all 0.2s ease;
+        }
+        .nav-tab .nav-icon,
+        .nav-tab .nav-label {
+          transition: all 0.2s ease;
+        }
+        .nav-tab-inactive:hover .nav-icon {
+          opacity: 0.75 !important;
+          transform: scale(0.95) !important;
+          filter: drop-shadow(0 0 4px ${PL}44) !important;
+        }
+        .nav-tab-inactive:hover .nav-label {
+          color: rgba(255,255,255,0.6) !important;
         }
       `}</style>
     </nav>
