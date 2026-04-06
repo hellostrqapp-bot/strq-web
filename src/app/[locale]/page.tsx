@@ -752,7 +752,7 @@ export default function Landing() {
               color: PL,
               fontSize: 38,
               fontWeight: 900,
-              textShadow: `0 0 20px ${PL}44, 0 0 40px ${P}22`,
+              textShadow: `0 0 12px ${PL}88, 0 0 28px ${PL}55, 0 0 50px ${P}33`,
             }}>
               Q
             </span>
