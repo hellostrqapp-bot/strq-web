@@ -42,6 +42,11 @@
   "language": {
     "label": "Idioma"
   },
+  "auth_error": {
+    "title": "Link expirado",
+    "description": "Seu link mágico não é mais válido. Sem problemas — solicite um novo.",
+    "cta": "Entrar novamente"
+  },
   "login": {
     "subtitle": "Entre com seu e-mail. Sem senha.",
     "email_placeholder": "voce@email.com.br",

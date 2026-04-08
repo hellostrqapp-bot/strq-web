@@ -42,6 +42,11 @@
   "language": {
     "label": "Sprache"
   },
+  "auth_error": {
+    "title": "Link abgelaufen",
+    "description": "Dein Magic Link ist nicht mehr gültig. Kein Problem — fordere einfach einen neuen an.",
+    "cta": "Erneut anmelden"
+  },
   "login": {
     "subtitle": "Melde dich mit deiner E-Mail an. Kein Passwort nötig.",
     "email_placeholder": "du@email.de",

@@ -42,6 +42,11 @@
   "language": {
     "label": "Language"
   },
+  "auth_error": {
+    "title": "Link expired",
+    "description": "Your magic link is no longer valid. No worries — just request a new one.",
+    "cta": "Sign in again"
+  },
   "login": {
     "subtitle": "Sign in with your email. No password needed.",
     "email_placeholder": "you@email.com",

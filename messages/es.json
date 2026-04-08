@@ -42,6 +42,11 @@
   "language": {
     "label": "Idioma"
   },
+  "auth_error": {
+    "title": "Enlace caducado",
+    "description": "Tu enlace mágico ya no es válido. No te preocupes — solicita uno nuevo.",
+    "cta": "Iniciar sesión de nuevo"
+  },
   "login": {
     "subtitle": "Inicia sesión con tu email. Sin contraseña.",
     "email_placeholder": "tu@email.es",

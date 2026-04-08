@@ -42,6 +42,11 @@
   "language": {
     "label": "Simi"
   },
+  "auth_error": {
+    "title": "Tinkiy tukukurqaña",
+    "description": "Magic tinkiyniyki manaña allinchu. Ama llakikuychu — musuqta mañakuy.",
+    "cta": "Yaykuy musuqmanta"
+  },
   "login": {
     "subtitle": "Correo electrónicoykiwan yaykuy. Mana contraseña necesitanchu.",
     "email_placeholder": "qam@email.com",

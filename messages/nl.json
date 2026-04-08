@@ -42,6 +42,11 @@
   "language": {
     "label": "Taal"
   },
+  "auth_error": {
+    "title": "Link verlopen",
+    "description": "Je magic link is niet meer geldig. Geen stress — vraag een nieuwe aan.",
+    "cta": "Opnieuw inloggen"
+  },
   "login": {
     "subtitle": "Log in met je e-mail. Geen wachtwoord nodig.",
     "email_placeholder": "je@email.nl",

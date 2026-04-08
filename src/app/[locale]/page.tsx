@@ -562,6 +562,7 @@ function LaunchCountdown({ t }: { t: (key: string) => string }) {
 // ── Main Landing Page ──
 export default function Landing() {
   const t = useTranslations();
+  const locale = useLocale();
   const [email, setEmail] = useState("");
   const [sport, setSport] = useState("none");
   const [referral, setReferral] = useState("");
@@ -570,6 +571,22 @@ export default function Landing() {
     "idle"
   );
   const [show, setShow] = useState(false);
+  const [authError, setAuthError] = useState<string | null>(null);
+
+  // Detect Supabase auth errors in hash fragment (e.g. expired magic link)
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const hash = window.location.hash;
+    if (hash.includes("error=")) {
+      const params = new URLSearchParams(hash.replace("#", ""));
+      const errorCode = params.get("error_code");
+      if (errorCode) {
+        setAuthError(errorCode);
+        // Clean up the URL hash
+        window.history.replaceState(null, "", window.location.pathname);
+      }
+    }
+  }, []);
 
   useEffect(() => {
     const timer = setTimeout(() => setShow(true), 100);
@@ -781,6 +798,57 @@ export default function Landing() {
 
         {/* Launch Countdown */}
         <LaunchCountdown t={t} />
+
+        {/* Auth error banner (e.g. expired magic link) */}
+        {authError && (
+          <div
+            style={{
+              width: "100%",
+              background: "rgba(231,76,60,0.08)",
+              border: "1.5px solid rgba(231,76,60,0.25)",
+              borderRadius: 12,
+              padding: "20px 20px",
+              marginBottom: 24,
+              textAlign: "center",
+            }}
+          >
+            <p
+              style={{
+                color: "#E74C3C",
+                fontSize: 15,
+                fontWeight: 600,
+                marginBottom: 6,
+              }}
+            >
+              {t("auth_error.title")}
+            </p>
+            <p
+              style={{
+                color: "rgba(255,255,255,0.5)",
+                fontSize: 13,
+                marginBottom: 14,
+              }}
+            >
+              {t("auth_error.description")}
+            </p>
+            <a
+              href={`/${locale}/login`}
+              style={{
+                display: "inline-block",
+                padding: "10px 24px",
+                borderRadius: 8,
+                background: P,
+                color: W,
+                fontSize: 14,
+                fontWeight: 700,
+                textDecoration: "none",
+                transition: "opacity 0.2s",
+              }}
+            >
+              {t("auth_error.cta")}
+            </a>
+          </div>
+        )}
 
         {/* Waitlist form or confirmation */}
         {state === "done" ? (

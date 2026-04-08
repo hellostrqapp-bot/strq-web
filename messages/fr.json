@@ -42,6 +42,11 @@
   "language": {
     "label": "Langue"
   },
+  "auth_error": {
+    "title": "Lien expiré",
+    "description": "Ton lien magique n'est plus valide. Pas de souci — demande-en un nouveau.",
+    "cta": "Se reconnecter"
+  },
   "login": {
     "subtitle": "Connectez-vous avec votre e-mail. Pas de mot de passe.",
     "email_placeholder": "vous@email.fr",
