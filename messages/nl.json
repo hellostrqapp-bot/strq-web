@@ -70,7 +70,11 @@
     "last_7_days": "Afgelopen 7 dagen",
     "surprise_bonus_xp": "Bonus XP!",
     "surprise_confetti": "Confetti party!",
-    "surprise_streak_shield": "strQ Shield verdiend!"
+    "surprise_streak_shield": "strQ Shield verdiend!",
+    "earned_rest": "Verdiende rustdag",
+    "rest_charging": "Rustdag laadt op...",
+    "rest_celebrate": "Rust verdiend. Herstel is kracht.",
+    "rest_celebrate_sub": "Je lichaam wordt sterker terwijl je rust."
   },
   "event": {
     "title": "Je evenement",

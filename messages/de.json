@@ -70,7 +70,11 @@
     "last_7_days": "Letzte 7 Tage",
     "surprise_bonus_xp": "Bonus XP!",
     "surprise_confetti": "Konfetti-Party!",
-    "surprise_streak_shield": "strQ-Schild verdient!"
+    "surprise_streak_shield": "strQ-Schild verdient!",
+    "earned_rest": "Verdienter Ruhetag",
+    "rest_charging": "Ruhetag lädt auf...",
+    "rest_celebrate": "Ruhe verdient. Erholung ist Stärke.",
+    "rest_celebrate_sub": "Dein Körper wird stärker, während du ruhst."
   },
   "event": {
     "title": "Dein Event",

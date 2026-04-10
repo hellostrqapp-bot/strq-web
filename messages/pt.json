@@ -70,7 +70,11 @@
     "last_7_days": "Últimos 7 dias",
     "surprise_bonus_xp": "Bônus XP!",
     "surprise_confetti": "Festa de confete!",
-    "surprise_streak_shield": "Escudo strQ conquistado!"
+    "surprise_streak_shield": "Escudo strQ conquistado!",
+    "earned_rest": "Dia de descanso conquistado",
+    "rest_charging": "Dia de descanso carregando...",
+    "rest_celebrate": "Descanso conquistado. Recuperação é força.",
+    "rest_celebrate_sub": "Seu corpo fica mais forte enquanto descansa."
   },
   "event": {
     "title": "Seu evento",

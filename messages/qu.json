@@ -70,7 +70,11 @@
     "last_7_days": "Qayna 7 punchaw",
     "surprise_bonus_xp": "¡Yapay XP!",
     "surprise_confetti": "¡Confeti raymi!",
-    "surprise_streak_shield": "¡strQ escudo ganasqa!"
+    "surprise_streak_shield": "¡strQ escudo ganasqa!",
+    "earned_rest": "Samay punchaw ganasqa",
+    "rest_charging": "Samay punchaw kargakuchkan...",
+    "rest_celebrate": "Samay ganasqa. Samaykuy kallpam.",
+    "rest_celebrate_sub": "Ukhuyki aswan sinchiyachkan samaykuchkaptiyki."
   },
   "event": {
     "title": "Eventoyki",

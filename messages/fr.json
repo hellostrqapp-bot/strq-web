@@ -70,7 +70,11 @@
     "last_7_days": "7 derniers jours",
     "surprise_bonus_xp": "Bonus XP !",
     "surprise_confetti": "Fête de confettis !",
-    "surprise_streak_shield": "Bouclier strQ gagné !"
+    "surprise_streak_shield": "Bouclier strQ gagné !",
+    "earned_rest": "Jour de repos mérité",
+    "rest_charging": "Jour de repos en charge...",
+    "rest_celebrate": "Repos mérité. La récupération, c'est la force.",
+    "rest_celebrate_sub": "Ton corps se renforce pendant que tu te reposes."
   },
   "event": {
     "title": "Votre événement",

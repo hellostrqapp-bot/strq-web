@@ -17,6 +17,7 @@ import {
   IconTraining,
   IconRest,
   IconCheck,
+  IconEarnedRest,
 } from '@/components/icons';
 import { getLevelInfo, type LevelInfo } from '@/lib/levels';
 import { LevelBadge } from '@/components/level-badge';
@@ -107,6 +108,7 @@ export default function DashboardPage() {
   const [state, setState] = useState<DashState>('loading');
   const [streak, setStreak] = useState<StreakResult | null>(null);
   const [todayLogged, setTodayLogged] = useState(false);
+  const [todayType, setTodayType] = useState<'training' | 'rest' | null>(null);
   const [reveal, setReveal] = useState<{
     baseXp: number;
     bonusXp: number;
@@ -173,6 +175,7 @@ export default function DashboardPage() {
       (a) => a.activity_date === today()
     );
     setTodayLogged(!!todayEntry);
+    setTodayType(todayEntry ? (todayEntry.activity_type as 'training' | 'rest') : null);
 
     // Check Daily Reveal
     if (revealRes.data && !revealRes.data.revealed && todayEntry) {
@@ -225,7 +228,7 @@ export default function DashboardPage() {
       .limit(60);
 
     const newStreak = calculateStreak(activities || []);
-    const baseXp = getBaseXP(type);
+    const baseXp = getBaseXP(type, type === 'rest' ? streak?.earnedRest : undefined);
     const streakBonus = getStreakBonus(newStreak);
     const surprise = rollSurprise();
     const totalEarned = baseXp + streakBonus + (surprise?.xp || 0);
@@ -286,6 +289,7 @@ export default function DashboardPage() {
     // Show reveal
     setStreak(newStreak);
     setTodayLogged(true);
+    setTodayType(type);
     setTotalXp((prev) => prev + totalEarned);
     setReveal({
       baseXp,
@@ -649,7 +653,15 @@ export default function DashboardPage() {
       )}
 
       {/* ── ACTION BUTTONS ── */}
-      {!todayLogged && state === 'idle' && (
+      {!todayLogged && state === 'idle' && (() => {
+        const er = streak?.earnedRest;
+        const restAvailable = er?.available ?? false;
+        const restTier = er?.tier ?? 'locked';
+        const restProgress = er?.progress ?? 0;
+        const restXp = er?.xpReward ?? 0;
+        const daysCharged = er?.trainingDaysSinceRest ?? 0;
+
+        return (
         <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
           {/* Primary: I trained! */}
           <button
@@ -675,27 +687,86 @@ export default function DashboardPage() {
             <IconTraining size={20} /> {t('log_training')}
           </button>
 
-          {/* Secondary: Rest day */}
+          {/* ── EARNED REST BUTTON ── */}
+          {/* The star feature: rest charges up with each training day */}
           <button
-            onClick={() => logActivity('rest')}
+            onClick={() => restAvailable && logActivity('rest')}
+            disabled={!restAvailable}
             style={{
               width: '100%',
-              padding: '14px',
-              fontSize: 14,
-              fontWeight: 600,
-              background: 'rgba(255,255,255,0.03)',
-              color: 'rgba(255,255,255,0.45)',
-              border: `1px solid rgba(255,255,255,0.06)`,
+              padding: restAvailable ? '18px 20px' : '14px 20px',
+              fontSize: restAvailable ? 15 : 14,
+              fontWeight: restAvailable ? 800 : 600,
+              background: restAvailable
+                ? restTier === 'supercharged'
+                  ? `linear-gradient(135deg, rgba(231,76,60,0.12), rgba(243,156,18,0.10), rgba(241,196,15,0.10), rgba(39,174,96,0.10), rgba(41,128,185,0.10), rgba(142,68,173,0.12))`
+                  : restTier === 'charged'
+                  ? `linear-gradient(135deg, rgba(165,105,189,0.12), rgba(123,200,140,0.10))`
+                  : `linear-gradient(135deg, rgba(165,105,189,0.08), rgba(255,255,255,0.03))`
+                : 'rgba(255,255,255,0.02)',
+              color: restAvailable
+                ? restTier === 'supercharged' ? W : PL
+                : 'rgba(255,255,255,0.3)',
+              border: restAvailable
+                ? restTier === 'supercharged'
+                  ? `1px solid rgba(241,196,15,0.3)`
+                  : `1px solid ${PL}33`
+                : `1px solid rgba(255,255,255,0.04)`,
               borderRadius: 14,
-              cursor: 'pointer',
-              transition: 'all 0.2s ease',
+              cursor: restAvailable ? 'pointer' : 'default',
+              transition: 'all 0.3s ease',
+              position: 'relative',
+              overflow: 'hidden',
+              boxShadow: restTier === 'supercharged'
+                ? `0 0 24px rgba(241,196,15,0.15), 0 0 48px rgba(142,68,173,0.1)`
+                : restTier === 'charged'
+                ? `0 0 16px ${PL}22`
+                : 'none',
+              animation: restTier === 'supercharged' ? 'earned-rest-glow 3s ease-in-out infinite' : undefined,
             }}
-            className="rest-btn"
+            className={restAvailable ? 'earned-rest-btn' : 'rest-btn'}
           >
-            <IconRest size={18} /> {t('log_rest')}
+            {/* Rainbow shimmer for supercharged */}
+            {restTier === 'supercharged' && (
+              <div style={{
+                position: 'absolute',
+                top: 0, left: 0, right: 0, bottom: 0,
+                background: 'linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.08) 50%, transparent 100%)',
+                animation: 'rest-shimmer 3s ease-in-out infinite',
+                pointerEvents: 'none',
+              }} />
+            )}
+
+            <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, position: 'relative' }}>
+              <IconEarnedRest size={22} progress={restProgress} tier={restTier} />
+              <span>
+                {restAvailable ? t('earned_rest') : t('rest_charging')}
+              </span>
+              {restAvailable && (
+                <span style={{
+                  fontSize: 12,
+                  fontWeight: 900,
+                  color: restTier === 'supercharged' ? '#F1C40F' : SK,
+                  marginLeft: 4,
+                  textShadow: restTier === 'supercharged' ? '0 0 8px rgba(241,196,15,0.5)' : undefined,
+                }}>
+                  +{restXp} XP
+                </span>
+              )}
+              {!restAvailable && daysCharged > 0 && (
+                <span style={{
+                  fontSize: 11,
+                  color: 'rgba(255,255,255,0.2)',
+                  marginLeft: 4,
+                }}>
+                  {daysCharged}/2
+                </span>
+              )}
+            </span>
           </button>
         </div>
-      )}
+        );
+      })()}
 
       {/* ── ALREADY LOGGED ── */}
       {todayLogged && state === 'idle' && (
@@ -703,33 +774,82 @@ export default function DashboardPage() {
           style={{
             textAlign: 'center',
             padding: '32px 20px 28px',
-            background: `linear-gradient(135deg, ${SK}14, ${SK}08)`,
-            border: `1px solid ${SK}33`,
+            background: todayType === 'rest'
+              ? `linear-gradient(135deg, rgba(231,76,60,0.04), rgba(243,156,18,0.04), rgba(241,196,15,0.05), rgba(39,174,96,0.04), rgba(41,128,185,0.04), rgba(142,68,173,0.05))`
+              : `linear-gradient(135deg, ${SK}14, ${SK}08)`,
+            border: todayType === 'rest'
+              ? `1px solid rgba(241,196,15,0.15)`
+              : `1px solid ${SK}33`,
             borderRadius: 16,
             position: 'relative',
             overflow: 'hidden',
           }}
         >
-          {/* Sparkle particles */}
+          {/* Sparkle particles — rainbow for rest, green/purple for training */}
           <div style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, pointerEvents: 'none' }}>
-            {[
-              { x: 8, y: 14, d: 0, s: 4 }, { x: 88, y: 10, d: 0.6, s: 3 },
-              { x: 50, y: 8, d: 1.2, s: 3 }, { x: 92, y: 60, d: 1.8, s: 4 },
-              { x: 6, y: 75, d: 2.4, s: 3 }, { x: 72, y: 82, d: 3.0, s: 3 },
-              { x: 30, y: 88, d: 3.6, s: 4 },
-            ].map((s, i) => (
-              <div key={i} style={{
-                position: 'absolute',
-                left: `${s.x}%`,
-                top: `${s.y}%`,
-                width: s.s,
-                height: s.s,
-                borderRadius: '50%',
-                background: i % 2 === 0 ? SK : PL,
-                animation: `card-sparkle 3s ease-in-out ${s.d}s infinite`,
-              }} />
-            ))}
+            {todayType === 'rest' ? (
+              /* Rainbow sparkles for earned rest */
+              [
+                { x: 5, y: 10, d: 0, s: 4 }, { x: 90, y: 8, d: 0.4, s: 3 },
+                { x: 15, y: 50, d: 0.8, s: 5 }, { x: 85, y: 45, d: 1.2, s: 4 },
+                { x: 50, y: 5, d: 1.6, s: 3 }, { x: 8, y: 80, d: 2.0, s: 4 },
+                { x: 92, y: 75, d: 2.4, s: 3 }, { x: 40, y: 90, d: 2.8, s: 5 },
+                { x: 65, y: 85, d: 3.2, s: 4 }, { x: 25, y: 15, d: 3.6, s: 3 },
+              ].map((s, i) => (
+                <div key={i} style={{
+                  position: 'absolute',
+                  left: `${s.x}%`,
+                  top: `${s.y}%`,
+                  width: s.s,
+                  height: s.s,
+                  borderRadius: '50%',
+                  background: RB[i % RB.length],
+                  animation: `card-sparkle 3s ease-in-out ${s.d}s infinite`,
+                }} />
+              ))
+            ) : (
+              [
+                { x: 8, y: 14, d: 0, s: 4 }, { x: 88, y: 10, d: 0.6, s: 3 },
+                { x: 50, y: 8, d: 1.2, s: 3 }, { x: 92, y: 60, d: 1.8, s: 4 },
+                { x: 6, y: 75, d: 2.4, s: 3 }, { x: 72, y: 82, d: 3.0, s: 3 },
+                { x: 30, y: 88, d: 3.6, s: 4 },
+              ].map((s, i) => (
+                <div key={i} style={{
+                  position: 'absolute',
+                  left: `${s.x}%`,
+                  top: `${s.y}%`,
+                  width: s.s,
+                  height: s.s,
+                  borderRadius: '50%',
+                  background: i % 2 === 0 ? SK : PL,
+                  animation: `card-sparkle 3s ease-in-out ${s.d}s infinite`,
+                }} />
+              ))
+            )}
           </div>
+
+          {/* Rainbow bar across the top for rest days */}
+          {todayType === 'rest' && (
+            <div style={{
+              position: 'absolute',
+              top: 0, left: 0, right: 0,
+              display: 'flex',
+              height: 3,
+              overflow: 'hidden',
+              borderRadius: '16px 16px 0 0',
+            }}>
+              {RB.map((c, i) => (
+                <div key={i} style={{ flex: 1, background: c, opacity: 0.6 }} />
+              ))}
+              <div style={{
+                position: 'absolute',
+                top: 0, left: 0, right: 0, bottom: 0,
+                background: 'linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.4) 50%, transparent 100%)',
+                animation: 'rest-shimmer 4s ease-in-out infinite',
+              }} />
+            </div>
+          )}
+
           {/* Ambient glow behind Q */}
           <div style={{
             position: 'absolute',
@@ -739,29 +859,59 @@ export default function DashboardPage() {
             width: 140,
             height: 140,
             borderRadius: '50%',
-            background: `radial-gradient(circle, ${SK}18 0%, transparent 70%)`,
+            background: todayType === 'rest'
+              ? `radial-gradient(circle, rgba(165,105,189,0.12) 0%, rgba(241,196,15,0.06) 50%, transparent 70%)`
+              : `radial-gradient(circle, ${SK}18 0%, transparent 70%)`,
             pointerEvents: 'none',
           }} />
-          <div style={{ marginBottom: 12, position: 'relative' }}><QCelebrating size={110} /></div>
-          <div style={{
-            fontSize: 18,
-            fontWeight: 800,
-            color: SK,
-            textShadow: `0 0 16px ${SK}44, 0 0 32px ${SK}22`,
-            position: 'relative',
-          }}>
-            {t('already_logged')}
-          </div>
-          <div
-            style={{
-              fontSize: 13,
-              color: 'rgba(255,255,255,0.4)',
-              marginTop: 6,
-              position: 'relative',
-            }}
-          >
-            {t('come_back_tomorrow')}
-          </div>
+
+          {todayType === 'rest' ? (
+            <>
+              {/* Resting Q — moon icon large */}
+              <div style={{ marginBottom: 16, position: 'relative' }}>
+                <IconEarnedRest size={72} progress={1} tier="supercharged" />
+              </div>
+              <div style={{
+                fontSize: 18,
+                fontWeight: 800,
+                color: PL,
+                textShadow: `0 0 16px ${PL}44, 0 0 32px ${P}22`,
+                position: 'relative',
+              }}>
+                {t('rest_celebrate')}
+              </div>
+              <div style={{
+                fontSize: 13,
+                color: 'rgba(255,255,255,0.45)',
+                marginTop: 6,
+                position: 'relative',
+                fontStyle: 'italic',
+              }}>
+                {t('rest_celebrate_sub')}
+              </div>
+            </>
+          ) : (
+            <>
+              <div style={{ marginBottom: 12, position: 'relative' }}><QCelebrating size={110} /></div>
+              <div style={{
+                fontSize: 18,
+                fontWeight: 800,
+                color: SK,
+                textShadow: `0 0 16px ${SK}44, 0 0 32px ${SK}22`,
+                position: 'relative',
+              }}>
+                {t('already_logged')}
+              </div>
+              <div style={{
+                fontSize: 13,
+                color: 'rgba(255,255,255,0.4)',
+                marginTop: 6,
+                position: 'relative',
+              }}>
+                {t('come_back_tomorrow')}
+              </div>
+            </>
+          )}
         </div>
       )}
 
@@ -880,9 +1030,19 @@ export default function DashboardPage() {
                     )}
                     {isRest && (
                       <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
-                        {/* Zen circle — rest is earned */}
-                        <circle cx="12" cy="12" r="8" fill="none" stroke={SK} strokeWidth="1.5" opacity="0.6" />
-                        <path d="M9 12h6" stroke={SK} strokeWidth="1.5" strokeLinecap="round" opacity="0.8" />
+                        {/* Rainbow ring — rest was earned */}
+                        <defs>
+                          <linearGradient id={`rb-${i}`} x1="0" y1="0" x2="24" y2="24" gradientUnits="userSpaceOnUse">
+                            <stop offset="0%" stopColor="#E74C3C" />
+                            <stop offset="20%" stopColor="#E67E22" />
+                            <stop offset="40%" stopColor="#F1C40F" />
+                            <stop offset="60%" stopColor="#27AE60" />
+                            <stop offset="80%" stopColor="#2980B9" />
+                            <stop offset="100%" stopColor="#8E44AD" />
+                          </linearGradient>
+                        </defs>
+                        <circle cx="12" cy="12" r="8" fill="none" stroke={`url(#rb-${i})`} strokeWidth="1.8" opacity="0.7" />
+                        <path d="M14.5 10a3.2 3.2 0 1 1-3.2 4.5 2.5 2.5 0 0 0 3.2-4.5Z" fill={PL} opacity="0.6" />
                       </svg>
                     )}
                     {isEmpty && (
@@ -995,6 +1155,22 @@ function ConfettiOverlay() {
           background: rgba(255,255,255,0.06) !important;
           color: rgba(255,255,255,0.6) !important;
           border-color: rgba(255,255,255,0.1) !important;
+        }
+        .earned-rest-btn:hover {
+          transform: translateY(-1px);
+          filter: brightness(1.15);
+        }
+        .earned-rest-btn:active {
+          transform: translateY(1px) scale(0.98);
+        }
+        @keyframes earned-rest-glow {
+          0%, 100% { box-shadow: 0 0 24px rgba(241,196,15,0.15), 0 0 48px rgba(142,68,173,0.1); }
+          50% { box-shadow: 0 0 32px rgba(241,196,15,0.25), 0 0 64px rgba(142,68,173,0.15), 0 0 80px rgba(39,174,96,0.08); }
+        }
+        @keyframes rest-shimmer {
+          0% { transform: translateX(-120%); }
+          50% { transform: translateX(120%); }
+          100% { transform: translateX(120%); }
         }
       `}</style>
     </div>

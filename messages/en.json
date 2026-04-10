@@ -70,7 +70,11 @@
     "last_7_days": "Last 7 days",
     "surprise_bonus_xp": "Bonus XP!",
     "surprise_confetti": "Confetti party!",
-    "surprise_streak_shield": "strQ Shield earned!"
+    "surprise_streak_shield": "strQ Shield earned!",
+    "earned_rest": "Earned rest day",
+    "rest_charging": "Rest day charging...",
+    "rest_celebrate": "Rest earned. Recovery is strength.",
+    "rest_celebrate_sub": "Your body grows stronger while you rest."
   },
   "event": {
     "title": "Your event",

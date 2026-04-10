@@ -12,12 +12,26 @@
 // "Rustdagen na inspanning breken de streak NIET."
 // ═══════════════════════════════════════════════════════════
 
+export interface EarnedRestInfo {
+  /** How many consecutive training days since last rest/gap */
+  trainingDaysSinceRest: number;
+  /** Is the earned rest button available? (>= 2 training days) */
+  available: boolean;
+  /** Progress 0-1 for the visual ring (0 = empty, 1 = full at 4+ days) */
+  progress: number;
+  /** XP reward if rest is taken now */
+  xpReward: number;
+  /** Tier label for UI styling */
+  tier: 'locked' | 'ready' | 'charged' | 'supercharged';
+}
+
 export interface StreakResult {
   currentStreak: number;
   longestStreak: number;
   multiplier: number;
   lastActivityDate: string | null;
   last7Days: DayInfo[];
+  earnedRest: EarnedRestInfo;
 }
 
 export interface DayInfo {
@@ -96,6 +110,7 @@ export function calculateStreak(activities: Activity[]): StreakResult {
     multiplier,
     lastActivityDate: activities.length > 0 ? activities[0].activity_date : null,
     last7Days: getLast7Days(activityMap),
+    earnedRest: calculateEarnedRest(activityMap),
   };
 }
 
@@ -157,13 +172,72 @@ function getLast7Days(activityMap: Map<string, string>): DayInfo[] {
   return days;
 }
 
+// ── Earned Rest Calculation ────────────────────────────────
+// Counts consecutive training days backwards from today (or yesterday
+// if today has no activity yet) to determine if earned rest is available.
+// The rest button "charges up" — more training = better reward.
+//
+// 0-1 days: locked (can't rest yet)
+// 2 days:   ready       → 25 XP
+// 3 days:   charged     → 40 XP
+// 4+ days:  supercharged → 60 XP
+
+function calculateEarnedRest(activityMap: Map<string, string>): EarnedRestInfo {
+  const todayStr = toDateStr(new Date());
+  const todayType = activityMap.get(todayStr);
+
+  // If today is already logged as rest, the button was already used
+  if (todayType === 'rest') {
+    return { trainingDaysSinceRest: 0, available: false, progress: 0, xpReward: 0, tier: 'locked' };
+  }
+
+  // Count consecutive training days backwards
+  // Start from yesterday if today hasn't been logged yet, or today if it's a training day
+  let consecutiveTraining = 0;
+  const d = new Date();
+
+  // If today is training, count it
+  if (todayType === 'training') {
+    consecutiveTraining++;
+    d.setDate(d.getDate() - 1);
+  }
+
+  // Walk backwards counting training days
+  for (let i = 0; i < 30; i++) {
+    const dateStr = toDateStr(d);
+    const type = activityMap.get(dateStr);
+    if (type === 'training') {
+      consecutiveTraining++;
+      d.setDate(d.getDate() - 1);
+    } else {
+      break; // Hit a rest day, gap, or no-activity — stop counting
+    }
+  }
+
+  // Determine tier and reward
+  if (consecutiveTraining < 2) {
+    return { trainingDaysSinceRest: consecutiveTraining, available: false, progress: consecutiveTraining / 4, xpReward: 0, tier: 'locked' };
+  }
+  if (consecutiveTraining === 2) {
+    return { trainingDaysSinceRest: 2, available: true, progress: 0.5, xpReward: 25, tier: 'ready' };
+  }
+  if (consecutiveTraining === 3) {
+    return { trainingDaysSinceRest: 3, available: true, progress: 0.75, xpReward: 40, tier: 'charged' };
+  }
+  // 4+ days
+  return { trainingDaysSinceRest: consecutiveTraining, available: true, progress: 1, xpReward: 60, tier: 'supercharged' };
+}
+
 // ── XP System ──────────────────────────────────────────────
 // Transparent per DSA: user can see exactly how XP is calculated
 
 /** Base XP for logging an activity */
-export function getBaseXP(type: 'training' | 'rest'): number {
-  // Training gets more XP than rest, but rest still counts
-  return type === 'training' ? 50 : 10;
+export function getBaseXP(type: 'training' | 'rest', earnedRest?: EarnedRestInfo): number {
+  // Training always gets 50 XP
+  if (type === 'training') return 50;
+  // Earned rest scales with effort — default to 10 for unearned rest
+  if (earnedRest && earnedRest.available) return earnedRest.xpReward;
+  return 10;
 }
 
 /** Streak bonus based on current streak state */

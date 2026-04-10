@@ -237,6 +237,70 @@ export function IconSeedling({ size = 22 }: IconProps) {
   );
 }
 
+/** Earned Rest — moon cradled in a rainbow ring that fills up */
+export function IconEarnedRest({ size = 22, progress = 0, tier = 'locked' }: IconProps & { progress?: number; tier?: string }) {
+  // Rainbow arc: progress 0-1 controls how much of the ring is drawn
+  const r = 10; // ring radius
+  const circumference = 2 * Math.PI * r;
+  const arcLength = circumference * Math.min(progress, 1);
+  const isGlowing = tier === 'charged' || tier === 'supercharged';
+  const isFull = tier === 'supercharged';
+
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none">
+      <defs>
+        <linearGradient id="rest-rainbow" x1="0" y1="0" x2="24" y2="24" gradientUnits="userSpaceOnUse">
+          {RB.map((c, i) => (
+            <stop key={i} offset={`${(i / (RB.length - 1)) * 100}%`} stopColor={c} />
+          ))}
+        </linearGradient>
+        {isGlowing && (
+          <filter id="rest-glow">
+            <feGaussianBlur stdDeviation="1.5" result="blur" />
+            <feMerge>
+              <feMergeNode in="blur" />
+              <feMergeNode in="SourceGraphic" />
+            </feMerge>
+          </filter>
+        )}
+      </defs>
+
+      {/* Background track */}
+      <circle cx="12" cy="12" r={r} fill="none" stroke="rgba(255,255,255,0.06)" strokeWidth="2.5" />
+
+      {/* Rainbow progress arc */}
+      <circle
+        cx="12" cy="12" r={r}
+        fill="none"
+        stroke="url(#rest-rainbow)"
+        strokeWidth={isFull ? 3 : 2.5}
+        strokeLinecap="round"
+        strokeDasharray={`${arcLength} ${circumference}`}
+        transform="rotate(-90 12 12)"
+        filter={isGlowing ? 'url(#rest-glow)' : undefined}
+        opacity={progress > 0 ? 1 : 0}
+      />
+
+      {/* Moon center */}
+      <path
+        d="M14.5 8a5 5 0 1 1-5 7 4 4 0 0 0 5-7Z"
+        fill={tier === 'locked' ? 'rgba(255,255,255,0.15)' : PL}
+        opacity={tier === 'locked' ? 0.6 : 0.85}
+      />
+
+      {/* Sparkle dots when supercharged */}
+      {isFull && (
+        <>
+          <circle cx="3" cy="5" r="1" fill={RB[2]} opacity="0.7" />
+          <circle cx="21" cy="7" r="0.8" fill={RB[0]} opacity="0.6" />
+          <circle cx="19" cy="19" r="1" fill={RB[4]} opacity="0.7" />
+          <circle cx="5" cy="18" r="0.8" fill={RB[3]} opacity="0.6" />
+        </>
+      )}
+    </svg>
+  );
+}
+
 /** Multiplier fire — smaller, for inline use */
 export function IconMultiplier({ size = 14 }: IconProps) {
   return (
