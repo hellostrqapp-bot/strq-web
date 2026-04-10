@@ -937,63 +937,38 @@ export default function DashboardPage() {
 
           {todayType === 'rest' ? (
             <>
-              {/* Q in resting pose — the hero */}
-              <div style={{ marginBottom: 8, position: 'relative' }}>
-                <QResting size={120} />
-              </div>
-
-              {/* Speech bubble from Q */}
+              {/* Moon + Q side by side */}
               <div style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: 12,
+                marginBottom: 12,
                 position: 'relative',
-                background: `linear-gradient(135deg, ${PD}cc, ${P}bb)`,
-                border: `1px solid ${PL}33`,
-                borderRadius: 16,
-                padding: '14px 20px',
-                marginBottom: 8,
-                maxWidth: 280,
-                marginLeft: 'auto',
-                marginRight: 'auto',
               }}>
-                {/* Bubble pointer */}
-                <div style={{
-                  position: 'absolute',
-                  top: -8,
-                  left: '50%',
-                  transform: 'translateX(-50%)',
-                  width: 0,
-                  height: 0,
-                  borderLeft: '8px solid transparent',
-                  borderRight: '8px solid transparent',
-                  borderBottom: `8px solid ${PD}cc`,
-                }} />
-                <div style={{
-                  fontSize: 15,
-                  fontWeight: 700,
-                  color: W,
-                  lineHeight: 1.4,
-                }}>
-                  {t('q_rest_quote')}
-                </div>
+                <IconEarnedRest size={56} progress={1} tier="supercharged" />
+                <QResting size={90} />
+              </div>
+
+              {/* Q's whisper */}
+              <div style={{
+                fontSize: 13,
+                color: `${PL}bb`,
+                fontStyle: 'italic',
+                marginBottom: 10,
+                position: 'relative',
+              }}>
+                Q: &ldquo;{t('q_rest_quote')}&rdquo;
               </div>
 
               <div style={{
-                fontSize: 18,
+                fontSize: 17,
                 fontWeight: 800,
                 color: PL,
                 textShadow: `0 0 16px ${PL}44, 0 0 32px ${P}22`,
                 position: 'relative',
-                marginTop: 12,
               }}>
                 {t('rest_celebrate')}
-              </div>
-              <div style={{
-                fontSize: 13,
-                color: 'rgba(255,255,255,0.45)',
-                marginTop: 6,
-                position: 'relative',
-                fontStyle: 'italic',
-              }}>
-                {t('rest_celebrate_sub')}
               </div>
             </>
           ) : (
