@@ -74,7 +74,9 @@
     "earned_rest": "Jour de repos mérité",
     "rest_charging": "Jour de repos en charge...",
     "rest_celebrate": "Repos mérité. La récupération, c'est la force.",
-    "rest_celebrate_sub": "Ton corps se renforce pendant que tu te reposes."
+    "rest_celebrate_sub": "Ton corps se renforce pendant que tu te reposes.",
+    "q_rest_quote": "Slow and steady, tu te souviens ? C'est la partie steady.",
+    "q_rest_nudge": "Tu l'as mérité. Prends ce repos."
   },
   "event": {
     "title": "Votre événement",

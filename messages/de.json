@@ -74,7 +74,9 @@
     "earned_rest": "Verdienter Ruhetag",
     "rest_charging": "Ruhetag lädt auf...",
     "rest_celebrate": "Ruhe verdient. Erholung ist Stärke.",
-    "rest_celebrate_sub": "Dein Körper wird stärker, während du ruhst."
+    "rest_celebrate_sub": "Dein Körper wird stärker, während du ruhst.",
+    "q_rest_quote": "Slow and steady, weißt du noch? Das ist der Steady-Teil.",
+    "q_rest_nudge": "Du hast es dir verdient. Nimm dir die Pause."
   },
   "event": {
     "title": "Dein Event",

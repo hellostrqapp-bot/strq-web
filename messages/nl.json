@@ -74,7 +74,9 @@
     "earned_rest": "Verdiende rustdag",
     "rest_charging": "Rustdag laadt op...",
     "rest_celebrate": "Rust verdiend. Herstel is kracht.",
-    "rest_celebrate_sub": "Je lichaam wordt sterker terwijl je rust."
+    "rest_celebrate_sub": "Je lichaam wordt sterker terwijl je rust.",
+    "q_rest_quote": "Slow and steady, weet je nog? Dit is het steady-gedeelte.",
+    "q_rest_nudge": "Je hebt het verdiend. Neem die rust."
   },
   "event": {
     "title": "Je evenement",

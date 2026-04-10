@@ -74,7 +74,9 @@
     "earned_rest": "Earned rest day",
     "rest_charging": "Rest day charging...",
     "rest_celebrate": "Rest earned. Recovery is strength.",
-    "rest_celebrate_sub": "Your body grows stronger while you rest."
+    "rest_celebrate_sub": "Your body grows stronger while you rest.",
+    "q_rest_quote": "Slow and steady, remember? This is the steady part.",
+    "q_rest_nudge": "You earned it. Take that rest."
   },
   "event": {
     "title": "Your event",

@@ -100,6 +100,62 @@ function QCelebrating({ size = 64 }: { size?: number }) {
   );
 }
 
+// ── Q Mascotte (resting pose — eyes closed, peaceful) ──
+function QResting({ size = 64 }: { size?: number }) {
+  const h = size * 1.25;
+  return (
+    <svg width={size} height={h} viewBox="0 0 240 300" fill="none">
+      <ellipse cx="120" cy="290" rx="36" ry="5" fill="rgba(0,0,0,0.14)" />
+      {/* Legs — relaxed */}
+      <path d="M106 250 L100 276" stroke={SK} strokeWidth="15" strokeLinecap="round" />
+      <path d="M134 250 L140 276" stroke={SK} strokeWidth="15" strokeLinecap="round" />
+      <ellipse cx="96" cy="280" rx="11" ry="5.5" fill={SD} />
+      <ellipse cx="144" cy="280" rx="11" ry="5.5" fill={SD} />
+      {/* Shell — rainbow stripes glow stronger during rest */}
+      <g>
+        <ellipse cx={120} cy={204} rx={52} ry={44} fill={P} />
+        <ellipse cx={120} cy={194} rx={25} ry={21} stroke={PM} strokeWidth="1.8" fill="none" opacity="0.45" />
+        <ellipse cx={112} cy={190} rx={12} ry={8} fill={PL} opacity="0.12" />
+        {RB.map((c, i) => (
+          <path key={i} d={`M${68 + i * 2} ${206 + i * 2.5} Q120 ${186 + i * 2.5} ${172 - i * 2} ${206 + i * 2.5}`} stroke={c} strokeWidth="3" fill="none" strokeLinecap="round" opacity="0.8" />
+        ))}
+      </g>
+      {/* Belly */}
+      <ellipse cx="120" cy="224" rx="26" ry="24" fill={SL} />
+      {/* Arms resting at sides — peaceful */}
+      <path d="M72 204 C60 218, 58 240, 66 254" stroke={SK} strokeWidth="12" strokeLinecap="round" />
+      <path d="M168 204 C180 218, 182 240, 174 254" stroke={SK} strokeWidth="12" strokeLinecap="round" />
+      {/* Hands resting */}
+      <ellipse cx="66" cy="258" rx="8" ry="6" fill={SD} />
+      <ellipse cx="174" cy="258" rx="8" ry="6" fill={SD} />
+      {/* Neck + Head — slightly tilted */}
+      <path d="M120 168 L118 154" stroke={SK} strokeWidth="14" strokeLinecap="round" />
+      <ellipse cx="118" cy="140" rx="28" ry="24" fill={SK} />
+      <circle cx="96" cy="146" r="4.5" fill={SL} opacity="0.35" />
+      {/* Glasses — slightly tilted with head */}
+      <g transform="rotate(-3 118 134)">
+        <rect x={96} y={128} width="20" height="15" rx="4.5" stroke={W} strokeWidth="2.6" fill="rgba(255,255,255,0.08)" />
+        <rect x={120} y={128} width="20" height="15" rx="4.5" stroke={W} strokeWidth="2.6" fill="rgba(255,255,255,0.08)" />
+        <path d="M116 134 C117 132, 119 132, 120 134" stroke={W} strokeWidth="2" fill="none" />
+        <line x1="96" y1="134" x2="90" y2="132" stroke={W} strokeWidth="2" strokeLinecap="round" />
+        <line x1="140" y1="134" x2="146" y2="132" stroke={W} strokeWidth="2" strokeLinecap="round" />
+      </g>
+      {/* Eyes — closed, peaceful curved lines */}
+      <path d="M103 132 C106 128, 112 128, 115 132" stroke={PD} strokeWidth="2.5" strokeLinecap="round" fill="none" />
+      <path d="M123 133 C126 129, 132 129, 135 133" stroke={PD} strokeWidth="2.5" strokeLinecap="round" fill="none" />
+      {/* Peaceful smile — gentle */}
+      <path d="M108 150 C114 158, 124 158, 130 150" stroke={PD} strokeWidth="2" fill="none" strokeLinecap="round" />
+      {/* Blush — warm glow on cheeks */}
+      <circle cx="100" cy="145" r="5" fill="#E74C3C" opacity="0.12" />
+      <circle cx="136" cy="146" r="5" fill="#E74C3C" opacity="0.12" />
+      {/* Z's floating up — rest is happening */}
+      <text x="150" y="120" fill={PL} fontSize="18" fontWeight="800" fontFamily="sans-serif" opacity="0.6">z</text>
+      <text x="162" y="105" fill={PL} fontSize="14" fontWeight="800" fontFamily="sans-serif" opacity="0.45">z</text>
+      <text x="170" y="92" fill={PL} fontSize="10" fontWeight="800" fontFamily="sans-serif" opacity="0.3">z</text>
+    </svg>
+  );
+}
+
 type DashState = 'loading' | 'reveal' | 'idle' | 'logging';
 
 export default function DashboardPage() {
@@ -764,6 +820,20 @@ export default function DashboardPage() {
               )}
             </span>
           </button>
+
+          {/* Q whisper when rest is available */}
+          {restAvailable && (
+            <div style={{
+              textAlign: 'center',
+              fontSize: 12,
+              color: `${PL}99`,
+              fontStyle: 'italic',
+              marginTop: 4,
+              animation: 'reveal-cta-pulse 3s ease-in-out infinite',
+            }}>
+              Q: &ldquo;{t('q_rest_nudge')}&rdquo;
+            </div>
+          )}
         </div>
         );
       })()}
@@ -867,16 +937,52 @@ export default function DashboardPage() {
 
           {todayType === 'rest' ? (
             <>
-              {/* Resting Q — moon icon large */}
-              <div style={{ marginBottom: 16, position: 'relative' }}>
-                <IconEarnedRest size={72} progress={1} tier="supercharged" />
+              {/* Q in resting pose — the hero */}
+              <div style={{ marginBottom: 8, position: 'relative' }}>
+                <QResting size={120} />
               </div>
+
+              {/* Speech bubble from Q */}
+              <div style={{
+                position: 'relative',
+                background: `linear-gradient(135deg, ${PD}cc, ${P}bb)`,
+                border: `1px solid ${PL}33`,
+                borderRadius: 16,
+                padding: '14px 20px',
+                marginBottom: 8,
+                maxWidth: 280,
+                marginLeft: 'auto',
+                marginRight: 'auto',
+              }}>
+                {/* Bubble pointer */}
+                <div style={{
+                  position: 'absolute',
+                  top: -8,
+                  left: '50%',
+                  transform: 'translateX(-50%)',
+                  width: 0,
+                  height: 0,
+                  borderLeft: '8px solid transparent',
+                  borderRight: '8px solid transparent',
+                  borderBottom: `8px solid ${PD}cc`,
+                }} />
+                <div style={{
+                  fontSize: 15,
+                  fontWeight: 700,
+                  color: W,
+                  lineHeight: 1.4,
+                }}>
+                  {t('q_rest_quote')}
+                </div>
+              </div>
+
               <div style={{
                 fontSize: 18,
                 fontWeight: 800,
                 color: PL,
                 textShadow: `0 0 16px ${PL}44, 0 0 32px ${P}22`,
                 position: 'relative',
+                marginTop: 12,
               }}>
                 {t('rest_celebrate')}
               </div>
@@ -1033,7 +1139,7 @@ export default function DashboardPage() {
                     {isRest && (
                       <>
                         {/* Sparkle ring around rest orbs */}
-                        {day.isToday && [0, 72, 144, 216, 288].map((angle, si) => {
+                        {[0, 72, 144, 216, 288].map((angle, si) => {
                           const rad = (angle * Math.PI) / 180;
                           const dist = 24;
                           const sx = Math.cos(rad) * dist;
@@ -1055,11 +1161,13 @@ export default function DashboardPage() {
                             />
                           );
                         })}
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                          {/* White moon on rainbow background — bold and clear */}
-                          <path d="M15 8a5.5 5.5 0 1 1-5.5 7.5A4.2 4.2 0 0 0 15 8Z" fill={W} opacity="0.9" />
-                          <text x="16" y="8" fill={W} fontSize="6" fontWeight="800" fontFamily="sans-serif" opacity="0.7">z</text>
-                        </svg>
+                        {/* Counter-spin so moon stays still while rainbow rotates */}
+                        <div style={{ animation: 'rest-orb-counterspin 8s linear infinite' }}>
+                          <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                            <path d="M15 8a5.5 5.5 0 1 1-5.5 7.5A4.2 4.2 0 0 0 15 8Z" fill={W} opacity="0.95" />
+                            <text x="16" y="8" fill={W} fontSize="6" fontWeight="800" fontFamily="sans-serif" opacity="0.8">z</text>
+                          </svg>
+                        </div>
                       </>
                     )}
                     {isEmpty && (
@@ -1187,8 +1295,12 @@ function ConfettiOverlay() {
           transform: translateY(1px) scale(0.98);
         }
         @keyframes rest-orb-spin {
-          from { filter: hue-rotate(0deg); }
-          to { filter: hue-rotate(360deg); }
+          from { transform: rotate(0deg); }
+          to { transform: rotate(360deg); }
+        }
+        @keyframes rest-orb-counterspin {
+          from { transform: rotate(0deg); }
+          to { transform: rotate(-360deg); }
         }
         @keyframes earned-rest-glow {
           0%, 100% { box-shadow: 0 0 24px rgba(241,196,15,0.15), 0 0 48px rgba(142,68,173,0.1); }

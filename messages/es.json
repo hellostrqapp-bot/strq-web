@@ -74,7 +74,9 @@
     "earned_rest": "Día de descanso ganado",
     "rest_charging": "Día de descanso cargando...",
     "rest_celebrate": "Descanso ganado. Recuperar es fuerza.",
-    "rest_celebrate_sub": "Tu cuerpo se fortalece mientras descansas."
+    "rest_celebrate_sub": "Tu cuerpo se fortalece mientras descansas.",
+    "q_rest_quote": "Slow and steady, ¿recuerdas? Esta es la parte steady.",
+    "q_rest_nudge": "Te lo ganaste. Tómate ese descanso."
   },
   "event": {
     "title": "Tu evento",
