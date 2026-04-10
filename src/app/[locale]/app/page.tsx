@@ -961,21 +961,21 @@ export default function DashboardPage() {
                           ? `linear-gradient(135deg, ${PM}, ${PL})`
                           : `linear-gradient(135deg, ${P}, ${PL})`
                         : isRest
-                        ? `linear-gradient(135deg, ${SK}22, ${SK}33)`
+                        ? `conic-gradient(from 180deg, #E74C3C, #E67E22, #F1C40F, #27AE60, #2980B9, #8E44AD, #E74C3C)`
                         : 'rgba(255,255,255,0.03)',
                       border: day.isToday
                         ? `2px solid ${PL}`
                         : isActive
                         ? `2px solid ${PL}55`
                         : isRest
-                        ? `2px solid ${SK}44`
+                        ? '2px solid rgba(255,255,255,0.15)'
                         : '2px solid rgba(255,255,255,0.06)',
                       boxShadow: day.isToday && isActive
                         ? `0 0 18px ${PL}77, 0 0 6px ${P}55, 0 0 30px ${P}33`
                         : isActive
                         ? `0 0 14px ${P}66, 0 0 4px ${PL}44`
                         : isRest
-                        ? `0 0 8px ${SK}22`
+                        ? `0 0 14px rgba(241,196,15,0.3), 0 0 28px rgba(142,68,173,0.2), 0 0 6px rgba(39,174,96,0.25)`
                         : 'none',
                       display: 'flex',
                       alignItems: 'center',
@@ -985,6 +985,8 @@ export default function DashboardPage() {
                       overflow: 'visible',
                       animation: day.isToday && isActive
                         ? 'day-pulse 2s ease-in-out infinite'
+                        : isRest
+                        ? 'rest-orb-spin 8s linear infinite'
                         : undefined,
                     }}
                   >
@@ -1029,21 +1031,36 @@ export default function DashboardPage() {
                       </svg>
                     )}
                     {isRest && (
-                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
-                        {/* Rainbow ring — rest was earned */}
-                        <defs>
-                          <linearGradient id={`rb-${i}`} x1="0" y1="0" x2="24" y2="24" gradientUnits="userSpaceOnUse">
-                            <stop offset="0%" stopColor="#E74C3C" />
-                            <stop offset="20%" stopColor="#E67E22" />
-                            <stop offset="40%" stopColor="#F1C40F" />
-                            <stop offset="60%" stopColor="#27AE60" />
-                            <stop offset="80%" stopColor="#2980B9" />
-                            <stop offset="100%" stopColor="#8E44AD" />
-                          </linearGradient>
-                        </defs>
-                        <circle cx="12" cy="12" r="8" fill="none" stroke={`url(#rb-${i})`} strokeWidth="1.8" opacity="0.7" />
-                        <path d="M14.5 10a3.2 3.2 0 1 1-3.2 4.5 2.5 2.5 0 0 0 3.2-4.5Z" fill={PL} opacity="0.6" />
-                      </svg>
+                      <>
+                        {/* Sparkle ring around rest orbs */}
+                        {day.isToday && [0, 72, 144, 216, 288].map((angle, si) => {
+                          const rad = (angle * Math.PI) / 180;
+                          const dist = 24;
+                          const sx = Math.cos(rad) * dist;
+                          const sy = Math.sin(rad) * dist;
+                          return (
+                            <div
+                              key={si}
+                              style={{
+                                position: 'absolute',
+                                width: 3.5,
+                                height: 3.5,
+                                borderRadius: '50%',
+                                background: RB[si % RB.length],
+                                left: `calc(50% + ${sx}px - 1.75px)`,
+                                top: `calc(50% + ${sy}px - 1.75px)`,
+                                animation: `today-sparkle 2.5s ease-in-out ${si * 0.5}s infinite`,
+                                pointerEvents: 'none',
+                              }}
+                            />
+                          );
+                        })}
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                          {/* White moon on rainbow background — bold and clear */}
+                          <path d="M15 8a5.5 5.5 0 1 1-5.5 7.5A4.2 4.2 0 0 0 15 8Z" fill={W} opacity="0.9" />
+                          <text x="16" y="8" fill={W} fontSize="6" fontWeight="800" fontFamily="sans-serif" opacity="0.7">z</text>
+                        </svg>
+                      </>
                     )}
                     {isEmpty && (
                       <div style={{
@@ -1060,10 +1077,16 @@ export default function DashboardPage() {
                       color: isActive
                         ? PL
                         : isRest
-                        ? `${SK}99`
+                        ? undefined
                         : 'rgba(255,255,255,0.2)',
-                      fontWeight: isActive ? 800 : 600,
-                      letterSpacing: isActive ? '0.04em' : undefined,
+                      fontWeight: isActive || isRest ? 800 : 600,
+                      letterSpacing: isActive || isRest ? '0.04em' : undefined,
+                      ...(isRest ? {
+                        background: 'linear-gradient(90deg, #E74C3C, #E67E22, #F1C40F, #27AE60, #2980B9, #8E44AD)',
+                        WebkitBackgroundClip: 'text',
+                        WebkitTextFillColor: 'transparent',
+                        backgroundClip: 'text',
+                      } : {}),
                     }}
                   >
                     {day.label}
@@ -1162,6 +1185,10 @@ function ConfettiOverlay() {
         }
         .earned-rest-btn:active {
           transform: translateY(1px) scale(0.98);
+        }
+        @keyframes rest-orb-spin {
+          from { filter: hue-rotate(0deg); }
+          to { filter: hue-rotate(360deg); }
         }
         @keyframes earned-rest-glow {
           0%, 100% { box-shadow: 0 0 24px rgba(241,196,15,0.15), 0 0 48px rgba(142,68,173,0.1); }
