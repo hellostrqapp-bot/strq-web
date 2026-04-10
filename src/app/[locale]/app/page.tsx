@@ -855,27 +855,25 @@ export default function DashboardPage() {
             overflow: 'hidden',
           }}
         >
-          {/* Sparkle particles — rainbow for rest, green/purple for training */}
+          {/* Twinkling stars — rainbow for rest, green/purple for training */}
           <div style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, pointerEvents: 'none' }}>
             {todayType === 'rest' ? (
-              /* Rainbow sparkles for earned rest */
+              /* Rainbow twinkling stars for earned rest */
               [
-                { x: 5, y: 10, d: 0, s: 4 }, { x: 90, y: 8, d: 0.4, s: 3 },
-                { x: 15, y: 50, d: 0.8, s: 5 }, { x: 85, y: 45, d: 1.2, s: 4 },
-                { x: 50, y: 5, d: 1.6, s: 3 }, { x: 8, y: 80, d: 2.0, s: 4 },
-                { x: 92, y: 75, d: 2.4, s: 3 }, { x: 40, y: 90, d: 2.8, s: 5 },
-                { x: 65, y: 85, d: 3.2, s: 4 }, { x: 25, y: 15, d: 3.6, s: 3 },
+                { x: 5, y: 10, d: 0, s: 10 }, { x: 90, y: 8, d: 0.4, s: 8 },
+                { x: 15, y: 50, d: 0.8, s: 12 }, { x: 85, y: 45, d: 1.2, s: 10 },
+                { x: 50, y: 5, d: 1.6, s: 8 }, { x: 8, y: 80, d: 2.0, s: 10 },
+                { x: 92, y: 75, d: 2.4, s: 8 }, { x: 40, y: 90, d: 2.8, s: 12 },
+                { x: 65, y: 85, d: 3.2, s: 10 }, { x: 25, y: 15, d: 3.6, s: 8 },
               ].map((s, i) => (
-                <div key={i} style={{
+                <svg key={i} width={s.s} height={s.s} viewBox="0 0 24 24" fill="none" style={{
                   position: 'absolute',
                   left: `${s.x}%`,
                   top: `${s.y}%`,
-                  width: s.s,
-                  height: s.s,
-                  borderRadius: '50%',
-                  background: RB[i % RB.length],
-                  animation: `card-sparkle 3s ease-in-out ${s.d}s infinite`,
-                }} />
+                  animation: `star-twinkle 3s ease-in-out ${s.d}s infinite`,
+                }}>
+                  <path d="M12 2L13.5 9.5L20 12L13.5 14.5L12 22L10.5 14.5L4 12L10.5 9.5L12 2Z" fill={RB[i % RB.length]} />
+                </svg>
               ))
             ) : (
               [
@@ -946,8 +944,12 @@ export default function DashboardPage() {
                 marginBottom: 12,
                 position: 'relative',
               }}>
-                <IconEarnedRest size={56} progress={1} tier="supercharged" />
-                <QResting size={90} />
+                <div style={{ animation: 'rest-orb-spin 8s linear infinite' }}>
+                  <IconEarnedRest size={56} progress={1} tier="supercharged" />
+                </div>
+                <div style={{ animation: 'q-sway 4s ease-in-out infinite' }}>
+                  <QResting size={90} />
+                </div>
               </div>
 
               {/* Q's whisper */}
@@ -1268,6 +1270,18 @@ function ConfettiOverlay() {
         }
         .earned-rest-btn:active {
           transform: translateY(1px) scale(0.98);
+        }
+        @keyframes star-twinkle {
+          0%, 100% { opacity: 0; transform: scale(0.3) rotate(0deg); }
+          30% { opacity: 0.9; transform: scale(1.1) rotate(20deg); }
+          50% { opacity: 0.7; transform: scale(0.9) rotate(-10deg); }
+          70% { opacity: 0.5; transform: scale(1.0) rotate(15deg); }
+        }
+        @keyframes q-sway {
+          0%, 100% { transform: rotate(-2deg) translateY(0); }
+          25% { transform: rotate(1deg) translateY(-2px); }
+          50% { transform: rotate(-1deg) translateY(0); }
+          75% { transform: rotate(2deg) translateY(-1px); }
         }
         @keyframes rest-orb-spin {
           from { transform: rotate(0deg); }
