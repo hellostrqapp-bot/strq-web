@@ -782,6 +782,30 @@ export default function DashboardPage() {
             }}
             className={restAvailable ? 'earned-rest-btn' : 'rest-btn'}
           >
+            {/* Fill-up liquid animation — shows charging progress visually */}
+            {!restAvailable && restProgress > 0 && (
+              <div style={{
+                position: 'absolute',
+                left: 0, right: 0, bottom: 0,
+                height: `${Math.min(restProgress * 100, 100)}%`,
+                background: `linear-gradient(0deg, rgba(165,105,189,0.12) 0%, rgba(165,105,189,0.04) 100%)`,
+                borderRadius: 14,
+                transition: 'height 1s ease-out',
+                pointerEvents: 'none',
+              }}>
+                {/* Subtle wave at the fill top */}
+                <div style={{
+                  position: 'absolute',
+                  top: -4,
+                  left: 0, right: 0,
+                  height: 8,
+                  background: `radial-gradient(ellipse at 50% 100%, ${PL}15 0%, transparent 70%)`,
+                  animation: 'rest-wave 3s ease-in-out infinite',
+                  pointerEvents: 'none',
+                }} />
+              </div>
+            )}
+
             {/* Rainbow shimmer for supercharged */}
             {restTier === 'supercharged' && (
               <div style={{
@@ -1299,6 +1323,10 @@ function ConfettiOverlay() {
           0% { transform: translateX(-120%); }
           50% { transform: translateX(120%); }
           100% { transform: translateX(120%); }
+        }
+        @keyframes rest-wave {
+          0%, 100% { transform: translateX(0) scaleY(1); opacity: 0.6; }
+          50% { transform: translateX(8px) scaleY(1.4); opacity: 1; }
         }
       `}</style>
     </div>

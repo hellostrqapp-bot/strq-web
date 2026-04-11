@@ -93,7 +93,11 @@
     "target": "Tempo alvo",
     "minutes": "min",
     "delete": "Excluir",
-    "confirm_delete": "Tem certeza?"
+    "confirm_delete": "Tem certeza?",
+    "road_header": "A caminho juntos",
+    "road_days_to_go": "dias restantes",
+    "road_count": "{count} tartarugas a caminho",
+    "road_invite": "+ Treina junto"
   },
   "level": {
     "name_fresh": "Fresh",

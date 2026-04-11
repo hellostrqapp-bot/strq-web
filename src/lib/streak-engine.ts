@@ -52,7 +52,6 @@ interface Activity {
 // Two consecutive missed/rest days = streak broken.
 
 export function calculateStreak(activities: Activity[]): StreakResult {
-  const todayStr = toDateStr(new Date());
   const activityMap = new Map<string, string>();
 
   for (const a of activities) {
@@ -61,36 +60,38 @@ export function calculateStreak(activities: Activity[]): StreakResult {
 
   let currentStreak = 0;
   let longestStreak = 0;
-  let consecutiveNonTraining = 0;
   let streakActive = true;
 
-  // Walk backwards from today
+  // Walk backwards from today.
+  // Key rule: "rustdagen na inspanning breken de streak NIET."
+  // An earned rest day (logged 'rest') after training is fine.
+  // Today being empty is fine (user hasn't opened the app yet).
+  // TWO consecutive UNLOGGED days (no activity at all) = streak breaks.
+  // But: unlogged today + logged rest yesterday = streak OK.
+
   const d = new Date();
+  let gapDays = 0; // consecutive days with NO logged activity at all
+
   for (let i = 0; i < 365 && streakActive; i++) {
     const dateStr = toDateStr(d);
     const type = activityMap.get(dateStr);
 
     if (type === 'training') {
       currentStreak++;
-      consecutiveNonTraining = 0;
+      gapDays = 0;
     } else if (type === 'rest') {
-      // Rest day — allowed if preceded by training
-      consecutiveNonTraining++;
-      if (consecutiveNonTraining >= 2) {
-        // Two non-training days in a row = streak breaks
-        streakActive = false;
-      }
-      // Rest days don't add to streak count, but don't break it
+      // Earned rest day — streak preserved, not incremented
+      // Reset the gap counter: this is a deliberate logged rest, not an absence
+      gapDays = 0;
     } else {
-      // No activity logged
+      // No activity logged this day
+      gapDays++;
       if (i === 0) {
-        // Today has no activity yet — that's OK, check yesterday
-        consecutiveNonTraining++;
-      } else {
-        consecutiveNonTraining++;
-        if (consecutiveNonTraining >= 2) {
-          streakActive = false;
-        }
+        // Today — user hasn't opened the app yet, that's fine
+        // Don't break, just continue checking yesterday
+      } else if (gapDays >= 2) {
+        // Two consecutive days with NO logged activity = streak broken
+        streakActive = false;
       }
     }
 

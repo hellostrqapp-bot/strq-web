@@ -93,7 +93,11 @@
     "target": "Tiempo objetivo",
     "minutes": "min",
     "delete": "Eliminar",
-    "confirm_delete": "¿Estás seguro?"
+    "confirm_delete": "¿Estás seguro?",
+    "road_header": "En camino juntos",
+    "road_days_to_go": "días restantes",
+    "road_count": "{count} tortugas en camino",
+    "road_invite": "+ Entrena juntos"
   },
   "level": {
     "name_fresh": "Fresh",

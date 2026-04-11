@@ -41,17 +41,15 @@ export function IconStreak({ size = 22 }: IconProps) {
 export function IconTraining({ size = 22 }: IconProps) {
   return (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="none">
-      <path
-        d="M5 12h1l2-4h2l-1.5 4H10l3-7h2l-2 7h1.5l3.5-5h2l-4 6.5V16a1 1 0 0 1-1 1H8a1 1 0 0 1-1-1v-2L5 12Z"
-        fill={SK}
-        opacity="0"
-      />
-      {/* Dumbbell icon */}
-      <rect x="3" y="9" width="3" height="6" rx="1" fill={SK} />
-      <rect x="18" y="9" width="3" height="6" rx="1" fill={SK} />
-      <rect x="6" y="10.5" width="12" height="3" rx="1" fill={SL} />
-      <rect x="1" y="10" width="2" height="4" rx="0.5" fill={SK} opacity="0.7" />
-      <rect x="21" y="10" width="2" height="4" rx="0.5" fill={SK} opacity="0.7" />
+      {/* Barbell — angular weight plates, not rounded */}
+      {/* Center bar */}
+      <rect x="5" y="11" width="14" height="2" rx="0.5" fill={SL} />
+      {/* Inner plates — tall rectangles */}
+      <rect x="4" y="7.5" width="2.5" height="9" rx="0.5" fill={SK} />
+      <rect x="17.5" y="7.5" width="2.5" height="9" rx="0.5" fill={SK} />
+      {/* Outer plates — taller, darker */}
+      <rect x="1.5" y="6" width="2" height="12" rx="0.5" fill={SK} opacity="0.8" />
+      <rect x="20.5" y="6" width="2" height="12" rx="0.5" fill={SK} opacity="0.8" />
     </svg>
   );
 }

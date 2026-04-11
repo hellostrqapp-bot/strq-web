@@ -93,7 +93,11 @@
     "target": "Temps cible",
     "minutes": "min",
     "delete": "Supprimer",
-    "confirm_delete": "Êtes-vous sûr ?"
+    "confirm_delete": "Êtes-vous sûr ?",
+    "road_header": "En route ensemble",
+    "road_days_to_go": "jours restants",
+    "road_count": "{count} tortues en chemin",
+    "road_invite": "+ Entraîne-toi ensemble"
   },
   "level": {
     "name_fresh": "Fresh",

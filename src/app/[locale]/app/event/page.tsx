@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { useTranslations, useLocale } from 'next-intl';
 import { createBrowserClient } from '@/lib/supabase-browser';
 import { IconEdit, IconDelete, IconFinish, IconSparkle } from '@/components/icons';
+import { RainbowRoad } from '@/components/rainbow-road';
 
 // ═══════════════════════════════════════════════════════════
 // strQ — Event Page
@@ -322,6 +323,29 @@ export default function EventPage() {
             </button>
           </div>
         </div>
+      )}
+
+      {/* ── RAINBOW ROAD — samen onderweg ── */}
+      {event && formState === 'closed' && (
+        <RainbowRoad
+          eventName={event.name}
+          daysToGo={daysUntil(event.event_date)}
+          friends={[
+            // TODO: replace with Supabase event_friends data when social feature ships
+            { name: 'Arnoud', xp: 0.40 },
+            { name: 'Sharon', xp: 0.20 },
+          ]}
+          strings={{
+            header: t('road_header'),
+            daysToGo: t('road_days_to_go'),
+            count: t('road_count'),
+            invite: t('road_invite'),
+          }}
+          onInvite={() => {
+            // TODO: open invite modal → email input → magic link → auto-join event
+            // For now, no-op — button is visible but flow not yet built
+          }}
+        />
       )}
 
       {/* ── CONFIRM DELETE ── */}

@@ -93,7 +93,11 @@
     "target": "Target time",
     "minutes": "min",
     "delete": "Delete",
-    "confirm_delete": "Are you sure?"
+    "confirm_delete": "Are you sure?",
+    "road_header": "On the road together",
+    "road_days_to_go": "days to go",
+    "road_count": "{count} turtles on their way",
+    "road_invite": "+ Train together"
   },
   "level": {
     "name_fresh": "Fresh",

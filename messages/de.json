@@ -93,7 +93,11 @@
     "target": "Zielzeit",
     "minutes": "Min",
     "delete": "Löschen",
-    "confirm_delete": "Bist du sicher?"
+    "confirm_delete": "Bist du sicher?",
+    "road_header": "Gemeinsam unterwegs",
+    "road_days_to_go": "Tage noch",
+    "road_count": "{count} Schildkröten unterwegs",
+    "road_invite": "+ Zusammen trainieren"
   },
   "level": {
     "name_fresh": "Fresh",

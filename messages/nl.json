@@ -93,7 +93,11 @@
     "target": "Streeftijd",
     "minutes": "min",
     "delete": "Verwijderen",
-    "confirm_delete": "Weet je het zeker?"
+    "confirm_delete": "Weet je het zeker?",
+    "road_header": "Samen onderweg",
+    "road_days_to_go": "dagen te gaan",
+    "road_count": "{count} schildpadjes onderweg",
+    "road_invite": "+ Train samen"
   },
   "level": {
     "name_fresh": "Fresh",

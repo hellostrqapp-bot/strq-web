@@ -51,7 +51,7 @@ function buildEmail(content: string, locale: string, unsubToken?: string): strin
 <body style="margin:0;padding:0;background:#1A1A2E;font-family:'Inter',-apple-system,sans-serif;">
   <div style="max-width:480px;margin:0 auto;padding:40px 24px;">
     <div style="text-align:center;margin-bottom:32px;">
-      <div style="font-size:48px;margin-bottom:8px;">&#128034;</div>
+      <img src="https://strq.app/q-logo@2x.png" alt="Q" width="48" height="60" style="margin-bottom:8px;" />
       <h1 style="color:#FFFFFF;font-size:24px;font-weight:700;margin:0;">str<span style="color:#6C3483;">Q</span></h1>
     </div>
     <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:32px 24px;">

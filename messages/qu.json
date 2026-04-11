@@ -93,7 +93,11 @@
     "target": "Chay pacha munasqa",
     "minutes": "min",
     "delete": "Pichay",
-    "confirm_delete": "¿Chiqaqtachu?"
+    "confirm_delete": "¿Chiqaqtachu?",
+    "road_header": "Ñanpi kuska",
+    "road_days_to_go": "p'unchawkuna falta",
+    "road_count": "{count} tortugakuna ñanpi",
+    "road_invite": "+ Kuska yachay"
   },
   "level": {
     "name_fresh": "Fresh",
