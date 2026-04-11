@@ -1481,10 +1481,6 @@ function ConfettiOverlay() {
           40% { transform: translateX(4px) scale(1.05); }
           100% { transform: translateX(0) scale(1); }
         }
-        .train-btn:hover {
-          transform: translateY(-1px);
-          box-shadow: 0 6px 28px #6C348377, 0 0 50px #6C348333 !important;
-        }
         .train-btn:active {
           transform: translateY(1px) scale(0.98);
         }
