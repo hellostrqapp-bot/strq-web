@@ -37,7 +37,8 @@
   },
   "footer": {
     "privacy": "Geen cookies. Geen tracking. Wel een schildpad met een bril.",
-    "copyright": "© {year} strQ.app"
+    "copyright": "© {year} strQ.app",
+    "login": "Al tester? Log in →"
   },
   "language": {
     "label": "Taal"

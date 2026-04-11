@@ -1056,14 +1056,29 @@ export default function Landing() {
           style={{
             marginTop: 48,
             textAlign: "center",
-            color: "rgba(255,255,255,0.12)",
             fontSize: 12,
             lineHeight: 1.6,
           }}
         >
-          {t("footer.privacy")}
-          <br />
-          {t("footer.copyright", { year: new Date().getFullYear() })}
+          <a
+            href={`/${locale}/login`}
+            style={{
+              color: "rgba(165,105,189,0.5)",
+              textDecoration: "none",
+              fontSize: 13,
+              fontWeight: 500,
+              transition: "color 0.2s",
+            }}
+            onMouseEnter={(e) => (e.currentTarget.style.color = "#A569BD")}
+            onMouseLeave={(e) => (e.currentTarget.style.color = "rgba(165,105,189,0.5)")}
+          >
+            {t("footer.login")}
+          </a>
+          <div style={{ marginTop: 16, color: "rgba(255,255,255,0.12)" }}>
+            {t("footer.privacy")}
+            <br />
+            {t("footer.copyright", { year: new Date().getFullYear() })}
+          </div>
         </div>
       </div>
     </div>

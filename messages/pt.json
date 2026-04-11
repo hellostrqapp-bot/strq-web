@@ -37,7 +37,8 @@
   },
   "footer": {
     "privacy": "Sem cookies. Sem rastreamento. Só uma tartaruga de óculos.",
-    "copyright": "© {year} strQ.app"
+    "copyright": "© {year} strQ.app",
+    "login": "Já és tester? Entrar →"
   },
   "language": {
     "label": "Idioma"

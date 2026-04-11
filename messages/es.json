@@ -37,7 +37,8 @@
   },
   "footer": {
     "privacy": "Sin cookies. Sin tracking. Solo una tortuga con gafas.",
-    "copyright": "© {year} strQ.app"
+    "copyright": "© {year} strQ.app",
+    "login": "¿Ya eres tester? Inicia sesión →"
   },
   "language": {
     "label": "Idioma"

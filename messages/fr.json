@@ -37,7 +37,8 @@
   },
   "footer": {
     "privacy": "Pas de cookies. Pas de tracking. Juste une tortue avec des lunettes.",
-    "copyright": "© {year} strQ.app"
+    "copyright": "© {year} strQ.app",
+    "login": "Déjà testeur ? Connectez-vous →"
   },
   "language": {
     "label": "Langue"

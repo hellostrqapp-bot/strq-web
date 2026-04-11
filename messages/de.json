@@ -37,7 +37,8 @@
   },
   "footer": {
     "privacy": "Keine Cookies. Kein Tracking. Nur eine Schildkröte mit Brille.",
-    "copyright": "© {year} strQ.app"
+    "copyright": "© {year} strQ.app",
+    "login": "Schon Tester? Einloggen →"
   },
   "language": {
     "label": "Sprache"

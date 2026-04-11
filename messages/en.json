@@ -37,7 +37,8 @@
   },
   "footer": {
     "privacy": "No cookies. No tracking. Just a turtle with glasses.",
-    "copyright": "© {year} strQ.app"
+    "copyright": "© {year} strQ.app",
+    "login": "Already a tester? Log in →"
   },
   "language": {
     "label": "Language"
