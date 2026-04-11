@@ -39,6 +39,48 @@ const BG = '#1A1A2E';
 const W = '#FFFFFF';
 const RB = ['#E74C3C', '#E67E22', '#F1C40F', '#27AE60', '#2980B9', '#8E44AD'];
 
+// ── Q Mini — lives inside the train button, eager and bouncing ──
+function QMiniReady({ size = 36 }: { size?: number }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 60 60" fill="none" style={{ display: 'block' }}>
+      {/* Shell */}
+      <ellipse cx="30" cy="33" rx="14" ry="12" fill={P} />
+      {RB.map((c, i) => (
+        <path key={i} d={`M${17 + i * 0.6} ${34 + i * 0.7} Q30 ${27 + i * 0.7} ${43 - i * 0.6} ${34 + i * 0.7}`}
+          stroke={c} strokeWidth="1.2" fill="none" strokeLinecap="round" opacity="0.7" />
+      ))}
+      {/* Belly */}
+      <ellipse cx="30" cy="37" rx="7" ry="6.5" fill={SL} />
+      {/* Legs */}
+      <path d="M26 42 L24 48" stroke={SK} strokeWidth="3.5" strokeLinecap="round" />
+      <path d="M34 42 L36 48" stroke={SK} strokeWidth="3.5" strokeLinecap="round" />
+      <ellipse cx="23" cy="49" rx="3" ry="1.5" fill={SD} />
+      <ellipse cx="37" cy="49" rx="3" ry="1.5" fill={SD} />
+      {/* Left arm — wave! */}
+      <path d="M17 33 C13 28, 10 20, 9 14" stroke={SK} strokeWidth="3" strokeLinecap="round" />
+      <ellipse cx="8.5" cy="13" rx="2.5" ry="2" fill={SD} />
+      {/* Right arm — relaxed */}
+      <path d="M43 34 C46 37, 46 42, 44 45" stroke={SK} strokeWidth="3" strokeLinecap="round" />
+      <ellipse cx="44" cy="46" rx="2" ry="1.5" fill={SD} />
+      {/* Neck */}
+      <path d="M30 24 L30 20" stroke={SK} strokeWidth="3.5" strokeLinecap="round" />
+      {/* Head */}
+      <ellipse cx="30" cy="15" rx="8" ry="7" fill={SK} />
+      {/* Glasses */}
+      <rect x="22.5" y="12" width="6" height="4.5" rx="1.5" stroke={W} strokeWidth="0.8" fill="rgba(255,255,255,0.08)" />
+      <rect x="31.5" y="12" width="6" height="4.5" rx="1.5" stroke={W} strokeWidth="0.8" fill="rgba(255,255,255,0.08)" />
+      <path d="M28.5 13.5 C29 12.8, 31 12.8, 31.5 13.5" stroke={W} strokeWidth="0.6" fill="none" />
+      {/* Eyes — eager, looking at you */}
+      <ellipse cx="25.8" cy="13.8" rx="1.3" ry="1.5" fill={W} />
+      <ellipse cx="34.2" cy="13.8" rx="1.3" ry="1.5" fill={W} />
+      <ellipse cx="26.2" cy="13.5" rx="0.8" ry="1" fill={PD} />
+      <ellipse cx="34.6" cy="13.5" rx="0.8" ry="1" fill={PD} />
+      {/* Warm grin */}
+      <path d="M27 19 C29 21, 31 21, 33 19" stroke={PD} strokeWidth="0.8" fill="none" strokeLinecap="round" />
+    </svg>
+  );
+}
+
 // ── Q Mascotte (small celebrating pose) ──
 function QCelebrating({ size = 64 }: { size?: number }) {
   const h = size * 1.25;
@@ -165,6 +207,7 @@ export default function DashboardPage() {
   const [streak, setStreak] = useState<StreakResult | null>(null);
   const [todayLogged, setTodayLogged] = useState(false);
   const [todayType, setTodayType] = useState<'training' | 'rest' | null>(null);
+  const [qSpinning, setQSpinning] = useState(false);
   const [reveal, setReveal] = useState<{
     baseXp: number;
     bonusXp: number;
@@ -719,12 +762,16 @@ export default function DashboardPage() {
 
         return (
         <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-          {/* Primary: I trained! */}
+          {/* Primary: I trained! — with Q bouncing inside */}
           <button
-            onClick={() => logActivity('training')}
+            onClick={() => {
+              setQSpinning(true);
+              setTimeout(() => setQSpinning(false), 700);
+              logActivity('training');
+            }}
             style={{
               width: '100%',
-              padding: '20px',
+              padding: '16px 20px',
               fontSize: 17,
               fontWeight: 800,
               background: `linear-gradient(135deg, ${P}, ${PM}, ${PL})`,
@@ -737,10 +784,24 @@ export default function DashboardPage() {
               letterSpacing: '0.02em',
               position: 'relative',
               overflow: 'hidden',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: 10,
             }}
             className="train-btn"
           >
-            <IconTraining size={20} /> {t('log_training')}
+            {/* Q is alive in the button — bounces idle, spins on tap */}
+            <span style={{
+              display: 'inline-flex',
+              animation: qSpinning
+                ? 'q-btn-spin 0.6s ease-in-out'
+                : 'q-btn-bounce 2s ease-in-out infinite',
+              flexShrink: 0,
+            }}>
+              <QMiniReady size={38} />
+            </span>
+            <span>{t('log_training')}</span>
           </button>
 
           {/* ── EARNED REST BUTTON ── */}
@@ -1275,6 +1336,16 @@ function ConfettiOverlay() {
           0%, 100% { opacity: 0; transform: scale(0.3); }
           40% { opacity: 0.9; transform: scale(1.2); }
           60% { opacity: 0.7; transform: scale(1); }
+        }
+        @keyframes q-btn-bounce {
+          0%, 100% { transform: translateY(0) rotate(0deg); }
+          25% { transform: translateY(-3px) rotate(-3deg); }
+          50% { transform: translateY(0) rotate(0deg); }
+          75% { transform: translateY(-2px) rotate(2deg); }
+        }
+        @keyframes q-btn-spin {
+          0% { transform: rotateY(0deg); }
+          100% { transform: rotateY(360deg); }
         }
         .train-btn:hover {
           transform: translateY(-1px);
