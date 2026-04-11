@@ -18,6 +18,13 @@ import { today } from '@/components/dashboard/helpers';
 
 export type DashState = 'loading' | 'reveal' | 'idle' | 'logging';
 
+/** Error codes — translated in the UI layer, not here */
+export type DashError =
+  | 'load_failed'       // loadData() failed
+  | 'not_logged_in'     // no auth session
+  | 'save_failed'       // activity upsert failed
+  | 'unknown';          // catch-all
+
 export interface RevealData {
   baseXp: number;
   bonusXp: number;
@@ -39,7 +46,7 @@ export function useDashboard() {
   const [totalXp, setTotalXp] = useState(0);
   const [showConfetti, setShowConfetti] = useState(false);
   const [event, setEvent] = useState<EventData | null>(null);
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState<DashError | null>(null);
 
   const supabase = createBrowserClient();
 
@@ -113,7 +120,7 @@ export function useDashboard() {
       }
     } catch (err) {
       console.error('[useDashboard] loadData failed:', err);
-      setError('Kon data niet laden. Probeer opnieuw.');
+      setError('load_failed');
       setState('idle');
     }
   }, [supabase]);
@@ -132,7 +139,7 @@ export function useDashboard() {
         data: { user },
       } = await supabase.auth.getUser();
       if (!user) {
-        setError('Niet ingelogd.');
+        setError('not_logged_in');
         setState('idle');
         return;
       }
@@ -152,7 +159,7 @@ export function useDashboard() {
 
       if (upsertError) {
         console.error('[useDashboard] upsert failed:', upsertError);
-        setError('Activiteit opslaan mislukt. Probeer opnieuw.');
+        setError('save_failed');
         setState('idle');
         return;
       }
@@ -246,7 +253,7 @@ export function useDashboard() {
       setState('reveal');
     } catch (err) {
       console.error('[useDashboard] logActivity failed:', err);
-      setError('Er ging iets mis. Probeer opnieuw.');
+      setError('unknown');
       setState('idle');
     }
   };

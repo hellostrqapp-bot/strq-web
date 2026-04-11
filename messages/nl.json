@@ -76,7 +76,11 @@
     "rest_celebrate": "Rust verdiend. Herstel is kracht.",
     "rest_celebrate_sub": "Je lichaam wordt sterker terwijl je rust.",
     "q_rest_quote": "Slow and steady, weet je nog? Dit is het steady-gedeelte.",
-    "q_rest_nudge": "Je hebt het verdiend. Neem die rust."
+    "q_rest_nudge": "Je hebt het verdiend. Neem die rust.",
+    "error_load_failed": "Kon data niet laden. Tik om opnieuw te proberen.",
+    "error_not_logged_in": "Sessie verlopen. Log opnieuw in.",
+    "error_save_failed": "Opslaan mislukt. Tik om opnieuw te proberen.",
+    "error_unknown": "Er ging iets mis. Tik om weg te klikken."
   },
   "event": {
     "title": "Je evenement",

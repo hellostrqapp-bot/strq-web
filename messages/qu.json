@@ -76,7 +76,11 @@
     "rest_celebrate": "Samay ganasqa. Samaykuy kallpam.",
     "rest_celebrate_sub": "Ukhuyki aswan sinchiyachkan samaykuchkaptiyki.",
     "q_rest_quote": "Allimanta allimanta, yuyarinki? Kayqa allimanta kaq.",
-    "q_rest_nudge": "Ganasqayki. Samaykunki."
+    "q_rest_nudge": "Ganasqayki. Samaykunki.",
+    "error_load_failed": "Mana datos cargayta atikunchu. Ñit'iy watiqmanta.",
+    "error_not_logged_in": "Sesión tukukun. Watiqmanta yaykuy.",
+    "error_save_failed": "Mana waqaychayta atikunchu. Ñit'iy watiqmanta.",
+    "error_unknown": "Imapas mana allinchu. Ñit'iy wichq'anapaq."
   },
   "event": {
     "title": "Eventoyki",

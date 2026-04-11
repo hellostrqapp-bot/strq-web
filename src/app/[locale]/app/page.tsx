@@ -95,7 +95,7 @@ export default function DashboardPage() {
             cursor: 'pointer',
           }}
         >
-          <span>{error}</span>
+          <span>{t(`error_${error}`)}</span>
           <span style={{ opacity: 0.5, fontSize: 11, marginLeft: 12 }}>✕</span>
         </div>
       )}

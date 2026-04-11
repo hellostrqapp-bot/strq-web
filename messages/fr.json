@@ -76,7 +76,11 @@
     "rest_celebrate": "Repos mérité. La récupération, c'est la force.",
     "rest_celebrate_sub": "Ton corps se renforce pendant que tu te reposes.",
     "q_rest_quote": "Slow and steady, tu te souviens ? C'est la partie steady.",
-    "q_rest_nudge": "Tu l'as mérité. Prends ce repos."
+    "q_rest_nudge": "Tu l'as mérité. Prends ce repos.",
+    "error_load_failed": "Impossible de charger les données. Appuyez pour réessayer.",
+    "error_not_logged_in": "Session expirée. Reconnectez-vous.",
+    "error_save_failed": "Échec de la sauvegarde. Appuyez pour réessayer.",
+    "error_unknown": "Une erreur est survenue. Appuyez pour fermer."
   },
   "event": {
     "title": "Votre événement",

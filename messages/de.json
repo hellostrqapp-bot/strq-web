@@ -76,7 +76,11 @@
     "rest_celebrate": "Ruhe verdient. Erholung ist Stärke.",
     "rest_celebrate_sub": "Dein Körper wird stärker, während du ruhst.",
     "q_rest_quote": "Slow and steady, weißt du noch? Das ist der Steady-Teil.",
-    "q_rest_nudge": "Du hast es dir verdient. Nimm dir die Pause."
+    "q_rest_nudge": "Du hast es dir verdient. Nimm dir die Pause.",
+    "error_load_failed": "Daten konnten nicht geladen werden. Tippe zum Wiederholen.",
+    "error_not_logged_in": "Sitzung abgelaufen. Bitte erneut anmelden.",
+    "error_save_failed": "Speichern fehlgeschlagen. Tippe zum Wiederholen.",
+    "error_unknown": "Etwas ist schiefgelaufen. Tippe zum Schließen."
   },
   "event": {
     "title": "Dein Event",

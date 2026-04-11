@@ -76,7 +76,11 @@
     "rest_celebrate": "Descanso conquistado. Recuperação é força.",
     "rest_celebrate_sub": "Seu corpo fica mais forte enquanto descansa.",
     "q_rest_quote": "Slow and steady, lembra? Essa é a parte steady.",
-    "q_rest_nudge": "Você mereceu. Descanse."
+    "q_rest_nudge": "Você mereceu. Descanse.",
+    "error_load_failed": "Não foi possível carregar os dados. Toque para tentar novamente.",
+    "error_not_logged_in": "Sessão expirada. Faça login novamente.",
+    "error_save_failed": "Falha ao salvar. Toque para tentar novamente.",
+    "error_unknown": "Algo deu errado. Toque para fechar."
   },
   "event": {
     "title": "Seu evento",
