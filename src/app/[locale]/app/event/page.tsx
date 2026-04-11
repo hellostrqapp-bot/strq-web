@@ -167,7 +167,7 @@ export default function EventPage() {
   }
 
   return (
-    <div style={{ maxWidth: 420, margin: '0 auto', paddingBottom: 40 }}>
+    <div style={{ maxWidth: 840, margin: '0 auto', paddingBottom: 40 }}>
       {/* Rainbow bar with shimmer */}
       <div
         style={{
@@ -204,8 +204,16 @@ export default function EventPage() {
         {t('title')}
       </div>
 
-      {/* ── EVENT DISPLAY ── */}
+      {/* ── TWO-COLUMN LAYOUT: event + rainbow road ── */}
       {event && formState === 'closed' && (
+        <div style={{
+          display: 'flex',
+          gap: 24,
+          alignItems: 'flex-start',
+          flexWrap: 'wrap',
+        }}>
+
+        {/* ── EVENT DISPLAY ── */}
         <div
           style={{
             background: `linear-gradient(135deg, ${PD}, ${P})`,
@@ -215,6 +223,8 @@ export default function EventPage() {
             border: `1px solid rgba(108, 52, 131, 0.3)`,
             position: 'relative',
             overflow: 'hidden',
+            flex: '1 1 340px',
+            minWidth: 280,
           }}
         >
           {/* Subtle sparkle dots */}
@@ -323,29 +333,30 @@ export default function EventPage() {
             </button>
           </div>
         </div>
-      )}
 
-      {/* ── RAINBOW ROAD — samen onderweg ── */}
-      {event && formState === 'closed' && (
-        <RainbowRoad
-          eventName={event.name}
-          daysToGo={daysUntil(event.event_date)}
-          friends={[
-            // TODO: replace with Supabase event_friends data when social feature ships
-            { name: 'Arnoud', xp: 0.40 },
-            { name: 'Sharon', xp: 0.20 },
-          ]}
-          strings={{
-            header: t('road_header'),
-            daysToGo: t('road_days_to_go'),
-            count: t('road_count'),
-            invite: t('road_invite'),
-          }}
-          onInvite={() => {
-            // TODO: open invite modal → email input → magic link → auto-join event
-            // For now, no-op — button is visible but flow not yet built
-          }}
-        />
+        {/* ── RAINBOW ROAD — samen onderweg ── */}
+        <div style={{ flex: '1 1 340px', minWidth: 280 }}>
+          <RainbowRoad
+            eventName={event.name}
+            daysToGo={daysUntil(event.event_date)}
+            friends={[
+              // TODO: replace with Supabase event_friends data when social feature ships
+              { name: 'Arnoud', xp: 0.40 },
+              { name: 'Sharon', xp: 0.20 },
+            ]}
+            strings={{
+              header: t('road_header'),
+              daysToGo: t('road_days_to_go'),
+              count: t('road_count'),
+              invite: t('road_invite'),
+            }}
+            onInvite={() => {
+              // TODO: open invite modal → email input → magic link → auto-join event
+            }}
+          />
+        </div>
+
+        </div>
       )}
 
       {/* ── CONFIRM DELETE ── */}
