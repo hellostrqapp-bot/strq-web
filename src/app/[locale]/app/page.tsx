@@ -1219,8 +1219,9 @@ export default function DashboardPage() {
                     borderRadius: 10,
                     position: 'relative',
                     overflow: 'hidden',
+                    animation: available ? 'rest-charge-glow 2s ease-in-out infinite' : undefined,
                   }}>
-                    {/* Fill bar */}
+                    {/* Fill bar with charging pulse */}
                     <div style={{
                       position: 'absolute',
                       left: 0, top: 0, bottom: 0,
@@ -1230,7 +1231,24 @@ export default function DashboardPage() {
                         : `linear-gradient(90deg, ${PL}0a, ${PL}14)`,
                       borderRadius: 10,
                       transition: 'width 1s ease-out',
-                    }} />
+                      animation: 'rest-charge-pulse 2.5s ease-in-out infinite',
+                    }}>
+                      {/* Shimmer moving across the fill */}
+                      <div style={{
+                        position: 'absolute',
+                        top: 0, left: 0, right: 0, bottom: 0,
+                        background: 'linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.12) 50%, transparent 100%)',
+                        animation: 'rest-charge-shimmer 3s ease-in-out infinite',
+                        borderRadius: 10,
+                      }} />
+                      {/* Glowing edge at the fill front */}
+                      <div style={{
+                        position: 'absolute',
+                        top: 0, right: -2, bottom: 0, width: 6,
+                        background: `radial-gradient(ellipse at 100% 50%, ${PL}30 0%, transparent 70%)`,
+                        animation: 'rest-charge-edge 1.5s ease-in-out infinite',
+                      }} />
+                    </div>
                     <div style={{
                       display: 'flex',
                       alignItems: 'center',
@@ -1575,6 +1593,23 @@ function ConfettiOverlay() {
         @keyframes rest-wave {
           0%, 100% { transform: translateX(0) scaleY(1); opacity: 0.6; }
           50% { transform: translateX(8px) scaleY(1.4); opacity: 1; }
+        }
+        @keyframes rest-charge-pulse {
+          0%, 100% { opacity: 0.7; }
+          50% { opacity: 1; }
+        }
+        @keyframes rest-charge-shimmer {
+          0% { transform: translateX(-150%); }
+          60% { transform: translateX(200%); }
+          100% { transform: translateX(200%); }
+        }
+        @keyframes rest-charge-edge {
+          0%, 100% { opacity: 0.4; }
+          50% { opacity: 1; }
+        }
+        @keyframes rest-charge-glow {
+          0%, 100% { box-shadow: 0 0 8px ${PL}11; }
+          50% { box-shadow: 0 0 16px ${PL}22, 0 0 24px ${P}11; }
         }
       `}</style>
     </div>
