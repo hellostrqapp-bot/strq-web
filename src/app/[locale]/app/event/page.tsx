@@ -563,7 +563,7 @@ export default function EventPage() {
       )}
 
       {/* ── POST-RACE INPUT (event passed, no result yet) ── */}
-      {event && !postRace && formState === 'closed' && daysUntil(event.event_date) === 0 && !event.result_time_minutes && (
+      {event && !postRace && formState === 'closed' && daysUntil(event.event_date) <= 0 && !event.result_time_minutes && (
         <div
           style={{
             background: `linear-gradient(135deg, ${PD}, #2D1B4E)`,
