@@ -10,6 +10,7 @@ import {
   type StreakResult,
 } from '@/lib/streak-engine';
 import { today } from '@/components/dashboard/helpers';
+import { reportError } from '@/lib/error-reporting';
 
 // ═══════════════════════════════════════════════════════════
 // useDashboard — all data fetching and business logic
@@ -120,6 +121,7 @@ export function useDashboard() {
       }
     } catch (err) {
       console.error('[useDashboard] loadData failed:', err);
+      reportError(err instanceof Error ? err : new Error(String(err)), { action: 'loadData' });
       setError('load_failed');
       setState('idle');
     }
@@ -253,6 +255,7 @@ export function useDashboard() {
       setState('reveal');
     } catch (err) {
       console.error('[useDashboard] logActivity failed:', err);
+      reportError(err instanceof Error ? err : new Error(String(err)), { action: 'logActivity' });
       setError('unknown');
       setState('idle');
     }
@@ -279,6 +282,7 @@ export function useDashboard() {
       }, 3000);
     } catch (err) {
       console.error('[useDashboard] doReveal failed:', err);
+      reportError(err instanceof Error ? err : new Error(String(err)), { action: 'doReveal' });
       setState('idle');
     }
   };
