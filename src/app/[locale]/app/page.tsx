@@ -40,7 +40,7 @@ const W = '#FFFFFF';
 const RB = ['#E74C3C', '#E67E22', '#F1C40F', '#27AE60', '#2980B9', '#8E44AD'];
 
 // ── Q Mini — lives inside the train button ──
-function QMiniButton({ pose = 'ready', size = 36 }: { pose?: 'ready' | 'running'; size?: number }) {
+function QMiniButton({ pose = 'ready', size = 36, excited = false }: { pose?: 'ready' | 'running'; size?: number; excited?: boolean }) {
   if (pose === 'running') {
     // Running Q: leaning forward, neck stretched, speedlines, dynamic legs
     return (
@@ -96,55 +96,103 @@ function QMiniButton({ pose = 'ready', size = 36 }: { pose?: 'ready' | 'running'
     );
   }
 
-  // Default: ready Q — waving arm animates via SVG
+  // Default: ready Q — waving arm, gets hyper when excited (hover)
+  const waveDur = excited ? '0.35s' : '1.2s';
+  const headDur = excited ? '0.35s' : '1.2s';
+
   return (
     <svg width={size} height={size} viewBox="0 0 60 60" fill="none" style={{ display: 'block' }}>
       {/* Shell */}
       <ellipse cx="30" cy="33" rx="14" ry="12" fill={P} />
       {RB.map((c, i) => (
         <path key={i} d={`M${17 + i * 0.6} ${34 + i * 0.7} Q30 ${27 + i * 0.7} ${43 - i * 0.6} ${34 + i * 0.7}`}
-          stroke={c} strokeWidth="1.2" fill="none" strokeLinecap="round" opacity="0.7" />
+          stroke={c} strokeWidth="1.2" fill="none" strokeLinecap="round" opacity={excited ? '0.9' : '0.7'} />
       ))}
       {/* Belly */}
       <ellipse cx="30" cy="37" rx="7" ry="6.5" fill={SL} />
-      {/* Legs */}
-      <path d="M26 42 L24 48" stroke={SK} strokeWidth="3.5" strokeLinecap="round" />
-      <path d="M34 42 L36 48" stroke={SK} strokeWidth="3.5" strokeLinecap="round" />
-      <ellipse cx="23" cy="49" rx="3" ry="1.5" fill={SD} />
-      <ellipse cx="37" cy="49" rx="3" ry="1.5" fill={SD} />
-      {/* Left arm — animated wave! */}
+      {/* Legs — bounce when excited */}
+      <g>
+        {excited && (
+          <animateTransform attributeName="transform" type="translate" values="0 0;0 -2;0 0" dur="0.25s" repeatCount="indefinite" />
+        )}
+        <path d="M26 42 L24 48" stroke={SK} strokeWidth="3.5" strokeLinecap="round" />
+        <path d="M34 42 L36 48" stroke={SK} strokeWidth="3.5" strokeLinecap="round" />
+        <ellipse cx="23" cy="49" rx="3" ry="1.5" fill={SD} />
+        <ellipse cx="37" cy="49" rx="3" ry="1.5" fill={SD} />
+      </g>
+      {/* Left arm — animated wave (fast when excited!) */}
       <g>
         <path d="M17 33 C13 28, 10 20, 9 14" stroke={SK} strokeWidth="3" strokeLinecap="round">
           <animate attributeName="d"
-            values="M17 33 C13 28, 10 20, 9 14;M17 33 C11 26, 6 20, 4 16;M17 33 C13 28, 10 20, 9 14"
-            dur="1.2s" repeatCount="indefinite" />
+            values={excited
+              ? "M17 33 C13 28, 10 20, 9 14;M17 33 C8 22, 2 16, 1 12;M17 33 C13 28, 10 20, 9 14"
+              : "M17 33 C13 28, 10 20, 9 14;M17 33 C11 26, 6 20, 4 16;M17 33 C13 28, 10 20, 9 14"}
+            dur={waveDur} repeatCount="indefinite" />
         </path>
         <ellipse cx="8.5" cy="13" rx="2.5" ry="2" fill={SD}>
-          <animate attributeName="cx" values="8.5;3.5;8.5" dur="1.2s" repeatCount="indefinite" />
-          <animate attributeName="cy" values="13;15;13" dur="1.2s" repeatCount="indefinite" />
+          <animate attributeName="cx" values={excited ? "8.5;0.5;8.5" : "8.5;3.5;8.5"} dur={waveDur} repeatCount="indefinite" />
+          <animate attributeName="cy" values={excited ? "13;11;13" : "13;15;13"} dur={waveDur} repeatCount="indefinite" />
         </ellipse>
       </g>
-      {/* Right arm — relaxed */}
-      <path d="M43 34 C46 37, 46 42, 44 45" stroke={SK} strokeWidth="3" strokeLinecap="round" />
-      <ellipse cx="44" cy="46" rx="2" ry="1.5" fill={SD} />
+      {/* Right arm — also waves when excited! */}
+      {excited ? (
+        <g>
+          <path d="M43 33 C47 28, 50 20, 51 14" stroke={SK} strokeWidth="3" strokeLinecap="round">
+            <animate attributeName="d"
+              values="M43 33 C47 28, 50 20, 51 14;M43 33 C49 22, 54 16, 56 12;M43 33 C47 28, 50 20, 51 14"
+              dur="0.4s" repeatCount="indefinite" />
+          </path>
+          <ellipse cx="51.5" cy="13" rx="2.5" ry="2" fill={SD}>
+            <animate attributeName="cx" values="51.5;57;51.5" dur="0.4s" repeatCount="indefinite" />
+            <animate attributeName="cy" values="13;11;13" dur="0.4s" repeatCount="indefinite" />
+          </ellipse>
+        </g>
+      ) : (
+        <>
+          <path d="M43 34 C46 37, 46 42, 44 45" stroke={SK} strokeWidth="3" strokeLinecap="round" />
+          <ellipse cx="44" cy="46" rx="2" ry="1.5" fill={SD} />
+        </>
+      )}
       {/* Neck */}
       <path d="M30 24 L30 20" stroke={SK} strokeWidth="3.5" strokeLinecap="round" />
-      {/* Head — subtle tilt with wave */}
+      {/* Head — subtle tilt, frantic when excited */}
       <g>
-        <animateTransform attributeName="transform" type="rotate" values="0 30 15;3 30 15;0 30 15;-2 30 15;0 30 15" dur="1.2s" repeatCount="indefinite" />
+        <animateTransform attributeName="transform" type="rotate"
+          values={excited
+            ? "0 30 15;5 30 15;-4 30 15;6 30 15;-3 30 15;0 30 15"
+            : "0 30 15;3 30 15;0 30 15;-2 30 15;0 30 15"}
+          dur={headDur} repeatCount="indefinite" />
         <ellipse cx="30" cy="15" rx="8" ry="7" fill={SK} />
         {/* Glasses */}
         <rect x="22.5" y="12" width="6" height="4.5" rx="1.5" stroke={W} strokeWidth="0.8" fill="rgba(255,255,255,0.08)" />
         <rect x="31.5" y="12" width="6" height="4.5" rx="1.5" stroke={W} strokeWidth="0.8" fill="rgba(255,255,255,0.08)" />
         <path d="M28.5 13.5 C29 12.8, 31 12.8, 31.5 13.5" stroke={W} strokeWidth="0.6" fill="none" />
-        {/* Eyes — eager, blinking */}
-        <ellipse cx="25.8" cy="13.8" rx="1.3" ry="1.5" fill={W} />
-        <ellipse cx="34.2" cy="13.8" rx="1.3" ry="1.5" fill={W} />
-        <ellipse cx="26.2" cy="13.5" rx="0.8" ry="1" fill={PD} />
-        <ellipse cx="34.6" cy="13.5" rx="0.8" ry="1" fill={PD} />
-        {/* Warm grin */}
-        <path d="M27 19 C29 21, 31 21, 33 19" stroke={PD} strokeWidth="0.8" fill="none" strokeLinecap="round" />
+        {/* Eyes — bigger when excited */}
+        <ellipse cx="25.8" cy="13.8" rx={excited ? 1.6 : 1.3} ry={excited ? 1.8 : 1.5} fill={W} />
+        <ellipse cx="34.2" cy="13.8" rx={excited ? 1.6 : 1.3} ry={excited ? 1.8 : 1.5} fill={W} />
+        <ellipse cx="26.2" cy="13.5" rx={excited ? 1 : 0.8} ry={excited ? 1.2 : 1} fill={PD} />
+        <ellipse cx="34.6" cy="13.5" rx={excited ? 1 : 0.8} ry={excited ? 1.2 : 1} fill={PD} />
+        {/* Mouth — big open grin when excited, warm smile when calm */}
+        {excited ? (
+          <path d="M26 18.5 C28 22, 32 22, 34 18.5" stroke={PD} strokeWidth="0.8" fill={SD} strokeLinecap="round" />
+        ) : (
+          <path d="M27 19 C29 21, 31 21, 33 19" stroke={PD} strokeWidth="0.8" fill="none" strokeLinecap="round" />
+        )}
       </g>
+      {/* Sparkles when excited */}
+      {excited && (
+        <>
+          <circle cx="12" cy="8" r="1.5" fill={PL}>
+            <animate attributeName="opacity" values="0;1;0" dur="0.5s" repeatCount="indefinite" />
+          </circle>
+          <circle cx="50" cy="6" r="1.2" fill="#F1C40F">
+            <animate attributeName="opacity" values="0;1;0" dur="0.6s" repeatCount="indefinite" />
+          </circle>
+          <circle cx="8" cy="28" r="1" fill={SK}>
+            <animate attributeName="opacity" values="0;0.8;0" dur="0.4s" repeatCount="indefinite" />
+          </circle>
+        </>
+      )}
     </svg>
   );
 }
@@ -276,6 +324,7 @@ export default function DashboardPage() {
   const [todayLogged, setTodayLogged] = useState(false);
   const [todayType, setTodayType] = useState<'training' | 'rest' | null>(null);
   const [qSpinning, setQSpinning] = useState(false);
+  const [qHover, setQHover] = useState(false);
   const [reveal, setReveal] = useState<{
     baseXp: number;
     bonusXp: number;
@@ -837,6 +886,8 @@ export default function DashboardPage() {
               setTimeout(() => setQSpinning(false), 700);
               logActivity('training');
             }}
+            onMouseEnter={() => setQHover(true)}
+            onMouseLeave={() => setQHover(false)}
             style={{
               width: '100%',
               padding: '16px 20px',
@@ -848,7 +899,9 @@ export default function DashboardPage() {
               borderRadius: 14,
               cursor: 'pointer',
               transition: 'all 0.2s ease',
-              boxShadow: `0 4px 20px ${P}55, 0 0 40px ${P}22`,
+              boxShadow: qHover
+                ? `0 6px 28px ${P}77, 0 0 50px ${P}33`
+                : `0 4px 20px ${P}55, 0 0 40px ${P}22`,
               letterSpacing: '0.02em',
               position: 'relative',
               overflow: 'hidden',
@@ -856,18 +909,21 @@ export default function DashboardPage() {
               alignItems: 'center',
               justifyContent: 'center',
               gap: 10,
+              transform: qHover ? 'translateY(-1px)' : 'none',
             }}
             className="train-btn"
           >
-            {/* Q is alive in the button — waves idle, runs on tap */}
+            {/* Q is alive in the button — calm idle, excited on hover, runs on tap */}
             <span style={{
               display: 'inline-flex',
               animation: qSpinning
                 ? 'q-btn-dash 0.6s ease-out'
+                : qHover
+                ? 'q-btn-excited 0.4s ease-in-out infinite'
                 : 'q-btn-bounce 2s ease-in-out infinite',
               flexShrink: 0,
             }}>
-              <QMiniButton pose={qSpinning ? 'running' : 'ready'} size={38} />
+              <QMiniButton pose={qSpinning ? 'running' : 'ready'} size={38} excited={qHover} />
             </span>
             <span>{t('log_training')}</span>
           </button>
@@ -1410,6 +1466,15 @@ function ConfettiOverlay() {
           25% { transform: translateY(-3px) rotate(-3deg); }
           50% { transform: translateY(0) rotate(0deg); }
           75% { transform: translateY(-2px) rotate(2deg); }
+        }
+        @keyframes q-btn-excited {
+          0% { transform: translateY(0) rotate(0deg) scale(1); }
+          15% { transform: translateY(-5px) rotate(-6deg) scale(1.08); }
+          30% { transform: translateY(0) rotate(4deg) scale(1); }
+          45% { transform: translateY(-4px) rotate(-5deg) scale(1.06); }
+          60% { transform: translateY(1px) rotate(3deg) scale(1); }
+          75% { transform: translateY(-6px) rotate(-4deg) scale(1.1); }
+          100% { transform: translateY(0) rotate(0deg) scale(1); }
         }
         @keyframes q-btn-dash {
           0% { transform: translateX(0) scale(1); }
