@@ -48,6 +48,11 @@ export default async function LocaleLayout({
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
         <meta name="apple-mobile-web-app-title" content="strQ" />
         <link rel="apple-touch-icon" href="/icon-192.png" />
+        <script
+          defer
+          src="https://cloud.umami.is/script.js"
+          data-website-id="89652777-8e7f-4b58-9808-3a98947ace37"
+        />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link
           rel="preconnect"
