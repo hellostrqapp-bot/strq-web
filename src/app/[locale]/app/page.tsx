@@ -1636,16 +1636,7 @@ function ConfettiOverlay() {
           0%, 100% { opacity: 0.7; }
           50% { opacity: 1; }
         }
-        @keyframes rest-charge-shimmer {
-          0% { transform: translateX(-150%); }
-          60% { transform: translateX(200%); }
-          100% { transform: translateX(200%); }
-        }
-        @keyframes rest-charge-edge {
-          0%, 100% { opacity: 0.4; }
-          50% { opacity: 1; }
-        }
-        @keyframes rest-charge-glow {
+@keyframes rest-charge-glow {
           0%, 100% { box-shadow: 0 0 8px ${PL}11; }
           50% { box-shadow: 0 0 16px ${PL}22, 0 0 24px ${P}11; }
         }
