@@ -125,6 +125,10 @@
     "reason_streak_bonus": "strQ yapay",
     "reason_multiplier": "2x mirachiy",
     "reason_surprise": "Mana suyasqa",
-    "reason_fuzzy_bonus": "Chayay yapay"
+    "reason_fuzzy_bonus": "Chayay yapay",
+    "paywall_title": "Twin kichay",
+    "paywall_description": "Digital yachachiq masiykita riqsiy. Twin sapa entrenamiyntuwan wiñan.",
+    "paywall_cta": "Upgrade — €{price}/killa",
+    "paywall_cancel": "Mayk'aqpas haqiyta atikunki"
   }
 }

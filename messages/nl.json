@@ -125,6 +125,10 @@
     "reason_streak_bonus": "strQ bonus",
     "reason_multiplier": "2x Multiplier",
     "reason_surprise": "Verrassing",
-    "reason_fuzzy_bonus": "Finish bonus"
+    "reason_fuzzy_bonus": "Finish bonus",
+    "paywall_title": "Ontgrendel Twin",
+    "paywall_description": "Maak kennis met je digitale trainingspartner. Twin groeit met elke training en voorspelt je race.",
+    "paywall_cta": "Upgrade — €{price}/mnd",
+    "paywall_cancel": "Op elk moment opzegbaar"
   }
 }

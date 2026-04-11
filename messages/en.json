@@ -125,6 +125,10 @@
     "reason_streak_bonus": "strQ bonus",
     "reason_multiplier": "2x Multiplier",
     "reason_surprise": "Surprise",
-    "reason_fuzzy_bonus": "Finish bonus"
+    "reason_fuzzy_bonus": "Finish bonus",
+    "paywall_title": "Unlock Twin",
+    "paywall_description": "Meet your digital training partner. Twin grows with every workout and predicts your race.",
+    "paywall_cta": "Upgrade — €{price}/mo",
+    "paywall_cancel": "Cancel anytime"
   }
 }

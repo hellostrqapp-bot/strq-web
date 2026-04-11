@@ -125,6 +125,10 @@
     "reason_streak_bonus": "strQ-Bonus",
     "reason_multiplier": "2x Multiplikator",
     "reason_surprise": "Überraschung",
-    "reason_fuzzy_bonus": "Ziel-Bonus"
+    "reason_fuzzy_bonus": "Ziel-Bonus",
+    "paywall_title": "Twin freischalten",
+    "paywall_description": "Lerne deinen digitalen Trainingspartner kennen. Twin wächst mit jedem Training und sagt dein Rennen voraus.",
+    "paywall_cta": "Upgrade — €{price}/Mon.",
+    "paywall_cancel": "Jederzeit kündbar"
   }
 }

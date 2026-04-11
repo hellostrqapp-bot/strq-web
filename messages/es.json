@@ -125,6 +125,10 @@
     "reason_streak_bonus": "Bonus strQ",
     "reason_multiplier": "Multiplicador 2x",
     "reason_surprise": "Sorpresa",
-    "reason_fuzzy_bonus": "Bonus de meta"
+    "reason_fuzzy_bonus": "Bonus de meta",
+    "paywall_title": "Desbloquear Twin",
+    "paywall_description": "Conoce a tu compañero de entrenamiento digital. Twin crece con cada entreno y predice tu carrera.",
+    "paywall_cta": "Upgrade — €{price}/mes",
+    "paywall_cancel": "Cancela en cualquier momento"
   }
 }
