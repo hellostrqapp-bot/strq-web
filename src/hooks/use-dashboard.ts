@@ -36,6 +36,7 @@ export interface EventData {
   name: string;
   event_date: string;
   target_time_minutes: number | null;
+  result_time_minutes: number | null;
 }
 
 export function useDashboard() {

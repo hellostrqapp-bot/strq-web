@@ -5,6 +5,8 @@ import { useTranslations, useLocale } from 'next-intl';
 import { createBrowserClient } from '@/lib/supabase-browser';
 import { IconEdit, IconDelete, IconFinish, IconSparkle } from '@/components/icons';
 import { RainbowRoad } from '@/components/rainbow-road';
+import { calculateFuzzyBonus } from '@/lib/streak-engine';
+import { reportError } from '@/lib/error-reporting';
 
 // ═══════════════════════════════════════════════════════════
 // strQ — Event Page
@@ -27,6 +29,7 @@ interface EventData {
   name: string;
   event_date: string;
   target_time_minutes: number | null;
+  result_time_minutes: number | null;
   sport_type: 'hyrox' | 'running' | 'triathlon' | 'cycling' | 'other';
 }
 
@@ -46,6 +49,13 @@ export default function EventPage() {
   });
   const [error, setError] = useState<string | null>(null);
   const [confirmDelete, setConfirmDelete] = useState(false);
+  const [resultMinutes, setResultMinutes] = useState('');
+  const [postRace, setPostRace] = useState<{
+    tier: 'gold' | 'silver' | 'bronze' | 'warm';
+    xp: number;
+    message: string;
+  } | null>(null);
+  const [submittingResult, setSubmittingResult] = useState(false);
 
   // ── Load event ──
   const loadEvent = useCallback(async () => {
@@ -144,6 +154,79 @@ export default function EventPage() {
     setEvent(null);
     setFormState('closed');
     setConfirmDelete(false);
+  };
+
+  // ── Submit race result ──
+  const submitResult = async () => {
+    if (!event?.id || !resultMinutes) return;
+    setSubmittingResult(true);
+    setError(null);
+
+    try {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      if (!user) return;
+
+      const actual = parseInt(resultMinutes, 10);
+      if (isNaN(actual) || actual <= 0) {
+        setError('Invalid time');
+        setSubmittingResult(false);
+        return;
+      }
+
+      // Calculate fuzzy bonus
+      const bonus = event.target_time_minutes
+        ? calculateFuzzyBonus(event.target_time_minutes, actual)
+        : { xp: 100, message: 'fuzzy_warm', tier: 'warm' as const };
+
+      // Update event with result
+      const { error: updateErr } = await supabase
+        .from('events')
+        .update({
+          result_time_minutes: actual,
+          status: 'completed',
+        })
+        .eq('id', event.id);
+
+      if (updateErr) throw updateErr;
+
+      // Award XP
+      await supabase.from('xp_log').insert({
+        user_id: user.id,
+        amount: bonus.xp,
+        reason: 'fuzzy_bonus',
+        activity_date: event.event_date,
+        metadata: {
+          event_name: event.name,
+          target: event.target_time_minutes,
+          actual,
+          tier: bonus.tier,
+        },
+      });
+
+      // Update total XP in streak_state
+      const { data: streakData } = await supabase
+        .from('streak_state')
+        .select('total_xp')
+        .eq('user_id', user.id)
+        .single();
+
+      if (streakData) {
+        await supabase
+          .from('streak_state')
+          .update({ total_xp: (streakData.total_xp || 0) + bonus.xp })
+          .eq('user_id', user.id);
+      }
+
+      setPostRace(bonus);
+    } catch (err) {
+      console.error('[event] submitResult failed:', err);
+      reportError(err instanceof Error ? err : new Error(String(err)), { action: 'submitResult' });
+      setError('Something went wrong');
+    } finally {
+      setSubmittingResult(false);
+    }
   };
 
   // ── Render ──
@@ -356,6 +439,173 @@ export default function EventPage() {
           />
         </div>
 
+        </div>
+      )}
+
+      {/* ── POST-RACE CELEBRATION ── */}
+      {postRace && event && (
+        <div
+          style={{
+            background: `linear-gradient(135deg, ${PD}, ${P})`,
+            borderRadius: 16,
+            padding: '32px 24px',
+            marginBottom: 24,
+            border: `1px solid ${PL}44`,
+            textAlign: 'center',
+            position: 'relative',
+            overflow: 'hidden',
+          }}
+        >
+          {/* Confetti particles */}
+          {Array.from({ length: 20 }).map((_, i) => (
+            <div key={i} style={{
+              position: 'absolute',
+              left: `${Math.random() * 100}%`,
+              top: -10,
+              width: 6, height: 6,
+              borderRadius: i % 3 === 0 ? '50%' : 1,
+              background: RB[i % RB.length],
+              animation: `result-confetti ${2 + Math.random() * 3}s ease-out ${Math.random() * 1.5}s forwards`,
+              opacity: 0,
+              pointerEvents: 'none',
+            }} />
+          ))}
+
+          <div style={{ fontSize: 56, marginBottom: 12 }}>
+            {postRace.tier === 'gold' ? '🏆' :
+             postRace.tier === 'silver' ? '🥈' :
+             postRace.tier === 'bronze' ? '🥉' : '🐢'}
+          </div>
+          <div style={{ fontSize: 24, fontWeight: 900, color: W, marginBottom: 8 }}>
+            {t(`result_${postRace.tier}_title`)}
+          </div>
+          <div style={{ fontSize: 15, color: PL, marginBottom: 20, lineHeight: 1.5 }}>
+            {t(`result_${postRace.tier}_body`)}
+          </div>
+
+          {/* Result vs target */}
+          {event.target_time_minutes && (
+            <div style={{
+              display: 'flex', justifyContent: 'center', gap: 32,
+              marginBottom: 20,
+              padding: '16px 0',
+              borderTop: `1px solid ${PL}22`,
+              borderBottom: `1px solid ${PL}22`,
+            }}>
+              <div>
+                <div style={{ fontSize: 28, fontWeight: 900, color: SK }}>
+                  {resultMinutes}
+                </div>
+                <div style={{ fontSize: 11, color: `${W}88` }}>{t('your_time')}</div>
+              </div>
+              <div>
+                <div style={{ fontSize: 28, fontWeight: 900, color: `${W}66` }}>
+                  {event.target_time_minutes}
+                </div>
+                <div style={{ fontSize: 11, color: `${W}88` }}>{t('target')}</div>
+              </div>
+            </div>
+          )}
+
+          {/* XP earned */}
+          <div style={{
+            display: 'inline-block',
+            background: `${SK}22`,
+            border: `1px solid ${SK}44`,
+            borderRadius: 20,
+            padding: '8px 20px',
+            fontSize: 16,
+            fontWeight: 700,
+            color: SK,
+          }}>
+            +{postRace.xp} XP
+          </div>
+
+          <div style={{ marginTop: 24 }}>
+            <button
+              onClick={() => {
+                setPostRace(null);
+                loadEvent();
+              }}
+              style={{
+                padding: '12px 32px',
+                fontSize: 14,
+                fontWeight: 600,
+                background: `linear-gradient(135deg, ${P}, ${PL})`,
+                color: W,
+                border: 'none',
+                borderRadius: 10,
+                cursor: 'pointer',
+              }}
+            >
+              {t('result_continue')}
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* ── POST-RACE INPUT (event passed, no result yet) ── */}
+      {event && !postRace && formState === 'closed' && daysUntil(event.event_date) === 0 && !event.result_time_minutes && (
+        <div
+          style={{
+            background: `linear-gradient(135deg, ${PD}, #2D1B4E)`,
+            borderRadius: 16,
+            padding: '24px',
+            marginBottom: 24,
+            border: `1px solid ${PL}33`,
+            textAlign: 'center',
+          }}
+        >
+          <div style={{ fontSize: 40, marginBottom: 12 }}>🏁</div>
+          <div style={{ fontSize: 18, fontWeight: 700, color: W, marginBottom: 6 }}>
+            {t('result_title')}
+          </div>
+          <div style={{ fontSize: 13, color: PL, marginBottom: 20 }}>
+            {t('result_subtitle', { name: event.name })}
+          </div>
+
+          {error && (
+            <div style={{ marginBottom: 12, fontSize: 13, color: '#FF6B6B' }}>{error}</div>
+          )}
+
+          <div style={{ display: 'flex', gap: 12, maxWidth: 320, margin: '0 auto' }}>
+            <input
+              type="number"
+              placeholder={t('result_placeholder')}
+              value={resultMinutes}
+              onChange={(e) => setResultMinutes(e.target.value)}
+              style={{
+                flex: 1,
+                padding: '12px',
+                fontSize: 16,
+                fontWeight: 600,
+                background: 'rgba(255,255,255,0.08)',
+                border: `1px solid ${PL}44`,
+                borderRadius: 10,
+                color: W,
+                fontFamily: 'Inter, sans-serif',
+                textAlign: 'center',
+              }}
+            />
+            <button
+              onClick={submitResult}
+              disabled={submittingResult || !resultMinutes}
+              style={{
+                padding: '12px 20px',
+                fontSize: 14,
+                fontWeight: 700,
+                background: submittingResult
+                  ? `${P}88`
+                  : `linear-gradient(135deg, ${P}, ${PL})`,
+                color: W,
+                border: 'none',
+                borderRadius: 10,
+                cursor: submittingResult ? 'default' : 'pointer',
+              }}
+            >
+              {submittingResult ? '...' : t('result_submit')}
+            </button>
+          </div>
         </div>
       )}
 
@@ -631,6 +881,11 @@ export default function EventPage() {
         @keyframes event-sparkle {
           0%, 100% { opacity: 0; transform: scale(0.5); }
           50% { opacity: 0.5; transform: scale(1); }
+        }
+        @keyframes result-confetti {
+          0% { opacity: 0; transform: translateY(0) rotate(0deg); }
+          20% { opacity: 1; }
+          100% { opacity: 0; transform: translateY(400px) rotate(720deg); }
         }
       `}</style>
 

@@ -101,7 +101,21 @@
     "road_header": "On the road together",
     "road_days_to_go": "days to go",
     "road_count": "{count} turtles on their way",
-    "road_invite": "+ Train together"
+    "road_invite": "+ Train together",
+    "result_title": "How did it go?",
+    "result_subtitle": "Enter your finish time for {name}",
+    "result_placeholder": "minutes",
+    "result_submit": "Done!",
+    "result_continue": "Continue",
+    "your_time": "your time",
+    "result_gold_title": "Target crushed!",
+    "result_gold_body": "You beat your goal. Q is incredibly proud.",
+    "result_silver_title": "So close!",
+    "result_silver_body": "Within 5% of your target. Impressive.",
+    "result_bronze_title": "Strong finish!",
+    "result_bronze_body": "Within 10% of your target. Solid race.",
+    "result_warm_title": "You showed up!",
+    "result_warm_body": "And that's what counts. Q knows: next time you'll go harder."
   },
   "level": {
     "name_fresh": "Fresh",

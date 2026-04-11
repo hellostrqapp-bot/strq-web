@@ -101,7 +101,21 @@
     "road_header": "A caminho juntos",
     "road_days_to_go": "dias restantes",
     "road_count": "{count} tartarugas a caminho",
-    "road_invite": "+ Treina junto"
+    "road_invite": "+ Treina junto",
+    "result_title": "Como foi?",
+    "result_subtitle": "Insere o teu tempo para {name}",
+    "result_placeholder": "minutos",
+    "result_submit": "Pronto!",
+    "result_continue": "Continuar",
+    "your_time": "o teu tempo",
+    "result_gold_title": "Objetivo alcançado!",
+    "result_gold_body": "Bateste o teu objetivo. Q está muito orgulhoso.",
+    "result_silver_title": "Tão perto!",
+    "result_silver_body": "A 5% do teu objetivo. Impressionante.",
+    "result_bronze_title": "Grande corrida!",
+    "result_bronze_body": "A 10% do teu objetivo. Sólido.",
+    "result_warm_title": "Estiveste lá!",
+    "result_warm_body": "E isso é o que conta. Q sabe: da próxima vez vais mais forte."
   },
   "level": {
     "name_fresh": "Fresh",

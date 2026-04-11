@@ -101,7 +101,21 @@
     "road_header": "En camino juntos",
     "road_days_to_go": "días restantes",
     "road_count": "{count} tortugas en camino",
-    "road_invite": "+ Entrena juntos"
+    "road_invite": "+ Entrena juntos",
+    "result_title": "¿Cómo fue?",
+    "result_subtitle": "Introduce tu tiempo para {name}",
+    "result_placeholder": "minutos",
+    "result_submit": "¡Listo!",
+    "result_continue": "Continuar",
+    "your_time": "tu tiempo",
+    "result_gold_title": "¡Objetivo logrado!",
+    "result_gold_body": "Superaste tu meta. Q está muy orgulloso.",
+    "result_silver_title": "¡Muy cerca!",
+    "result_silver_body": "A un 5% de tu objetivo. Impresionante.",
+    "result_bronze_title": "¡Gran carrera!",
+    "result_bronze_body": "A un 10% de tu objetivo. Sólido.",
+    "result_warm_title": "¡Estuviste ahí!",
+    "result_warm_body": "Y eso es lo que cuenta. Q sabe: la próxima vez irás más fuerte."
   },
   "level": {
     "name_fresh": "Fresh",

@@ -101,7 +101,21 @@
     "road_header": "Samen onderweg",
     "road_days_to_go": "dagen te gaan",
     "road_count": "{count} schildpadjes onderweg",
-    "road_invite": "+ Train samen"
+    "road_invite": "+ Train samen",
+    "result_title": "Hoe ging het?",
+    "result_subtitle": "Vul je eindtijd in voor {name}",
+    "result_placeholder": "minuten",
+    "result_submit": "Klaar!",
+    "result_continue": "Verder",
+    "your_time": "jouw tijd",
+    "result_gold_title": "Streeftijd gehaald!",
+    "result_gold_body": "Je hebt je doel verslagen. Q is ontzettend trots.",
+    "result_silver_title": "Héél dichtbij!",
+    "result_silver_body": "Binnen 5% van je streeftijd. Dat is knap.",
+    "result_bronze_title": "Sterk gelopen!",
+    "result_bronze_body": "Binnen 10% van je streeftijd. Solide race.",
+    "result_warm_title": "Je was erbij!",
+    "result_warm_body": "En dat is wat telt. Q weet: de volgende keer ga je harder."
   },
   "level": {
     "name_fresh": "Fresh",

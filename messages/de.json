@@ -101,7 +101,21 @@
     "road_header": "Gemeinsam unterwegs",
     "road_days_to_go": "Tage noch",
     "road_count": "{count} Schildkröten unterwegs",
-    "road_invite": "+ Zusammen trainieren"
+    "road_invite": "+ Zusammen trainieren",
+    "result_title": "Wie lief's?",
+    "result_subtitle": "Trage deine Endzeit ein für {name}",
+    "result_placeholder": "Minuten",
+    "result_submit": "Fertig!",
+    "result_continue": "Weiter",
+    "your_time": "deine Zeit",
+    "result_gold_title": "Ziel geschafft!",
+    "result_gold_body": "Du hast dein Ziel geschlagen. Q ist unglaublich stolz.",
+    "result_silver_title": "Ganz nah dran!",
+    "result_silver_body": "Innerhalb von 5% deines Ziels. Beeindruckend.",
+    "result_bronze_title": "Stark gelaufen!",
+    "result_bronze_body": "Innerhalb von 10% deines Ziels. Solides Rennen.",
+    "result_warm_title": "Du warst dabei!",
+    "result_warm_body": "Und das zählt. Q weiß: nächstes Mal gibst du mehr Gas."
   },
   "level": {
     "name_fresh": "Fresh",

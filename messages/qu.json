@@ -101,7 +101,21 @@
     "road_header": "Ñanpi kuska",
     "road_days_to_go": "p'unchawkuna falta",
     "road_count": "{count} tortugakuna ñanpi",
-    "road_invite": "+ Kuska yachay"
+    "road_invite": "+ Kuska yachay",
+    "result_title": "Imayna karqa?",
+    "result_subtitle": "{name}-paq pachakta qillqay",
+    "result_placeholder": "minutukuna",
+    "result_submit": "Tukusqa!",
+    "result_continue": "Hinaspa",
+    "your_time": "pachayki",
+    "result_gold_title": "Munasqayki hunt'asqa!",
+    "result_gold_body": "Munasqaykita atipanki. Q ancha kusisqam.",
+    "result_silver_title": "Aslla pisiyarqa!",
+    "result_silver_body": "5% hinallan pisiyarqa. Allinmi.",
+    "result_bronze_title": "Kallpawan tukurqanki!",
+    "result_bronze_body": "10% hinallan pisiyarqa. Allin puriymi.",
+    "result_warm_title": "Chaypi karqanki!",
+    "result_warm_body": "Chaymi chanin. Q yachan: hamuq kutipim aswan kallpawan rinki."
   },
   "level": {
     "name_fresh": "Fresh",
