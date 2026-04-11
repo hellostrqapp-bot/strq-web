@@ -75,6 +75,31 @@ export default function DashboardPage() {
       {/* Confetti overlay */}
       {showConfetti && <ConfettiOverlay />}
 
+      {/* Error toast — dismissible */}
+      {error && (
+        <div
+          role="alert"
+          onClick={clearError}
+          style={{
+            marginBottom: 16,
+            padding: '10px 14px',
+            background: 'rgba(231,76,60,0.12)',
+            border: '1px solid rgba(231,76,60,0.25)',
+            borderRadius: 10,
+            color: '#E74C3C',
+            fontSize: 13,
+            fontWeight: 600,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            cursor: 'pointer',
+          }}
+        >
+          <span>{error}</span>
+          <span style={{ opacity: 0.5, fontSize: 11, marginLeft: 12 }}>✕</span>
+        </div>
+      )}
+
       {/* Rainbow bar — with subtle traveling shimmer */}
       <div
         style={{
