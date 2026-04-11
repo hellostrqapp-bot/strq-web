@@ -3,6 +3,7 @@ import { NextIntlClientProvider } from "next-intl";
 import { getMessages, getTranslations } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
+import SWRegister from "@/components/sw-register";
 import "../globals.css";
 
 export async function generateStaticParams() {
@@ -60,6 +61,7 @@ export default async function LocaleLayout({
       <body>
         <NextIntlClientProvider messages={messages}>
           {children}
+          <SWRegister />
         </NextIntlClientProvider>
       </body>
     </html>
