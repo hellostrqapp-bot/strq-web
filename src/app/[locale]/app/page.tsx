@@ -1215,8 +1215,9 @@ export default function DashboardPage() {
                   <div style={{
                     marginTop: 16,
                     display: 'flex',
+                    flexDirection: 'column',
                     alignItems: 'center',
-                    gap: 10,
+                    gap: 6,
                   }}>
                     {/* Vertical battery cell */}
                     <div style={{
