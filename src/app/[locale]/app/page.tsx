@@ -1202,6 +1202,53 @@ export default function DashboardPage() {
               }}>
                 {t('come_back_tomorrow')}
               </div>
+
+              {/* Rest charging indicator — shows progress toward earned rest */}
+              {(() => {
+                const er = streak?.earnedRest;
+                const progress = er?.progress ?? 0;
+                const daysCharged = er?.trainingDaysSinceRest ?? 0;
+                const available = er?.available ?? false;
+                if (daysCharged === 0 && !available) return null;
+                return (
+                  <div style={{
+                    marginTop: 16,
+                    padding: '10px 16px',
+                    background: 'rgba(165,105,189,0.06)',
+                    border: `1px solid ${PL}18`,
+                    borderRadius: 10,
+                    position: 'relative',
+                    overflow: 'hidden',
+                  }}>
+                    {/* Fill bar */}
+                    <div style={{
+                      position: 'absolute',
+                      left: 0, top: 0, bottom: 0,
+                      width: `${Math.min(progress * 100, 100)}%`,
+                      background: available
+                        ? `linear-gradient(90deg, rgba(231,76,60,0.08), rgba(243,156,18,0.06), rgba(241,196,15,0.08), rgba(39,174,96,0.06), rgba(41,128,185,0.06), rgba(142,68,173,0.08))`
+                        : `linear-gradient(90deg, ${PL}0a, ${PL}14)`,
+                      borderRadius: 10,
+                      transition: 'width 1s ease-out',
+                    }} />
+                    <div style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      gap: 6,
+                      position: 'relative',
+                      fontSize: 12,
+                      fontWeight: 600,
+                      color: available ? PL : 'rgba(255,255,255,0.35)',
+                    }}>
+                      <IconEarnedRest size={16} progress={progress} tier={er?.tier ?? 'locked'} />
+                      <span>
+                        {available ? t('earned_rest') : `${t('rest_charging')} ${daysCharged}/2`}
+                      </span>
+                    </div>
+                  </div>
+                );
+              })()}
             </>
           )}
         </div>
