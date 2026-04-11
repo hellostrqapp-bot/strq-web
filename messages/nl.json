@@ -115,7 +115,13 @@
     "result_bronze_title": "Sterk gelopen!",
     "result_bronze_body": "Binnen 10% van je streeftijd. Solide race.",
     "result_warm_title": "Je was erbij!",
-    "result_warm_body": "En dat is wat telt. Q weet: de volgende keer ga je harder."
+    "result_warm_body": "En dat is wat telt. Q weet: de volgende keer ga je harder.",
+    "completed_label": "Voltooid",
+    "completed_gold": "Streeftijd gehaald. Q is trots op je.",
+    "completed_silver": "Héél dichtbij. Volgende keer pak je 'm.",
+    "completed_bronze": "Sterk gelopen. Solide race.",
+    "completed_warm": "Je was erbij — en dat is wat telt.",
+    "next_event": "Volgend evenement plannen"
   },
   "level": {
     "name_fresh": "Fresh",

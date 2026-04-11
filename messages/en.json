@@ -115,7 +115,13 @@
     "result_bronze_title": "Strong finish!",
     "result_bronze_body": "Within 10% of your target. Solid race.",
     "result_warm_title": "You showed up!",
-    "result_warm_body": "And that's what counts. Q knows: next time you'll go harder."
+    "result_warm_body": "And that's what counts. Q knows: next time you'll go harder.",
+    "completed_label": "Completed",
+    "completed_gold": "Target crushed. Q is proud of you.",
+    "completed_silver": "So close. You'll nail it next time.",
+    "completed_bronze": "Strong finish. Solid race.",
+    "completed_warm": "You showed up — and that's what counts.",
+    "next_event": "Plan next event"
   },
   "level": {
     "name_fresh": "Fresh",

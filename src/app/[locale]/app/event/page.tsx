@@ -56,6 +56,7 @@ export default function EventPage() {
     message: string;
   } | null>(null);
   const [submittingResult, setSubmittingResult] = useState(false);
+  const [completedEvent, setCompletedEvent] = useState<(EventData & { status: string }) | null>(null);
 
   // ── Load event ──
   const loadEvent = useCallback(async () => {
@@ -64,6 +65,7 @@ export default function EventPage() {
     } = await supabase.auth.getUser();
     if (!user) return;
 
+    // Try upcoming event first
     const { data, error: err } = await supabase
       .from('events')
       .select('*')
@@ -75,12 +77,28 @@ export default function EventPage() {
 
     if (!err && data) {
       setEvent(data);
+      setCompletedEvent(null);
       setFormData({
         name: data.name,
         event_date: data.event_date,
         target_time_minutes: data.target_time_minutes?.toString() || '',
         sport_type: data.sport_type || 'other',
       });
+    } else {
+      setEvent(null);
+      // No upcoming event — check for most recent completed
+      const { data: completed } = await supabase
+        .from('events')
+        .select('*')
+        .eq('user_id', user.id)
+        .eq('status', 'completed')
+        .order('event_date', { ascending: false })
+        .limit(1)
+        .single();
+
+      if (completed) {
+        setCompletedEvent(completed);
+      }
     }
     setLoading(false);
   }, [supabase]);
@@ -889,8 +907,120 @@ export default function EventPage() {
         }
       `}</style>
 
+      {/* ── COMPLETED EVENT DISPLAY ── */}
+      {!event && completedEvent && formState === 'closed' && !postRace && (
+        <div style={{ marginBottom: 24 }}>
+          <div
+            style={{
+              background: `linear-gradient(135deg, ${PD}, ${P})`,
+              borderRadius: 16,
+              padding: '28px 24px',
+              border: `1px solid ${PL}33`,
+              textAlign: 'center',
+              position: 'relative',
+              overflow: 'hidden',
+            }}
+          >
+            {/* Subtle sparkles */}
+            {[{ x: 15, y: 20, d: 0 }, { x: 85, y: 15, d: 1 }, { x: 50, y: 85, d: 2 }].map((s, i) => (
+              <div key={i} style={{
+                position: 'absolute',
+                left: `${s.x}%`, top: `${s.y}%`,
+                width: 3, height: 3, borderRadius: '50%',
+                background: PL,
+                animation: `event-sparkle 3s ease-in-out ${s.d}s infinite`,
+                pointerEvents: 'none',
+              }} />
+            ))}
+
+            {/* Tier emoji */}
+            <div style={{ fontSize: 48, marginBottom: 12 }}>
+              {completedEvent.target_time_minutes && completedEvent.result_time_minutes
+                ? completedEvent.result_time_minutes <= completedEvent.target_time_minutes ? '🏆'
+                : completedEvent.result_time_minutes <= completedEvent.target_time_minutes * 1.05 ? '🥈'
+                : completedEvent.result_time_minutes <= completedEvent.target_time_minutes * 1.10 ? '🥉'
+                : '🐢'
+              : '🐢'}
+            </div>
+
+            <div style={{ fontSize: 11, fontWeight: 600, color: `${W}66`, textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 6 }}>
+              {t('completed_label')}
+            </div>
+            <div style={{ fontSize: 22, fontWeight: 900, color: W, marginBottom: 4 }}>
+              {completedEvent.name}
+            </div>
+            <div style={{ fontSize: 13, color: `${W}77`, marginBottom: 20 }}>
+              {formatEventDate(completedEvent.event_date, locale)}
+            </div>
+
+            {/* Result vs target */}
+            <div style={{
+              display: 'flex', justifyContent: 'center', gap: 32,
+              padding: '16px 0',
+              borderTop: `1px solid ${PL}22`,
+              borderBottom: `1px solid ${PL}22`,
+              marginBottom: 20,
+            }}>
+              {completedEvent.result_time_minutes && (
+                <div>
+                  <div style={{ fontSize: 32, fontWeight: 900, color: SK }}>
+                    {completedEvent.result_time_minutes}
+                  </div>
+                  <div style={{ fontSize: 11, color: `${W}88` }}>{t('your_time')}</div>
+                </div>
+              )}
+              {completedEvent.target_time_minutes && (
+                <div>
+                  <div style={{ fontSize: 32, fontWeight: 900, color: `${W}55` }}>
+                    {completedEvent.target_time_minutes}
+                  </div>
+                  <div style={{ fontSize: 11, color: `${W}88` }}>{t('target')}</div>
+                </div>
+              )}
+            </div>
+
+            {/* Tier message */}
+            <div style={{ fontSize: 14, color: PL, lineHeight: 1.6, marginBottom: 4 }}>
+              {completedEvent.target_time_minutes && completedEvent.result_time_minutes
+                ? completedEvent.result_time_minutes <= completedEvent.target_time_minutes
+                  ? t('completed_gold')
+                  : completedEvent.result_time_minutes <= completedEvent.target_time_minutes * 1.05
+                    ? t('completed_silver')
+                    : completedEvent.result_time_minutes <= completedEvent.target_time_minutes * 1.10
+                      ? t('completed_bronze')
+                      : t('completed_warm')
+                : t('completed_warm')}
+            </div>
+          </div>
+
+          {/* New event button */}
+          <button
+            onClick={() => {
+              setCompletedEvent(null);
+              setFormState('adding');
+              setFormData({ name: '', event_date: '', target_time_minutes: '', sport_type: 'other' });
+              setError(null);
+            }}
+            style={{
+              width: '100%',
+              marginTop: 16,
+              padding: '14px 24px',
+              fontSize: 14,
+              fontWeight: 700,
+              background: `linear-gradient(135deg, ${P}, ${PL})`,
+              color: W,
+              border: 'none',
+              borderRadius: 10,
+              cursor: 'pointer',
+            }}
+          >
+            <IconSparkle size={16} /> {t('next_event')}
+          </button>
+        </div>
+      )}
+
       {/* ── EMPTY STATE ── */}
-      {!event && formState === 'closed' && (
+      {!event && !completedEvent && formState === 'closed' && (
         <div
           style={{
             textAlign: 'center',

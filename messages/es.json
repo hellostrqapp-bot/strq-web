@@ -115,7 +115,13 @@
     "result_bronze_title": "¡Gran carrera!",
     "result_bronze_body": "A un 10% de tu objetivo. Sólido.",
     "result_warm_title": "¡Estuviste ahí!",
-    "result_warm_body": "Y eso es lo que cuenta. Q sabe: la próxima vez irás más fuerte."
+    "result_warm_body": "Y eso es lo que cuenta. Q sabe: la próxima vez irás más fuerte.",
+    "completed_label": "Completado",
+    "completed_gold": "Objetivo cumplido. Q está orgulloso de ti.",
+    "completed_silver": "Muy cerca. La próxima lo logras.",
+    "completed_bronze": "Gran carrera. Sólido.",
+    "completed_warm": "Estuviste ahí — y eso es lo que cuenta.",
+    "next_event": "Planificar siguiente evento"
   },
   "level": {
     "name_fresh": "Fresh",

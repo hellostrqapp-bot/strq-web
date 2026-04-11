@@ -115,7 +115,13 @@
     "result_bronze_title": "Stark gelaufen!",
     "result_bronze_body": "Innerhalb von 10% deines Ziels. Solides Rennen.",
     "result_warm_title": "Du warst dabei!",
-    "result_warm_body": "Und das zählt. Q weiß: nächstes Mal gibst du mehr Gas."
+    "result_warm_body": "Und das zählt. Q weiß: nächstes Mal gibst du mehr Gas.",
+    "completed_label": "Abgeschlossen",
+    "completed_gold": "Zielzeit geschafft. Q ist stolz auf dich.",
+    "completed_silver": "Ganz knapp. Nächstes Mal packst du's.",
+    "completed_bronze": "Starkes Finish. Solides Rennen.",
+    "completed_warm": "Du warst dabei — und das zählt.",
+    "next_event": "Nächstes Event planen"
   },
   "level": {
     "name_fresh": "Fresh",

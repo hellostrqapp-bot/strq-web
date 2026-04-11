@@ -115,7 +115,13 @@
     "result_bronze_title": "Kallpawan tukurqanki!",
     "result_bronze_body": "10% hinallan pisiyarqa. Allin puriymi.",
     "result_warm_title": "Chaypi karqanki!",
-    "result_warm_body": "Chaymi chanin. Q yachan: hamuq kutipim aswan kallpawan rinki."
+    "result_warm_body": "Chaymi chanin. Q yachan: hamuq kutipim aswan kallpawan rinki.",
+    "completed_label": "Tukusqa",
+    "completed_gold": "Ñanpi chayarqanki. Q kusisqa.",
+    "completed_silver": "Aslla pisilla. Hamuq kutipaq.",
+    "completed_bronze": "Sinchi puriynin. Allin.",
+    "completed_warm": "Chaypi karqanki — chaymi hunt'an.",
+    "next_event": "Hamuq eventoqa"
   },
   "level": {
     "name_fresh": "Fresh",
