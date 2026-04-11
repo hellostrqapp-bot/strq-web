@@ -8,6 +8,7 @@
 export const ALLOWED_TESTERS: string[] = [
   'arnoud.kok@gmail.com',
   'sharondrenth@hotmail.com',
+  'tommysinteur@gmail.com',
 ];
 
 export function isAllowedTester(email: string): boolean {
