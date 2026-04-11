@@ -1210,60 +1210,97 @@ export default function DashboardPage() {
                 const daysCharged = er?.trainingDaysSinceRest ?? 0;
                 const available = er?.available ?? false;
                 if (daysCharged === 0 && !available) return null;
+                const fillPct = Math.min(progress * 100, 100);
                 return (
                   <div style={{
                     marginTop: 16,
-                    padding: '10px 16px',
-                    background: 'rgba(165,105,189,0.06)',
-                    border: `1px solid ${PL}18`,
-                    borderRadius: 10,
-                    position: 'relative',
-                    overflow: 'hidden',
-                    animation: available ? 'rest-charge-glow 2s ease-in-out infinite' : undefined,
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: 10,
                   }}>
-                    {/* Fill bar with charging pulse */}
+                    {/* Vertical battery cell */}
                     <div style={{
-                      position: 'absolute',
-                      left: 0, top: 0, bottom: 0,
-                      width: `${Math.min(progress * 100, 100)}%`,
-                      background: available
-                        ? `linear-gradient(90deg, rgba(231,76,60,0.08), rgba(243,156,18,0.06), rgba(241,196,15,0.08), rgba(39,174,96,0.06), rgba(41,128,185,0.06), rgba(142,68,173,0.08))`
-                        : `linear-gradient(90deg, ${PL}0a, ${PL}14)`,
-                      borderRadius: 10,
-                      transition: 'width 1s ease-out',
-                      animation: 'rest-charge-pulse 2.5s ease-in-out infinite',
-                    }}>
-                      {/* Shimmer moving across the fill */}
-                      <div style={{
-                        position: 'absolute',
-                        top: 0, left: 0, right: 0, bottom: 0,
-                        background: 'linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.12) 50%, transparent 100%)',
-                        animation: 'rest-charge-shimmer 3s ease-in-out infinite',
-                        borderRadius: 10,
-                      }} />
-                      {/* Glowing edge at the fill front */}
-                      <div style={{
-                        position: 'absolute',
-                        top: 0, right: -2, bottom: 0, width: 6,
-                        background: `radial-gradient(ellipse at 100% 50%, ${PL}30 0%, transparent 70%)`,
-                        animation: 'rest-charge-edge 1.5s ease-in-out infinite',
-                      }} />
-                    </div>
-                    <div style={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      gap: 6,
+                      width: 28,
+                      height: 48,
                       position: 'relative',
-                      fontSize: 12,
-                      fontWeight: 600,
-                      color: available ? PL : 'rgba(255,255,255,0.35)',
+                      flexShrink: 0,
                     }}>
-                      <IconEarnedRest size={16} progress={progress} tier={er?.tier ?? 'locked'} />
-                      <span>
-                        {available ? t('earned_rest') : `${t('rest_charging')} ${daysCharged}/2`}
-                      </span>
+                      {/* Battery cap (top nub) */}
+                      <div style={{
+                        position: 'absolute',
+                        top: 0, left: '50%', transform: 'translateX(-50%)',
+                        width: 12, height: 4,
+                        borderRadius: '3px 3px 0 0',
+                        background: available ? PL : 'rgba(255,255,255,0.15)',
+                        transition: 'background 0.5s',
+                      }} />
+                      {/* Battery body */}
+                      <div style={{
+                        position: 'absolute',
+                        top: 4, left: 0, right: 0, bottom: 0,
+                        borderRadius: 5,
+                        border: `1.5px solid ${available ? PL + '60' : 'rgba(255,255,255,0.12)'}`,
+                        background: 'rgba(255,255,255,0.03)',
+                        overflow: 'hidden',
+                        animation: available ? 'rest-charge-glow 2s ease-in-out infinite' : undefined,
+                      }}>
+                        {/* Water fill — rises from bottom */}
+                        <div style={{
+                          position: 'absolute',
+                          left: 0, right: 0, bottom: 0,
+                          height: `${fillPct}%`,
+                          background: available
+                            ? `linear-gradient(0deg, rgba(231,76,60,0.6), rgba(243,156,18,0.5), rgba(241,196,15,0.5), rgba(39,174,96,0.5), rgba(41,128,185,0.5), rgba(142,68,173,0.6))`
+                            : `linear-gradient(0deg, ${PL}50, ${PL}30)`,
+                          transition: 'height 1.2s ease-out',
+                          animation: 'rest-charge-pulse 2.5s ease-in-out infinite',
+                          borderRadius: '0 0 3px 3px',
+                        }}>
+                          {/* Water surface wave */}
+                          <div style={{
+                            position: 'absolute',
+                            top: -3, left: -4, right: -4, height: 8,
+                            background: available
+                              ? `radial-gradient(ellipse at 50% 100%, rgba(142,68,173,0.4) 0%, transparent 70%)`
+                              : `radial-gradient(ellipse at 50% 100%, ${PL}30 0%, transparent 70%)`,
+                            animation: 'rest-water-wobble 2s ease-in-out infinite',
+                            borderRadius: '50%',
+                          }} />
+                          {/* Rising shimmer */}
+                          <div style={{
+                            position: 'absolute',
+                            left: 0, right: 0, bottom: 0, top: 0,
+                            background: 'linear-gradient(0deg, transparent 0%, rgba(255,255,255,0.15) 50%, transparent 100%)',
+                            animation: 'rest-charge-shimmer-v 3.5s ease-in-out infinite',
+                          }} />
+                        </div>
+                        {/* Subtle bubbles */}
+                        {!available && fillPct > 0 && (
+                          <>
+                            <div style={{
+                              position: 'absolute', bottom: '10%', left: '25%',
+                              width: 3, height: 3, borderRadius: '50%',
+                              background: `${PL}30`,
+                              animation: 'rest-bubble 2.8s ease-in-out infinite',
+                            }} />
+                            <div style={{
+                              position: 'absolute', bottom: '5%', left: '60%',
+                              width: 2, height: 2, borderRadius: '50%',
+                              background: `${PL}25`,
+                              animation: 'rest-bubble 3.4s ease-in-out infinite 0.8s',
+                            }} />
+                          </>
+                        )}
+                      </div>
                     </div>
+                    {/* Label next to battery */}
+                    <span style={{
+                      fontSize: 11,
+                      fontWeight: 600,
+                      color: available ? PL : 'rgba(255,255,255,0.30)',
+                    }}>
+                      {available ? t('earned_rest') : t('rest_charging')}
+                    </span>
                   </div>
                 );
               })()}
@@ -1610,6 +1647,21 @@ function ConfettiOverlay() {
         @keyframes rest-charge-glow {
           0%, 100% { box-shadow: 0 0 8px ${PL}11; }
           50% { box-shadow: 0 0 16px ${PL}22, 0 0 24px ${P}11; }
+        }
+        @keyframes rest-charge-shimmer-v {
+          0% { transform: translateY(100%); }
+          60% { transform: translateY(-100%); }
+          100% { transform: translateY(-100%); }
+        }
+        @keyframes rest-water-wobble {
+          0%, 100% { transform: scaleX(1) translateY(0); }
+          25% { transform: scaleX(1.1) translateY(-1px); }
+          75% { transform: scaleX(0.9) translateY(1px); }
+        }
+        @keyframes rest-bubble {
+          0% { transform: translateY(0) scale(1); opacity: 0.6; }
+          50% { transform: translateY(-12px) scale(0.7); opacity: 0.3; }
+          100% { transform: translateY(-20px) scale(0.4); opacity: 0; }
         }
       `}</style>
     </div>
