@@ -65,6 +65,7 @@ export async function getSubscription(
 
     if (error || !data) return FREE;
 
+    // past_due = payment failed, no premium access
     const isActive =
       data.status === 'active' || data.status === 'trialing';
 

@@ -1,8 +1,22 @@
 import { NextRequest, NextResponse } from "next/server";
 import { supabase } from "@/lib/supabase";
+import { rateLimit } from "@/lib/rate-limit";
 
 export async function POST(request: NextRequest) {
   try {
+    // Rate limit: 5 signups per IP per minute
+    const ip = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim()
+      || request.headers.get("x-real-ip")
+      || "unknown";
+    const { limited, remaining } = rateLimit(`waitlist:${ip}`, 5, 60_000);
+
+    if (limited) {
+      return NextResponse.json(
+        { error: "Te veel verzoeken, probeer het straks opnieuw" },
+        { status: 429, headers: { "Retry-After": "60", "X-RateLimit-Remaining": "0" } }
+      );
+    }
+
     const body = await request.json();
     const { email, sport, referral_source, utm_source, utm_medium, utm_campaign } = body;
 
