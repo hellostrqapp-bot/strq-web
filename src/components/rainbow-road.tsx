@@ -21,7 +21,7 @@ const GOLD_D = '#D4AC0D';
 
 const MAX_FRIENDS = 6;
 const CW = 400;
-const CH = 480;
+const CH = 380;
 
 interface Friend {
   name: string;
@@ -46,8 +46,8 @@ interface RainbowRoadProps {
 // ── Road geometry ──
 
 function roadCenter(t: number) {
-  const yNear = 540;
-  const yHorizon = 175;
+  const yNear = 420;
+  const yHorizon = 140;
   const ease = 1 - Math.pow(1 - t, 2.2);
   const y = yNear - (yNear - yHorizon) * ease;
 
@@ -260,7 +260,7 @@ export function RainbowRoad({ eventName, daysToGo, friends, strings, onInvite }:
     <div style={{
       background: BG,
       borderRadius: 20,
-      padding: '20px 12px 16px',
+      padding: '14px 12px 10px',
       maxWidth: 440,
       margin: '0 auto',
       fontFamily: 'Inter, system-ui, sans-serif',
