@@ -753,7 +753,7 @@ export default function DashboardPage() {
         </div>
       )}
 
-      {/* ── STREAK HISTORY (last 7 days) ── */}
+      {/* ── STREAK HISTORY ── */}
       {streak && (
         <div style={{ marginTop: 36 }}>
           <div
@@ -766,13 +766,25 @@ export default function DashboardPage() {
               textTransform: 'uppercase',
             }}
           >
-            {t('last_7_days')}
+            {streak.last7Days.length > 7
+              ? t('streak_history_days', { count: streak.last7Days.length })
+              : t('last_7_days')}
           </div>
           <div
+            ref={(el) => {
+              // Auto-scroll to the right (today) on mount
+              if (el) el.scrollLeft = el.scrollWidth;
+            }}
             style={{
               display: 'flex',
               gap: 4,
-              justifyContent: 'space-between',
+              justifyContent: streak.last7Days.length <= 7 ? 'space-between' : 'flex-start',
+              overflowX: streak.last7Days.length > 7 ? 'auto' : 'visible',
+              scrollBehavior: 'smooth',
+              paddingBottom: streak.last7Days.length > 7 ? 4 : 0,
+              WebkitOverflowScrolling: 'touch',
+              msOverflowStyle: 'none',
+              scrollbarWidth: 'none',
             }}
           >
             {streak.last7Days.map((day, i) => {
@@ -784,7 +796,8 @@ export default function DashboardPage() {
                 <div
                   key={i}
                   style={{
-                    flex: 1,
+                    flex: streak.last7Days.length <= 7 ? 1 : 'none',
+                    minWidth: streak.last7Days.length > 7 ? 48 : undefined,
                     textAlign: 'center',
                   }}
                 >

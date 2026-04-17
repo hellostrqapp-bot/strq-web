@@ -110,7 +110,7 @@ export function calculateStreak(activities: Activity[]): StreakResult {
     longestStreak,
     multiplier,
     lastActivityDate: activities.length > 0 ? activities[0].activity_date : null,
-    last7Days: getLast7Days(activityMap),
+    last7Days: getStreakHistory(activityMap, currentStreak),
     earnedRest: calculateEarnedRest(activityMap),
   };
 }
@@ -150,13 +150,47 @@ function calculateLongestStreak(activities: Activity[]): number {
   return longest;
 }
 
-// ── Last 7 Days ────────────────────────────────────────────
-function getLast7Days(activityMap: Map<string, string>): DayInfo[] {
+// ── Streak History ─────────────────────────────────────────
+// Returns all days of the current streak (minimum 7 days).
+// When streak > 7, shows full streak so the user sees their
+// entire run, not just the last week.
+function getStreakHistory(
+  activityMap: Map<string, string>,
+  currentStreak: number
+): DayInfo[] {
   const days: DayInfo[] = [];
   const todayStr = toDateStr(new Date());
   const dayLabels = ['zo', 'ma', 'di', 'wo', 'do', 'vr', 'za'];
 
-  for (let i = 6; i >= 0; i--) {
+  // Walk backwards to find the first day of the streak.
+  // The streak includes rest days, so count all days from
+  // today back to the start of unbroken activity.
+  let streakDays = 0;
+  let gapDays = 0;
+  const walker = new Date();
+  for (let i = 0; i < 365; i++) {
+    const dateStr = toDateStr(walker);
+    const type = activityMap.get(dateStr);
+
+    if (type === 'training' || type === 'rest') {
+      gapDays = 0;
+      streakDays = i + 1;
+    } else {
+      gapDays++;
+      if (i === 0) {
+        // Today with no activity yet — still part of streak
+        streakDays = 1;
+      } else if (gapDays >= 2) {
+        break;
+      }
+    }
+    walker.setDate(walker.getDate() - 1);
+  }
+
+  // Show at least 7 days, or the full streak length, whichever is more
+  const daysToShow = Math.max(7, streakDays);
+
+  for (let i = daysToShow - 1; i >= 0; i--) {
     const d = new Date();
     d.setDate(d.getDate() - i);
     const dateStr = toDateStr(d);
@@ -197,9 +231,13 @@ function calculateEarnedRest(activityMap: Map<string, string>): EarnedRestInfo {
   let consecutiveTraining = 0;
   const d = new Date();
 
-  // If today is training, count it
   if (todayType === 'training') {
+    // Count today, then walk back from yesterday
     consecutiveTraining++;
+    d.setDate(d.getDate() - 1);
+  } else {
+    // Today not logged yet — start looking from yesterday so the earned-rest
+    // button stays available after a streak of training days.
     d.setDate(d.getDate() - 1);
   }
 

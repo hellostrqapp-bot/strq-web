@@ -234,6 +234,33 @@ describe('earnedRest', () => {
     expect(result.earnedRest.tier).toBe('locked');
     expect(result.earnedRest.trainingDaysSinceRest).toBe(0);
   });
+
+  it('stays available when today is not yet logged after a training streak', () => {
+    // 6 trainingsdagen tot en met gisteren, vandaag nog niks → knop moet
+    // supercharged zijn. Regressie: eerdere versie gaf 0 terug.
+    const activities = makeActivities([
+      { daysAgo: 1, type: 'training' },
+      { daysAgo: 2, type: 'training' },
+      { daysAgo: 3, type: 'training' },
+      { daysAgo: 4, type: 'training' },
+      { daysAgo: 5, type: 'training' },
+      { daysAgo: 6, type: 'training' },
+    ]);
+    const result = calculateStreak(activities);
+    expect(result.earnedRest.tier).toBe('supercharged');
+    expect(result.earnedRest.available).toBe(true);
+    expect(result.earnedRest.trainingDaysSinceRest).toBe(6);
+  });
+
+  it('is ready when today not logged after 2 training days', () => {
+    const activities = makeActivities([
+      { daysAgo: 1, type: 'training' },
+      { daysAgo: 2, type: 'training' },
+    ]);
+    const result = calculateStreak(activities);
+    expect(result.earnedRest.tier).toBe('ready');
+    expect(result.earnedRest.available).toBe(true);
+  });
 });
 
 // ── XP System ─────────────────────────────────────────────
