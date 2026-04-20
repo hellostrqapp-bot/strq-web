@@ -93,10 +93,11 @@ export function useDashboard() {
         ]);
 
       const activities = activitiesRes.data || [];
-      const streakResult = calculateStreak(activities);
+      const upcomingEvent = eventRes.data || null;
+      const streakResult = calculateStreak(activities, upcomingEvent);
       setStreak(streakResult);
       setTotalXp(streakStateRes.data?.total_xp || 0);
-      setEvent(eventRes.data || null);
+      setEvent(upcomingEvent);
 
       // Check if today is already logged
       const todayEntry = activities.find(
@@ -175,7 +176,7 @@ export function useDashboard() {
         .order('activity_date', { ascending: false })
         .limit(60);
 
-      const newStreak = calculateStreak(activities || []);
+      const newStreak = calculateStreak(activities || [], event);
       const baseXp = getBaseXP(
         type,
         type === 'rest' ? streak?.earnedRest : undefined

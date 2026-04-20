@@ -82,7 +82,11 @@
     "error_load_failed": "Mana datos cargayta atikunchu. Ñit'iy watiqmanta.",
     "error_not_logged_in": "Sesión tukukun. Watiqmanta yaykuy.",
     "error_save_failed": "Mana waqaychayta atikunchu. Ñit'iy watiqmanta.",
-    "error_unknown": "Imapas mana allinchu. Ñit'iy wichq'anapaq."
+    "error_unknown": "Imapas mana allinchu. Ñit'iy wichq'anapaq.",
+    "taper_rest": "Taper samay",
+    "taper_mode_label": "Taper kashan",
+    "taper_mode_sub": "Kunan samayqa allinmi — streak-niyki kashanraq.",
+    "taper_mode_race_day": "Phawarin punchaw. Allin kachun."
   },
   "event": {
     "title": "Eventoyki",

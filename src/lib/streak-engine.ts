@@ -8,21 +8,39 @@
 // 3. Two consecutive rest days → streak breaks
 // 4. After 3+ day streak → 2x multiplier on XP
 // 5. Surprise bonuses are random (15% chance)
+// 6. Taper mode: within TAPER_WINDOW_DAYS of an upcoming event,
+//    rest is always free and gap days do not break the streak.
+//    A taper is smart preparation, not a missed day.
 //
 // "Rustdagen na inspanning breken de streak NIET."
 // ═══════════════════════════════════════════════════════════
 
+/** Days before an event where taper mode activates (inclusive). */
+export const TAPER_WINDOW_DAYS = 3;
+
+/** XP for a taper rest day — same as 'charged' earned rest. */
+export const TAPER_REST_XP = 40;
+
 export interface EarnedRestInfo {
   /** How many consecutive training days since last rest/gap */
   trainingDaysSinceRest: number;
-  /** Is the earned rest button available? (>= 2 training days) */
+  /** Is the earned rest button available? (>= 2 training days, or taper active) */
   available: boolean;
   /** Progress 0-1 for the visual ring (0 = empty, 1 = full at 4+ days) */
   progress: number;
   /** XP reward if rest is taken now */
   xpReward: number;
   /** Tier label for UI styling */
-  tier: 'locked' | 'ready' | 'charged' | 'supercharged';
+  tier: 'locked' | 'ready' | 'charged' | 'supercharged' | 'taper';
+}
+
+export interface TaperInfo {
+  /** Is taper mode active right now? */
+  active: boolean;
+  /** Days until the event (0 = event day today). -1 when no upcoming event. */
+  daysUntilEvent: number;
+  /** Event date that triggered the taper, if any */
+  eventDate: string | null;
 }
 
 export interface StreakResult {
@@ -32,6 +50,7 @@ export interface StreakResult {
   lastActivityDate: string | null;
   last7Days: DayInfo[];
   earnedRest: EarnedRestInfo;
+  taper: TaperInfo;
 }
 
 export interface DayInfo {
@@ -51,12 +70,17 @@ interface Activity {
 // Rest days after training don't break the streak.
 // Two consecutive missed/rest days = streak broken.
 
-export function calculateStreak(activities: Activity[]): StreakResult {
+export function calculateStreak(
+  activities: Activity[],
+  upcomingEvent?: { event_date: string } | null
+): StreakResult {
   const activityMap = new Map<string, string>();
 
   for (const a of activities) {
     activityMap.set(a.activity_date, a.activity_type);
   }
+
+  const taper = calculateTaper(upcomingEvent);
 
   let currentStreak = 0;
   let longestStreak = 0;
@@ -68,6 +92,10 @@ export function calculateStreak(activities: Activity[]): StreakResult {
   // Today being empty is fine (user hasn't opened the app yet).
   // TWO consecutive UNLOGGED days (no activity at all) = streak breaks.
   // But: unlogged today + logged rest yesterday = streak OK.
+  //
+  // Taper exception: on days within the taper window of an upcoming event,
+  // unlogged days do not count against the streak. A deliberate taper is
+  // smart preparation, not a missed day.
 
   const d = new Date();
   let gapDays = 0; // consecutive days with NO logged activity at all
@@ -75,6 +103,7 @@ export function calculateStreak(activities: Activity[]): StreakResult {
   for (let i = 0; i < 365 && streakActive; i++) {
     const dateStr = toDateStr(d);
     const type = activityMap.get(dateStr);
+    const inTaper = isDateInTaperWindow(d, upcomingEvent);
 
     if (type === 'training') {
       currentStreak++;
@@ -82,6 +111,11 @@ export function calculateStreak(activities: Activity[]): StreakResult {
     } else if (type === 'rest') {
       // Earned rest day — streak preserved, not incremented
       // Reset the gap counter: this is a deliberate logged rest, not an absence
+      gapDays = 0;
+    } else if (inTaper) {
+      // Unlogged day that falls inside the taper window of an upcoming event.
+      // Don't count as a gap — tapering down is exactly what the athlete
+      // should be doing. Streak is preserved without incrementing.
       gapDays = 0;
     } else {
       // No activity logged this day
@@ -110,9 +144,51 @@ export function calculateStreak(activities: Activity[]): StreakResult {
     longestStreak,
     multiplier,
     lastActivityDate: activities.length > 0 ? activities[0].activity_date : null,
-    last7Days: getStreakHistory(activityMap, currentStreak),
-    earnedRest: calculateEarnedRest(activityMap),
+    last7Days: getStreakHistory(activityMap, currentStreak, upcomingEvent),
+    earnedRest: calculateEarnedRest(activityMap, taper),
+    taper,
   };
+}
+
+// ── Taper Mode ─────────────────────────────────────────────
+// Taper mode is active on the TAPER_WINDOW_DAYS leading up to an event
+// (inclusive of event day itself). During taper:
+//   - Rest is always free (no earned-rest counter required)
+//   - Unlogged days do not break the streak
+//   - Earned rest button shows 'taper' tier with 40 XP
+// This makes the app honour the fact that tapering is smart training.
+
+function calculateTaper(upcomingEvent?: { event_date: string } | null): TaperInfo {
+  if (!upcomingEvent?.event_date) {
+    return { active: false, daysUntilEvent: -1, eventDate: null };
+  }
+  const days = daysBetween(new Date(), new Date(upcomingEvent.event_date));
+  if (days < 0) {
+    // Event is in the past — shouldn't happen for 'upcoming' status, but be safe
+    return { active: false, daysUntilEvent: days, eventDate: upcomingEvent.event_date };
+  }
+  return {
+    active: days <= TAPER_WINDOW_DAYS,
+    daysUntilEvent: days,
+    eventDate: upcomingEvent.event_date,
+  };
+}
+
+/** Is the given date within the taper window of the event? */
+function isDateInTaperWindow(
+  date: Date,
+  upcomingEvent?: { event_date: string } | null
+): boolean {
+  if (!upcomingEvent?.event_date) return false;
+  const days = daysBetween(date, new Date(upcomingEvent.event_date));
+  return days >= 0 && days <= TAPER_WINDOW_DAYS;
+}
+
+/** Whole-day difference between two dates (b - a). */
+function daysBetween(a: Date, b: Date): number {
+  const aUtc = Date.UTC(a.getFullYear(), a.getMonth(), a.getDate());
+  const bUtc = Date.UTC(b.getFullYear(), b.getMonth(), b.getDate());
+  return Math.round((bUtc - aUtc) / (1000 * 60 * 60 * 24));
 }
 
 // ── Longest Streak (historical) ────────────────────────────
@@ -156,7 +232,8 @@ function calculateLongestStreak(activities: Activity[]): number {
 // entire run, not just the last week.
 function getStreakHistory(
   activityMap: Map<string, string>,
-  currentStreak: number
+  currentStreak: number,
+  upcomingEvent?: { event_date: string } | null
 ): DayInfo[] {
   const days: DayInfo[] = [];
   const todayStr = toDateStr(new Date());
@@ -171,8 +248,13 @@ function getStreakHistory(
   for (let i = 0; i < 365; i++) {
     const dateStr = toDateStr(walker);
     const type = activityMap.get(dateStr);
+    const inTaper = isDateInTaperWindow(walker, upcomingEvent);
 
     if (type === 'training' || type === 'rest') {
+      gapDays = 0;
+      streakDays = i + 1;
+    } else if (inTaper) {
+      // Taper day — part of the streak even without a log
       gapDays = 0;
       streakDays = i + 1;
     } else {
@@ -217,7 +299,10 @@ function getStreakHistory(
 // 3 days:   charged     → 40 XP
 // 4+ days:  supercharged → 60 XP
 
-function calculateEarnedRest(activityMap: Map<string, string>): EarnedRestInfo {
+function calculateEarnedRest(
+  activityMap: Map<string, string>,
+  taper: TaperInfo
+): EarnedRestInfo {
   const todayStr = toDateStr(new Date());
   const todayType = activityMap.get(todayStr);
 
@@ -251,6 +336,24 @@ function calculateEarnedRest(activityMap: Map<string, string>): EarnedRestInfo {
     } else {
       break; // Hit a rest day, gap, or no-activity — stop counting
     }
+  }
+
+  // Taper mode: rest is always available and free, regardless of counter.
+  // The tier takes precedence when the user has trained enough to supercharge —
+  // we pick the better of taper (40 XP) or what they've earned.
+  if (taper.active) {
+    // If the user has built a supercharged streak AND is in taper, give them
+    // the bigger reward. Otherwise give the flat taper reward.
+    if (consecutiveTraining >= 4) {
+      return { trainingDaysSinceRest: consecutiveTraining, available: true, progress: 1, xpReward: 60, tier: 'supercharged' };
+    }
+    return {
+      trainingDaysSinceRest: consecutiveTraining,
+      available: true,
+      progress: 1,
+      xpReward: TAPER_REST_XP,
+      tier: 'taper',
+    };
   }
 
   // Determine tier and reward

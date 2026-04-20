@@ -254,6 +254,48 @@ export default function DashboardPage() {
         );
       })()}
 
+      {/* ── TAPER MODE BANNER ── */}
+      {streak?.taper.active && (
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: 10,
+            background: `linear-gradient(90deg, ${P}22, ${PL}18, transparent)`,
+            border: `1px solid ${PL}33`,
+            borderRadius: 12,
+            padding: '10px 14px',
+            marginBottom: 20,
+            fontSize: 13,
+            lineHeight: 1.35,
+          }}
+          role="status"
+          aria-live="polite"
+        >
+          <span style={{
+            display: 'inline-block',
+            width: 8,
+            height: 8,
+            borderRadius: '50%',
+            background: PL,
+            boxShadow: `0 0 10px ${PL}aa`,
+            flexShrink: 0,
+          }} />
+          <div>
+            <div style={{ color: W, fontWeight: 700 }}>
+              {streak.taper.daysUntilEvent === 0
+                ? t('taper_mode_race_day')
+                : t('taper_mode_label')}
+            </div>
+            {streak.taper.daysUntilEvent > 0 && (
+              <div style={{ color: 'rgba(255,255,255,0.55)', fontSize: 12, marginTop: 1 }}>
+                {t('taper_mode_sub')}
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+
       {/* ── DAILY REVEAL ── */}
       {state === 'reveal' && reveal && (
         <div
@@ -544,7 +586,9 @@ export default function DashboardPage() {
             <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, position: 'relative' }}>
               <IconEarnedRest size={22} progress={restProgress} tier={restTier} />
               <span>
-                {restAvailable ? t('earned_rest') : t('rest_charging')}
+                {restAvailable
+                  ? (restTier === 'taper' ? t('taper_rest') : t('earned_rest'))
+                  : t('rest_charging')}
               </span>
               {restAvailable && (
                 <span style={{

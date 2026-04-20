@@ -82,7 +82,11 @@
     "error_load_failed": "Daten konnten nicht geladen werden. Tippe zum Wiederholen.",
     "error_not_logged_in": "Sitzung abgelaufen. Bitte erneut anmelden.",
     "error_save_failed": "Speichern fehlgeschlagen. Tippe zum Wiederholen.",
-    "error_unknown": "Etwas ist schiefgelaufen. Tippe zum Schließen."
+    "error_unknown": "Etwas ist schiefgelaufen. Tippe zum Schließen.",
+    "taper_rest": "Taper-Pause",
+    "taper_mode_label": "Taper-Modus aktiv",
+    "taper_mode_sub": "Pause ist jetzt klug — deine Serie läuft weiter.",
+    "taper_mode_race_day": "Wettkampftag. Viel Erfolg."
   },
   "event": {
     "title": "Dein Event",

@@ -82,7 +82,11 @@
     "error_load_failed": "Impossible de charger les données. Appuyez pour réessayer.",
     "error_not_logged_in": "Session expirée. Reconnectez-vous.",
     "error_save_failed": "Échec de la sauvegarde. Appuyez pour réessayer.",
-    "error_unknown": "Une erreur est survenue. Appuyez pour fermer."
+    "error_unknown": "Une erreur est survenue. Appuyez pour fermer.",
+    "taper_rest": "Repos taper",
+    "taper_mode_label": "Mode taper activé",
+    "taper_mode_sub": "Le repos est intelligent maintenant — ta série continue.",
+    "taper_mode_race_day": "Jour de course. Bonne chance."
   },
   "event": {
     "title": "Votre événement",

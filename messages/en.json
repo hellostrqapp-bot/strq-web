@@ -82,7 +82,11 @@
     "error_load_failed": "Couldn't load data. Tap to retry.",
     "error_not_logged_in": "Session expired. Please log in again.",
     "error_save_failed": "Save failed. Tap to retry.",
-    "error_unknown": "Something went wrong. Tap to dismiss."
+    "error_unknown": "Something went wrong. Tap to dismiss.",
+    "taper_rest": "Taper rest",
+    "taper_mode_label": "Taper mode on",
+    "taper_mode_sub": "Rest is smart now — your streak keeps running.",
+    "taper_mode_race_day": "Race day. Good luck."
   },
   "event": {
     "title": "Your event",

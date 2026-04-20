@@ -377,6 +377,137 @@ describe('calculateFuzzyBonus', () => {
   });
 });
 
+// ── Taper Mode ────────────────────────────────────────────
+// "Rust in de taper-periode breekt de streak NIET."
+// Arnoud's eigen casus: 3 dagen voor Hyrox Paris mag hij rusten
+// zonder earned-rest counter en zonder streak-risico.
+
+describe('taper mode', () => {
+  /** Returns an ISO date string N days from today. */
+  function daysFromToday(n: number): string {
+    const d = new Date();
+    d.setDate(d.getDate() + n);
+    return d.toISOString().split('T')[0];
+  }
+
+  it('is inactive without an upcoming event', () => {
+    const result = calculateStreak([]);
+    expect(result.taper.active).toBe(false);
+    expect(result.taper.daysUntilEvent).toBe(-1);
+  });
+
+  it('is inactive when event is more than 3 days out', () => {
+    const result = calculateStreak([], { event_date: daysFromToday(7) });
+    expect(result.taper.active).toBe(false);
+    expect(result.taper.daysUntilEvent).toBe(7);
+  });
+
+  it('activates 3 days before event', () => {
+    const result = calculateStreak([], { event_date: daysFromToday(3) });
+    expect(result.taper.active).toBe(true);
+    expect(result.taper.daysUntilEvent).toBe(3);
+  });
+
+  it('is active on event day itself', () => {
+    const result = calculateStreak([], { event_date: daysFromToday(0) });
+    expect(result.taper.active).toBe(true);
+    expect(result.taper.daysUntilEvent).toBe(0);
+  });
+
+  // ── Streak preservation during taper ──
+
+  it('preserves streak when all taper days are unlogged', () => {
+    // Arnoud's case: trained through yesterday, then wants full rest for 3 days
+    // leading up to event. Event is TAPER_WINDOW_DAYS out, so today..event are
+    // all inside the window. All unlogged — streak must survive.
+    const activities = makeActivities([
+      { daysAgo: 1, type: 'training' },
+      { daysAgo: 2, type: 'training' },
+      { daysAgo: 3, type: 'training' },
+      { daysAgo: 4, type: 'training' },
+    ]);
+    const result = calculateStreak(activities, { event_date: daysFromToday(3) });
+    // Today in taper (gap ignored), yesterday training counts, etc.
+    expect(result.currentStreak).toBe(4);
+    expect(result.taper.active).toBe(true);
+  });
+
+  it('survives 3 consecutive rest days inside taper window', () => {
+    // Today, yesterday, day-before: all rest. Taper active → no streak break
+    // even though earned rest counter would normally require training between.
+    const activities = makeActivities([
+      { daysAgo: 0, type: 'rest' },
+      { daysAgo: 1, type: 'rest' },
+      { daysAgo: 2, type: 'rest' },
+      { daysAgo: 3, type: 'training' },
+      { daysAgo: 4, type: 'training' },
+    ]);
+    // Event on day +1 → today, yesterday, day-before, day-before-that all taper
+    const result = calculateStreak(activities, { event_date: daysFromToday(1) });
+    // currentStreak counts only training days: 2
+    expect(result.currentStreak).toBe(2);
+    expect(result.taper.active).toBe(true);
+  });
+
+  it('would break streak without taper — regression check', () => {
+    // 3 unlogged days in a row — without taper, classic behaviour: broken.
+    const activities = makeActivities([
+      { daysAgo: 4, type: 'training' },
+      { daysAgo: 5, type: 'training' },
+      { daysAgo: 6, type: 'training' },
+      { daysAgo: 7, type: 'training' },
+    ]);
+    const result = calculateStreak(activities);
+    // No event → normal gap rules → streak broken
+    expect(result.currentStreak).toBe(0);
+  });
+
+  it('keeps earned rest available in taper even at 0 training days', () => {
+    // No recent training but taper active → rest should still be free
+    const result = calculateStreak([], { event_date: daysFromToday(2) });
+    expect(result.taper.active).toBe(true);
+    expect(result.earnedRest.available).toBe(true);
+    expect(result.earnedRest.tier).toBe('taper');
+    expect(result.earnedRest.xpReward).toBe(40);
+  });
+
+  it('keeps supercharged tier in taper if user earned it', () => {
+    // 5 days of training leading into taper → deserve the 60 XP reward
+    const activities = makeActivities([
+      { daysAgo: 0, type: 'training' },
+      { daysAgo: 1, type: 'training' },
+      { daysAgo: 2, type: 'training' },
+      { daysAgo: 3, type: 'training' },
+      { daysAgo: 4, type: 'training' },
+    ]);
+    const result = calculateStreak(activities, { event_date: daysFromToday(2) });
+    expect(result.earnedRest.tier).toBe('supercharged');
+    expect(result.earnedRest.xpReward).toBe(60);
+  });
+
+  it('upgrades ready/charged to taper so user gets at least 40 XP', () => {
+    // Only 2 training days → normally 'ready' (25 XP), but taper makes it 40
+    const activities = makeActivities([
+      { daysAgo: 0, type: 'training' },
+      { daysAgo: 1, type: 'training' },
+    ]);
+    const result = calculateStreak(activities, { event_date: daysFromToday(2) });
+    expect(result.earnedRest.tier).toBe('taper');
+    expect(result.earnedRest.xpReward).toBe(40);
+  });
+
+  it('last7Days includes unlogged taper days as part of streak', () => {
+    // Trained today, event in 2 days → tomorrow + day after are taper (future)
+    // Past days should still be streak days if logged
+    const activities = makeActivities([
+      { daysAgo: 0, type: 'training' },
+      { daysAgo: 1, type: 'training' },
+    ]);
+    const result = calculateStreak(activities, { event_date: daysFromToday(2) });
+    expect(result.last7Days.length).toBeGreaterThanOrEqual(7);
+  });
+});
+
 // ── rollSurprise ──────────────────────────────────────────
 
 describe('rollSurprise', () => {

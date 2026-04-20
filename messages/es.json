@@ -82,7 +82,11 @@
     "error_load_failed": "No se pudieron cargar los datos. Toca para reintentar.",
     "error_not_logged_in": "Sesión expirada. Inicia sesión de nuevo.",
     "error_save_failed": "Error al guardar. Toca para reintentar.",
-    "error_unknown": "Algo salió mal. Toca para cerrar."
+    "error_unknown": "Algo salió mal. Toca para cerrar.",
+    "taper_rest": "Descanso de taper",
+    "taper_mode_label": "Modo taper activo",
+    "taper_mode_sub": "Descansar ahora es inteligente — tu racha sigue.",
+    "taper_mode_race_day": "Día de carrera. Mucha suerte."
   },
   "event": {
     "title": "Tu evento",

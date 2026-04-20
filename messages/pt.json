@@ -82,7 +82,11 @@
     "error_load_failed": "Não foi possível carregar os dados. Toque para tentar novamente.",
     "error_not_logged_in": "Sessão expirada. Faça login novamente.",
     "error_save_failed": "Falha ao salvar. Toque para tentar novamente.",
-    "error_unknown": "Algo deu errado. Toque para fechar."
+    "error_unknown": "Algo deu errado. Toque para fechar.",
+    "taper_rest": "Descanso de taper",
+    "taper_mode_label": "Modo taper ativo",
+    "taper_mode_sub": "Descansar agora é inteligente — sua sequência continua.",
+    "taper_mode_race_day": "Dia de prova. Boa sorte."
   },
   "event": {
     "title": "Seu evento",
