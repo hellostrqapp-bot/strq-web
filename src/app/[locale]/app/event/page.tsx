@@ -306,7 +306,8 @@ export default function EventPage() {
       </div>
 
       {/* ── TWO-COLUMN LAYOUT: event + rainbow road ── */}
-      {event && formState === 'closed' && (
+      {/* Hidden on race-day (and after) until result is entered, so post-race input is prominent */}
+      {event && formState === 'closed' && (daysUntil(event.event_date) > 0 || event.result_time_minutes) && (
         <div style={{
           display: 'flex',
           gap: 24,
@@ -413,7 +414,7 @@ export default function EventPage() {
                 transition: 'background 0.2s',
               }}
             >
-              <IconEdit size={16} /> {t('add_event')}
+              <IconEdit size={16} /> {t('edit')}
             </button>
             <button
               onClick={() => setConfirmDelete(true)}

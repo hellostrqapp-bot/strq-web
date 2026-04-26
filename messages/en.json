@@ -1,6 +1,6 @@
 {
   "meta": {
-    "title": "strQ.app — Consistency rewarded",
+    "title": "strQ.app: Consistency rewarded",
     "description": "You know that moment. Halfway through training, and the couch wins. strQ helps you keep going."
   },
   "hero": {
@@ -33,7 +33,7 @@
     "hours": "hours",
     "minutes": "min",
     "seconds": "sec",
-    "event_name": "April 23 — Hyrox Paris"
+    "event_name": "April 23: Hyrox Paris"
   },
   "footer": {
     "privacy": "No cookies. No tracking. Just a turtle with glasses.",
@@ -45,7 +45,7 @@
   },
   "auth_error": {
     "title": "Link expired",
-    "description": "Your magic link is no longer valid. No worries — just request a new one.",
+    "description": "Your magic link is no longer valid. No worries, just request a new one.",
     "cta": "Sign in again"
   },
   "login": {
@@ -64,7 +64,7 @@
     "multiplier": "bonus",
     "days_to_go": "days to go",
     "log_training": "I trained today!",
-    "log_rest": "Rest day — earned it",
+    "log_rest": "Rest day, earned it",
     "already_logged": "Today is locked in!",
     "come_back_tomorrow": "Come back tomorrow for your next strQ.",
     "tap_to_reveal": "Tap to reveal",
@@ -85,13 +85,14 @@
     "error_unknown": "Something went wrong. Tap to dismiss.",
     "taper_rest": "Taper rest",
     "taper_mode_label": "Taper mode on",
-    "taper_mode_sub": "Rest is smart now — your streak keeps running.",
+    "taper_mode_sub": "Rest is smart now, your streak keeps running.",
     "taper_mode_race_day": "Race day. Good luck."
   },
   "event": {
     "title": "Your event",
     "no_event": "No event added yet.",
     "add_event": "Add event",
+    "edit": "Edit",
     "event_name": "Name",
     "event_name_placeholder": "e.g. Hyrox Paris",
     "event_date": "Date",
@@ -126,7 +127,7 @@
     "completed_gold": "Target crushed. Q is proud of you.",
     "completed_silver": "So close. You'll nail it next time.",
     "completed_bronze": "Strong finish. Solid race.",
-    "completed_warm": "You showed up — and that's what counts.",
+    "completed_warm": "You showed up, and that's what counts.",
     "next_event": "Plan next event"
   },
   "level": {
@@ -154,7 +155,7 @@
     "reason_fuzzy_bonus": "Finish bonus",
     "paywall_title": "Unlock Twin",
     "paywall_description": "Meet your digital training partner. Twin grows with every workout and predicts your race.",
-    "paywall_cta": "Upgrade — €{price}/mo",
+    "paywall_cta": "Upgrade: €{price}/mo",
     "paywall_cancel": "Cancel anytime"
   }
 }

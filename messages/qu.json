@@ -1,6 +1,6 @@
 {
   "meta": {
-    "title": "strQ.app — Chiqap ruwanaqa gananakuyta",
+    "title": "strQ.app: Chiqap ruwanaqa gananakuyta",
     "description": "Chay pachata riqsinki. Yachachikuy chawpinpi, samana tiyanayki atipasunki. strQ yanapasunki ñawpaqman rinaykipaq."
   },
   "hero": {
@@ -33,7 +33,7 @@
     "hours": "hora",
     "minutes": "min",
     "seconds": "seg",
-    "event_name": "23 abril — Hyrox Paris"
+    "event_name": "23 abril: Hyrox Paris"
   },
   "footer": {
     "privacy": "Mana cookies. Mana rastreamiento. Huk tortuga lentesyuqlla.",
@@ -45,7 +45,7 @@
   },
   "auth_error": {
     "title": "Tinkiy tukukurqaña",
-    "description": "Magic tinkiyniyki manaña allinchu. Ama llakikuychu — musuqta mañakuy.",
+    "description": "Magic tinkiyniyki manaña allinchu. Ama llakikuychu, musuqta mañakuy.",
     "cta": "Yaykuy musuqmanta"
   },
   "login": {
@@ -64,7 +64,7 @@
     "multiplier": "yapay",
     "days_to_go": "punchaw falta",
     "log_training": "¡Kunan yachachikurqani!",
-    "log_rest": "Samay punchaw — ganasqa",
+    "log_rest": "Samay punchaw, ganasqa",
     "already_logged": "¡Kunan punchaypaq qillqasqaña!",
     "come_back_tomorrow": "Paqarin kutimuy qatiq strQ-niykipaq.",
     "tap_to_reveal": "Ñit'iy rikuchinaykipaq",
@@ -85,13 +85,14 @@
     "error_unknown": "Imapas mana allinchu. Ñit'iy wichq'anapaq.",
     "taper_rest": "Taper samay",
     "taper_mode_label": "Taper kashan",
-    "taper_mode_sub": "Kunan samayqa allinmi — streak-niyki kashanraq.",
+    "taper_mode_sub": "Kunan samayqa allinmi, streak-niyki kashanraq.",
     "taper_mode_race_day": "Phawarin punchaw. Allin kachun."
   },
   "event": {
     "title": "Eventoyki",
     "no_event": "Manaraq evento yapasqachu.",
     "add_event": "Eventota yapay",
+    "edit": "Tikrachiy",
     "event_name": "Suti",
     "event_name_placeholder": "ahinataq Hyrox Lima",
     "event_date": "Punchaw",
@@ -126,7 +127,7 @@
     "completed_gold": "Ñanpi chayarqanki. Q kusisqa.",
     "completed_silver": "Aslla pisilla. Hamuq kutipaq.",
     "completed_bronze": "Sinchi puriynin. Allin.",
-    "completed_warm": "Chaypi karqanki — chaymi hunt'an.",
+    "completed_warm": "Chaypi karqanki, chaymi hunt'an.",
     "next_event": "Hamuq eventoqa"
   },
   "level": {
@@ -154,7 +155,7 @@
     "reason_fuzzy_bonus": "Chayay yapay",
     "paywall_title": "Twin kichay",
     "paywall_description": "Digital yachachiq masiykita riqsiy. Twin sapa entrenamiyntuwan wiñan.",
-    "paywall_cta": "Upgrade — €{price}/killa",
+    "paywall_cta": "Upgrade: €{price}/killa",
     "paywall_cancel": "Mayk'aqpas haqiyta atikunki"
   }
 }

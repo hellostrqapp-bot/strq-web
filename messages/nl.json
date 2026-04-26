@@ -1,6 +1,6 @@
 {
   "meta": {
-    "title": "strQ.app — Consistentie beloond",
+    "title": "strQ.app: Consistentie beloond",
     "description": "Je kent dat moment. Halverwege de voorbereiding, en de bank wint. strQ helpt je vol te houden."
   },
   "hero": {
@@ -33,7 +33,7 @@
     "hours": "uren",
     "minutes": "min",
     "seconds": "sec",
-    "event_name": "23 april — Hyrox Paris"
+    "event_name": "23 april: Hyrox Paris"
   },
   "footer": {
     "privacy": "Geen cookies. Geen tracking. Wel een schildpad met een bril.",
@@ -45,7 +45,7 @@
   },
   "auth_error": {
     "title": "Link verlopen",
-    "description": "Je magic link is niet meer geldig. Geen stress — vraag een nieuwe aan.",
+    "description": "Je magic link is niet meer geldig. Geen stress, vraag een nieuwe aan.",
     "cta": "Opnieuw inloggen"
   },
   "login": {
@@ -64,7 +64,7 @@
     "multiplier": "bonus",
     "days_to_go": "dagen te gaan",
     "log_training": "Ik heb getraind!",
-    "log_rest": "Rustdag — verdiend",
+    "log_rest": "Rustdag, verdiend",
     "already_logged": "Vandaag staat erin!",
     "come_back_tomorrow": "Kom morgen terug voor je volgende strQ.",
     "tap_to_reveal": "Tik om te onthullen",
@@ -81,7 +81,7 @@
     "q_rest_nudge": "Je hebt het verdiend. Neem die rust.",
     "taper_rest": "Taper rust",
     "taper_mode_label": "Taper modus actief",
-    "taper_mode_sub": "Rust is nu slim — je streak loopt door.",
+    "taper_mode_sub": "Rust is nu slim, je streak loopt door.",
     "taper_mode_race_day": "Race day. Veel succes.",
     "error_load_failed": "Kon data niet laden. Tik om opnieuw te proberen.",
     "error_not_logged_in": "Sessie verlopen. Log opnieuw in.",
@@ -92,6 +92,7 @@
     "title": "Je evenement",
     "no_event": "Nog geen evenement toegevoegd.",
     "add_event": "Evenement toevoegen",
+    "edit": "Bewerken",
     "event_name": "Naam",
     "event_name_placeholder": "bijv. Hyrox Paris",
     "event_date": "Datum",
@@ -126,7 +127,7 @@
     "completed_gold": "Streeftijd gehaald. Q is trots op je.",
     "completed_silver": "Héél dichtbij. Volgende keer pak je 'm.",
     "completed_bronze": "Sterk gelopen. Solide race.",
-    "completed_warm": "Je was erbij — en dat is wat telt.",
+    "completed_warm": "Je was erbij, en dat is wat telt.",
     "next_event": "Volgend evenement plannen"
   },
   "level": {
@@ -154,7 +155,7 @@
     "reason_fuzzy_bonus": "Finish bonus",
     "paywall_title": "Ontgrendel Twin",
     "paywall_description": "Maak kennis met je digitale trainingspartner. Twin groeit met elke training en voorspelt je race.",
-    "paywall_cta": "Upgrade — €{price}/mnd",
+    "paywall_cta": "Upgrade: €{price}/mnd",
     "paywall_cancel": "Op elk moment opzegbaar"
   }
 }

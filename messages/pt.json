@@ -1,6 +1,6 @@
 {
   "meta": {
-    "title": "strQ.app — Consistência recompensada",
+    "title": "strQ.app: Consistência recompensada",
     "description": "Você conhece esse momento. No meio do treino, o sofá vence. strQ te ajuda a continuar."
   },
   "hero": {
@@ -33,7 +33,7 @@
     "hours": "horas",
     "minutes": "min",
     "seconds": "seg",
-    "event_name": "23 de abril — Hyrox Paris"
+    "event_name": "23 de abril: Hyrox Paris"
   },
   "footer": {
     "privacy": "Sem cookies. Sem rastreamento. Só uma tartaruga de óculos.",
@@ -45,7 +45,7 @@
   },
   "auth_error": {
     "title": "Link expirado",
-    "description": "Seu link mágico não é mais válido. Sem problemas — solicite um novo.",
+    "description": "Seu link mágico não é mais válido. Sem problemas, solicite um novo.",
     "cta": "Entrar novamente"
   },
   "login": {
@@ -64,7 +64,7 @@
     "multiplier": "bônus",
     "days_to_go": "dias restantes",
     "log_training": "Eu treinei hoje!",
-    "log_rest": "Dia de descanso — merecido",
+    "log_rest": "Dia de descanso, merecido",
     "already_logged": "Hoje está registrado!",
     "come_back_tomorrow": "Volte amanhã para seu próximo strQ.",
     "tap_to_reveal": "Toque para revelar",
@@ -85,13 +85,14 @@
     "error_unknown": "Algo deu errado. Toque para fechar.",
     "taper_rest": "Descanso de taper",
     "taper_mode_label": "Modo taper ativo",
-    "taper_mode_sub": "Descansar agora é inteligente — sua sequência continua.",
+    "taper_mode_sub": "Descansar agora é inteligente, sua sequência continua.",
     "taper_mode_race_day": "Dia de prova. Boa sorte."
   },
   "event": {
     "title": "Seu evento",
     "no_event": "Nenhum evento adicionado.",
     "add_event": "Adicionar evento",
+    "edit": "Editar",
     "event_name": "Nome",
     "event_name_placeholder": "ex. Hyrox São Paulo",
     "event_date": "Data",
@@ -126,7 +127,7 @@
     "completed_gold": "Objetivo alcançado. Q tem orgulho de ti.",
     "completed_silver": "Tão perto. Da próxima vez consegues.",
     "completed_bronze": "Boa corrida. Sólido.",
-    "completed_warm": "Estiveste lá — e é isso que conta.",
+    "completed_warm": "Estiveste lá, e é isso que conta.",
     "next_event": "Planear próximo evento"
   },
   "level": {
@@ -154,7 +155,7 @@
     "reason_fuzzy_bonus": "Bônus de chegada",
     "paywall_title": "Desbloquear Twin",
     "paywall_description": "Conheça o seu parceiro de treino digital. Twin cresce com cada treino e prevê a sua corrida.",
-    "paywall_cta": "Upgrade — €{price}/mês",
+    "paywall_cta": "Upgrade: €{price}/mês",
     "paywall_cancel": "Cancele a qualquer momento"
   }
 }

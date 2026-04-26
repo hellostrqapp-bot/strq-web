@@ -1,6 +1,6 @@
 {
   "meta": {
-    "title": "strQ.app — Konsistenz belohnt",
+    "title": "strQ.app: Konsistenz belohnt",
     "description": "Du kennst diesen Moment. Mitten im Training, und die Couch gewinnt. strQ hilft dir durchzuhalten."
   },
   "hero": {
@@ -33,7 +33,7 @@
     "hours": "Std",
     "minutes": "Min",
     "seconds": "Sek",
-    "event_name": "23. April — Hyrox Paris"
+    "event_name": "23. April: Hyrox Paris"
   },
   "footer": {
     "privacy": "Keine Cookies. Kein Tracking. Nur eine Schildkröte mit Brille.",
@@ -45,7 +45,7 @@
   },
   "auth_error": {
     "title": "Link abgelaufen",
-    "description": "Dein Magic Link ist nicht mehr gültig. Kein Problem — fordere einfach einen neuen an.",
+    "description": "Dein Magic Link ist nicht mehr gültig. Kein Problem, fordere einfach einen neuen an.",
     "cta": "Erneut anmelden"
   },
   "login": {
@@ -64,7 +64,7 @@
     "multiplier": "Bonus",
     "days_to_go": "Tage noch",
     "log_training": "Ich habe trainiert!",
-    "log_rest": "Ruhetag — verdient",
+    "log_rest": "Ruhetag, verdient",
     "already_logged": "Heute ist eingetragen!",
     "come_back_tomorrow": "Komm morgen wieder für deinen nächsten strQ.",
     "tap_to_reveal": "Tippen zum Enthüllen",
@@ -85,13 +85,14 @@
     "error_unknown": "Etwas ist schiefgelaufen. Tippe zum Schließen.",
     "taper_rest": "Taper-Pause",
     "taper_mode_label": "Taper-Modus aktiv",
-    "taper_mode_sub": "Pause ist jetzt klug — deine Serie läuft weiter.",
+    "taper_mode_sub": "Pause ist jetzt klug, deine Serie läuft weiter.",
     "taper_mode_race_day": "Wettkampftag. Viel Erfolg."
   },
   "event": {
     "title": "Dein Event",
     "no_event": "Noch kein Event hinzugefügt.",
     "add_event": "Event hinzufügen",
+    "edit": "Bearbeiten",
     "event_name": "Name",
     "event_name_placeholder": "z.B. Hyrox Paris",
     "event_date": "Datum",
@@ -126,7 +127,7 @@
     "completed_gold": "Zielzeit geschafft. Q ist stolz auf dich.",
     "completed_silver": "Ganz knapp. Nächstes Mal packst du's.",
     "completed_bronze": "Starkes Finish. Solides Rennen.",
-    "completed_warm": "Du warst dabei — und das zählt.",
+    "completed_warm": "Du warst dabei, und das zählt.",
     "next_event": "Nächstes Event planen"
   },
   "level": {
@@ -154,7 +155,7 @@
     "reason_fuzzy_bonus": "Ziel-Bonus",
     "paywall_title": "Twin freischalten",
     "paywall_description": "Lerne deinen digitalen Trainingspartner kennen. Twin wächst mit jedem Training und sagt dein Rennen voraus.",
-    "paywall_cta": "Upgrade — €{price}/Mon.",
+    "paywall_cta": "Upgrade: €{price}/Mon.",
     "paywall_cancel": "Jederzeit kündbar"
   }
 }
