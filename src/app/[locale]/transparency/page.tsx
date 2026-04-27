@@ -5,7 +5,7 @@ import { marked } from "marked";
 import { getTranslations } from "next-intl/server";
 import { routing } from "@/i18n/routing";
 import type { Metadata } from "next";
-import LocaleSwitcher from "../privacy/LocaleSwitcher";
+import LocaleSwitcher from "./LocaleSwitcher";
 
 // ═══════════════════════════════════════════════════════════
 // strQ.app — Algorithmic transparency (DSA art. 24+)
