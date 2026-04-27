@@ -67,6 +67,17 @@ export function DashboardStyles() {
       .train-btn:active {
         transform: translateY(1px) scale(0.98);
       }
+      @keyframes q-rest-breathe {
+        0%, 100% { transform: translateY(0) scale(1); }
+        50% { transform: translateY(-1px) scale(1.02); }
+      }
+      .rest-btn:active {
+        transform: translateY(1px) scale(0.98);
+      }
+      .rest-btn:hover {
+        background: linear-gradient(135deg, rgba(165,105,189,0.16), rgba(123,200,140,0.12)) !important;
+        border-color: rgba(165,105,189,0.5) !important;
+      }
       .rest-btn:hover {
         background: rgba(255,255,255,0.06) !important;
         color: rgba(255,255,255,0.6) !important;

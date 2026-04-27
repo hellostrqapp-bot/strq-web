@@ -449,183 +449,149 @@ export default function DashboardPage() {
         </div>
       )}
 
-      {/* ── ACTION BUTTONS ── */}
+      {/* ── ACTION BUTTONS ── (Spoor A: TRAIN + RUST, equal value) */}
+      {/*
+        Two-button system, side by side. Both always available. Both count
+        for the streak. TRAIN earns base XP plus multiplier; RUST yields 0 XP
+        (the streak-day itself is the reward). Choosing rest is never punished
+        and the visual hierarchy reflects that they are equal options.
+      */}
       {!todayLogged && state === 'idle' && (() => {
-        const er = streak?.earnedRest;
-        const restAvailable = er?.available ?? false;
-        const restTier = er?.tier ?? 'locked';
-        const restProgress = er?.progress ?? 0;
-        const restXp = er?.xpReward ?? 0;
-        const daysCharged = er?.trainingDaysSinceRest ?? 0;
+        const trainBonusActive = (streak?.multiplier ?? 1) >= 2;
+        const trainMultiplier = streak?.multiplier ?? 1;
 
         return (
         <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-          {/* Primary: I trained! — with Q bouncing inside */}
-          <button
-            onClick={() => {
-              setQSpinning(true);
-              setTimeout(() => setQSpinning(false), 700);
-              logActivity('training');
-            }}
-            onMouseEnter={() => setQHover(true)}
-            onMouseLeave={() => setQHover(false)}
-            style={{
-              width: '100%',
-              padding: '16px 20px',
-              fontSize: 17,
-              fontWeight: 800,
-              background: `linear-gradient(135deg, ${P}, ${PM}, ${PL})`,
-              color: W,
-              border: 'none',
-              borderRadius: 14,
-              cursor: 'pointer',
-              transition: 'all 0.2s ease',
-              boxShadow: qHover
-                ? `0 6px 28px ${P}77, 0 0 50px ${P}33`
-                : `0 4px 20px ${P}55, 0 0 40px ${P}22`,
-              letterSpacing: '0.02em',
-              position: 'relative',
-              overflow: 'hidden',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              gap: 10,
-              transform: qHover ? 'translateY(-1px)' : 'none',
-            }}
-            className="train-btn"
-          >
-            {/* Q is alive in the button — calm idle, excited on hover, runs on tap */}
-            <span style={{
-              display: 'inline-flex',
-              animation: qSpinning
-                ? 'q-btn-dash 0.6s ease-out'
-                : qHover
-                ? 'q-btn-excited 0.4s ease-in-out infinite'
-                : 'q-btn-bounce 2s ease-in-out infinite',
-              flexShrink: 0,
-            }}>
-              <QMiniButton pose={qSpinning ? 'running' : 'ready'} size={38} excited={qHover} />
-            </span>
-            <span>{t('log_training')}</span>
-          </button>
-
-          {/* ── EARNED REST BUTTON ── */}
-          {/* The star feature: rest charges up with each training day */}
-          <button
-            onClick={() => restAvailable && logActivity('rest')}
-            disabled={!restAvailable}
-            style={{
-              width: '100%',
-              padding: restAvailable ? '18px 20px' : '14px 20px',
-              fontSize: restAvailable ? 15 : 14,
-              fontWeight: restAvailable ? 800 : 600,
-              background: restAvailable
-                ? restTier === 'supercharged'
-                  ? `linear-gradient(135deg, rgba(231,76,60,0.12), rgba(243,156,18,0.10), rgba(241,196,15,0.10), rgba(39,174,96,0.10), rgba(41,128,185,0.10), rgba(142,68,173,0.12))`
-                  : restTier === 'charged'
-                  ? `linear-gradient(135deg, rgba(165,105,189,0.12), rgba(123,200,140,0.10))`
-                  : `linear-gradient(135deg, rgba(165,105,189,0.08), rgba(255,255,255,0.03))`
-                : 'rgba(255,255,255,0.02)',
-              color: restAvailable
-                ? restTier === 'supercharged' ? W : PL
-                : 'rgba(255,255,255,0.3)',
-              border: restAvailable
-                ? restTier === 'supercharged'
-                  ? `1px solid rgba(241,196,15,0.3)`
-                  : `1px solid ${PL}33`
-                : `1px solid rgba(255,255,255,0.04)`,
-              borderRadius: 14,
-              cursor: restAvailable ? 'pointer' : 'default',
-              transition: 'all 0.3s ease',
-              position: 'relative',
-              overflow: 'hidden',
-              boxShadow: restTier === 'supercharged'
-                ? `0 0 24px rgba(241,196,15,0.15), 0 0 48px rgba(142,68,173,0.1)`
-                : restTier === 'charged'
-                ? `0 0 16px ${PL}22`
-                : 'none',
-              animation: restTier === 'supercharged' ? 'earned-rest-glow 3s ease-in-out infinite' : undefined,
-            }}
-            className={restAvailable ? 'earned-rest-btn' : 'rest-btn'}
-          >
-            {/* Fill-up liquid animation — shows charging progress visually */}
-            {!restAvailable && restProgress > 0 && (
-              <div style={{
-                position: 'absolute',
-                left: 0, right: 0, bottom: 0,
-                height: `${Math.min(restProgress * 100, 100)}%`,
-                background: `linear-gradient(0deg, rgba(165,105,189,0.12) 0%, rgba(165,105,189,0.04) 100%)`,
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: '1fr 1fr',
+            gap: 12,
+          }}>
+            {/* ── TRAIN ── */}
+            <button
+              onClick={() => {
+                setQSpinning(true);
+                setTimeout(() => setQSpinning(false), 700);
+                logActivity('training');
+              }}
+              onMouseEnter={() => setQHover(true)}
+              onMouseLeave={() => setQHover(false)}
+              style={{
+                padding: '20px 14px 16px',
+                fontSize: 15,
+                fontWeight: 800,
+                background: `linear-gradient(135deg, ${P}, ${PM}, ${PL})`,
+                color: W,
+                border: 'none',
                 borderRadius: 14,
-                transition: 'height 1s ease-out',
-                pointerEvents: 'none',
+                cursor: 'pointer',
+                transition: 'all 0.2s ease',
+                boxShadow: qHover
+                  ? `0 6px 28px ${P}77, 0 0 50px ${P}33`
+                  : `0 4px 20px ${P}55, 0 0 40px ${P}22`,
+                letterSpacing: '0.02em',
+                position: 'relative',
+                overflow: 'hidden',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                gap: 8,
+                transform: qHover ? 'translateY(-1px)' : 'none',
+              }}
+              className="train-btn"
+              aria-label={t('log_training')}
+            >
+              <span style={{
+                display: 'inline-flex',
+                animation: qSpinning
+                  ? 'q-btn-dash 0.6s ease-out'
+                  : qHover
+                  ? 'q-btn-excited 0.4s ease-in-out infinite'
+                  : 'q-btn-bounce 2s ease-in-out infinite',
+                flexShrink: 0,
               }}>
-                {/* Subtle wave at the fill top */}
-                <div style={{
-                  position: 'absolute',
-                  top: -4,
-                  left: 0, right: 0,
-                  height: 8,
-                  background: `radial-gradient(ellipse at 50% 100%, ${PL}15 0%, transparent 70%)`,
-                  animation: 'rest-wave 3s ease-in-out infinite',
-                  pointerEvents: 'none',
-                }} />
-              </div>
-            )}
+                <QMiniButton pose={qSpinning ? 'running' : 'ready'} size={42} excited={qHover} />
+              </span>
+              <span style={{ fontSize: 16 }}>{t('log_training')}</span>
+              <span style={{
+                fontSize: 11,
+                fontWeight: 700,
+                color: trainBonusActive ? SL : 'rgba(255,255,255,0.7)',
+                letterSpacing: '0.04em',
+                textTransform: 'uppercase',
+                opacity: 0.9,
+              }}>
+                {trainBonusActive
+                  ? `+50 XP · ${trainMultiplier}× ${t('multiplier')}`
+                  : `+50 XP`}
+              </span>
+            </button>
 
-            {/* Rainbow shimmer for supercharged */}
-            {restTier === 'supercharged' && (
+            {/* ── RUST ── */}
+            <button
+              onClick={() => logActivity('rest')}
+              style={{
+                padding: '20px 14px 16px',
+                fontSize: 15,
+                fontWeight: 800,
+                background: `linear-gradient(135deg, rgba(165,105,189,0.10), rgba(123,200,140,0.08))`,
+                color: PL,
+                border: `1px solid ${PL}33`,
+                borderRadius: 14,
+                cursor: 'pointer',
+                transition: 'all 0.2s ease',
+                boxShadow: `0 0 12px ${PL}11`,
+                letterSpacing: '0.02em',
+                position: 'relative',
+                overflow: 'hidden',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                gap: 8,
+              }}
+              className="rest-btn"
+              aria-label={t('log_rest')}
+            >
+              {/* Subtle calm glow behind Q */}
               <div style={{
                 position: 'absolute',
-                top: 0, left: 0, right: 0, bottom: 0,
-                background: 'linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.08) 50%, transparent 100%)',
-                animation: 'rest-shimmer 3s ease-in-out infinite',
+                top: 18, left: '50%',
+                transform: 'translateX(-50%)',
+                width: 56, height: 56,
+                borderRadius: '50%',
+                background: `radial-gradient(circle, ${PL}22 0%, transparent 70%)`,
                 pointerEvents: 'none',
               }} />
-            )}
-
-            <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, position: 'relative' }}>
-              <IconEarnedRest size={22} progress={restProgress} tier={restTier} />
-              <span>
-                {restAvailable
-                  ? (restTier === 'taper' ? t('taper_rest') : t('earned_rest'))
-                  : t('rest_charging')}
+              <span style={{
+                display: 'inline-flex',
+                position: 'relative',
+                animation: 'q-rest-breathe 4s ease-in-out infinite',
+              }}>
+                <QResting size={42} />
               </span>
-              {restAvailable && (
-                <span style={{
-                  fontSize: 12,
-                  fontWeight: 900,
-                  color: restTier === 'supercharged' ? '#F1C40F' : SK,
-                  marginLeft: 4,
-                  textShadow: restTier === 'supercharged' ? '0 0 8px rgba(241,196,15,0.5)' : undefined,
-                }}>
-                  +{restXp} XP
-                </span>
-              )}
-              {!restAvailable && daysCharged > 0 && (
-                <span style={{
-                  fontSize: 11,
-                  color: 'rgba(255,255,255,0.2)',
-                  marginLeft: 4,
-                }}>
-                  {daysCharged}/2
-                </span>
-              )}
-            </span>
-          </button>
+              <span style={{ fontSize: 16, color: W }}>{t('log_rest')}</span>
+              <span style={{
+                fontSize: 11,
+                fontWeight: 700,
+                color: 'rgba(255,255,255,0.45)',
+                letterSpacing: '0.04em',
+                textTransform: 'uppercase',
+              }}>
+                {t('rest_counts_for_streak')}
+              </span>
+            </button>
+          </div>
 
-          {/* Q whisper when rest is available */}
-          {restAvailable && (
-            <div style={{
-              textAlign: 'center',
-              fontSize: 12,
-              color: `${PL}99`,
-              fontStyle: 'italic',
-              marginTop: 4,
-              animation: 'reveal-cta-pulse 3s ease-in-out infinite',
-            }}>
-              Q: &ldquo;{t('q_rest_nudge')}&rdquo;
-            </div>
-          )}
+          {/* Q whisper — gentle reminder that both are valid */}
+          <div style={{
+            textAlign: 'center',
+            fontSize: 12,
+            color: `${PL}88`,
+            fontStyle: 'italic',
+            marginTop: 4,
+          }}>
+            Q: &ldquo;{t('q_choice_nudge')}&rdquo;
+          </div>
         </div>
         );
       })()}

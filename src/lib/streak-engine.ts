@@ -1,18 +1,20 @@
 // ═══════════════════════════════════════════════════════════
 // strQ — Streak Engine
-// Core game mechanic: streak calculation with smart rest days
+// Core game mechanic: streak calculation with explicit rest.
 //
-// Rules:
+// Roadmap v3 (Spoor A) rules — 27 apr 2026:
 // 1. Training day → streak +1
-// 2. Rest day after training → streak preserved (not +1)
-// 3. Two consecutive rest days → streak breaks
-// 4. After 3+ day streak → 2x multiplier on XP
-// 5. Surprise bonuses are random (15% chance)
-// 6. Taper mode: within TAPER_WINDOW_DAYS of an upcoming event,
-//    rest is always free and gap days do not break the streak.
-//    A taper is smart preparation, not a missed day.
+// 2. Rest day → streak +1 (rest is a valid choice, not a gap)
+// 3. Two consecutive UNLOGGED days (no rest, no training) → streak breaks
+// 4. After 3+ day streak → 2x multiplier on training XP
+// 5. Rest yields 0 XP (counts for streak only)
+// 6. Surprise bonuses are random (15% chance)
+// 7. Taper mode: within TAPER_WINDOW_DAYS of an upcoming event,
+//    unlogged days do not count against the streak.
 //
-// "Rustdagen na inspanning breken de streak NIET."
+// Pre-v3 (deprecated): earned-rest tier logic (calculateEarnedRest)
+// is retained for backwards compatibility but is no longer surfaced
+// in the dashboard UI. Will be cleaned up in a follow-up migration.
 // ═══════════════════════════════════════════════════════════
 
 /** Days before an event where taper mode activates (inclusive). */
@@ -109,8 +111,9 @@ export function calculateStreak(
       currentStreak++;
       gapDays = 0;
     } else if (type === 'rest') {
-      // Earned rest day — streak preserved, not incremented
+      // Spoor A: rest is a valid choice and counts for the streak.
       // Reset the gap counter: this is a deliberate logged rest, not an absence
+      currentStreak++;
       gapDays = 0;
     } else if (inTaper) {
       // Unlogged day that falls inside the taper window of an upcoming event.
@@ -192,12 +195,13 @@ function daysBetween(a: Date, b: Date): number {
 }
 
 // ── Longest Streak (historical) ────────────────────────────
+// Spoor A: count training AND rest days. The streak resets only when there
+// is a true gap of 2+ unlogged days between two logged days.
 function calculateLongestStreak(activities: Activity[]): number {
   if (activities.length === 0) return 0;
 
-  // Sort by date ascending
   const sorted = [...activities]
-    .filter((a) => a.activity_type === 'training')
+    .filter((a) => a.activity_type === 'training' || a.activity_type === 'rest')
     .sort((a, b) => a.activity_date.localeCompare(b.activity_date));
 
   let longest = 0;
@@ -210,8 +214,11 @@ function calculateLongestStreak(activities: Activity[]): number {
       const daysDiff = Math.round(
         (d.getTime() - prevDate.getTime()) / (1000 * 60 * 60 * 24)
       );
-      if (daysDiff <= 2) {
-        // Allow 1 gap day (rest day)
+      if (daysDiff === 1) {
+        // Consecutive logged day: streak continues
+        current++;
+      } else if (daysDiff === 2) {
+        // One unlogged gap day between two logged days: still tolerated
         current++;
       } else {
         current = 1;
@@ -374,12 +381,12 @@ function calculateEarnedRest(
 // Transparent per DSA: user can see exactly how XP is calculated
 
 /** Base XP for logging an activity */
-export function getBaseXP(type: 'training' | 'rest', earnedRest?: EarnedRestInfo): number {
-  // Training always gets 50 XP
+export function getBaseXP(type: 'training' | 'rest', _earnedRest?: EarnedRestInfo): number {
+  // Spoor A (27 apr 2026): rest yields 0 XP. It counts for the streak,
+  // never for XP. Removes the implicit "rest = reward" framing and lets
+  // the multiplier-bonus on TRAIN do the visible incentive work.
   if (type === 'training') return 50;
-  // Earned rest scales with effort — default to 10 for unearned rest
-  if (earnedRest && earnedRest.available) return earnedRest.xpReward;
-  return 10;
+  return 0;
 }
 
 /** Streak bonus based on current streak state */

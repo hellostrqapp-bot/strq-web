@@ -177,12 +177,11 @@ export function useDashboard() {
         .limit(60);
 
       const newStreak = calculateStreak(activities || [], event);
-      const baseXp = getBaseXP(
-        type,
-        type === 'rest' ? streak?.earnedRest : undefined
-      );
-      const streakBonus = getStreakBonus(newStreak);
-      const surprise = rollSurprise();
+      const baseXp = getBaseXP(type);
+      // Spoor A: rest yields 0 XP — no streak bonus, no surprise.
+      // Multiplier and surprise are exclusive to TRAIN.
+      const streakBonus = type === 'training' ? getStreakBonus(newStreak) : 0;
+      const surprise = type === 'training' ? rollSurprise() : null;
       const totalEarned = baseXp + streakBonus + (surprise?.xp || 0);
 
       // Create daily reveal
