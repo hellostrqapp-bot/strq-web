@@ -162,6 +162,12 @@
     "paywall_title": "Ontgrendel Twin",
     "paywall_description": "Maak kennis met je digitale trainingspartner. Twin groeit met elke training en voorspelt je race.",
     "paywall_cta": "Upgrade: €{price}/mnd",
-    "paywall_cancel": "Op elk moment opzegbaar"
+    "paywall_cancel": "Op elk moment opzegbaar",
+    "data_export_title": "Mijn data (AVG)",
+    "data_export_description": "Onder de AVG heb je recht op inzage en dataportabiliteit. Download je volledige strQ-dataset als JSON.",
+    "data_export_button": "Download mijn gegevens",
+    "data_export_loading": "Verzamelen...",
+    "data_export_error": "Download mislukt. Probeer het opnieuw of mail hello@strq.app.",
+    "data_export_privacy_link": "Lees onze privacy policy →"
   }
 }

@@ -47,6 +47,8 @@ export default function ProfilePage() {
   const [stats, setStats] = useState<StreakState | null>(null);
   const [xpHistory, setXpHistory] = useState<XPLogEntry[]>([]);
   const [email, setEmail] = useState<string>('');
+  const [exporting, setExporting] = useState(false);
+  const [exportError, setExportError] = useState<string | null>(null);
 
   // ── Load data ──
   const loadData = useCallback(async () => {
@@ -89,6 +91,33 @@ export default function ProfilePage() {
     setSigningOut(true);
     await supabase.auth.signOut();
     window.location.href = '/' + locale;
+  };
+
+  // ── GDPR data export (art. 15 + 20) ──
+  // Calls /api/export which returns the user's full dataset as JSON.
+  // Server enforces auth via Supabase cookies; RLS scopes the rows.
+  const handleExport = async () => {
+    setExporting(true);
+    setExportError(null);
+    try {
+      const res = await fetch('/api/export', { credentials: 'include' });
+      if (!res.ok) {
+        throw new Error(`Export failed (${res.status})`);
+      }
+      const blob = await res.blob();
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `strq-export-${new Date().toISOString().slice(0, 10)}.json`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    } catch (err) {
+      setExportError(err instanceof Error ? err.message : 'Unknown error');
+    } finally {
+      setExporting(false);
+    }
   };
 
   // ── Render ──
@@ -367,6 +396,89 @@ export default function ProfilePage() {
         >
           {signingOut ? '...' : t('sign_out')}
         </button>
+      </div>
+
+      {/* ── DATA EXPORT (GDPR art. 15 + 20) ── */}
+      <div
+        style={{
+          background: 'rgba(255,255,255,0.04)',
+          border: `1px solid rgba(108, 52, 131, 0.12)`,
+          borderRadius: 14,
+          padding: '16px',
+          marginBottom: 24,
+        }}
+      >
+        <div
+          style={{
+            fontSize: 13,
+            color: 'rgba(255,255,255,0.5)',
+            fontWeight: 600,
+            marginBottom: 8,
+            textTransform: 'uppercase',
+            letterSpacing: '0.5px',
+          }}
+        >
+          {t('data_export_title')}
+        </div>
+        <div
+          style={{
+            fontSize: 13,
+            color: 'rgba(255,255,255,0.65)',
+            lineHeight: 1.55,
+            marginBottom: 14,
+          }}
+        >
+          {t('data_export_description')}
+        </div>
+        <button
+          onClick={handleExport}
+          disabled={exporting}
+          style={{
+            width: '100%',
+            padding: '12px',
+            fontSize: 14,
+            fontWeight: 600,
+            background: `linear-gradient(135deg, ${P}, ${PM})`,
+            color: W,
+            border: 'none',
+            borderRadius: 8,
+            cursor: exporting ? 'wait' : 'pointer',
+            opacity: exporting ? 0.6 : 1,
+            transition: 'all 0.2s',
+          }}
+        >
+          {exporting ? t('data_export_loading') : t('data_export_button')}
+        </button>
+        {exportError && (
+          <div
+            style={{
+              marginTop: 10,
+              fontSize: 12,
+              color: '#FF6B6B',
+              lineHeight: 1.4,
+            }}
+          >
+            {t('data_export_error')}
+          </div>
+        )}
+        <div
+          style={{
+            marginTop: 12,
+            fontSize: 11,
+            color: 'rgba(255,255,255,0.35)',
+            lineHeight: 1.5,
+          }}
+        >
+          <a
+            href={`/${locale}/privacy`}
+            style={{
+              color: 'rgba(165,105,189,0.7)',
+              textDecoration: 'none',
+            }}
+          >
+            {t('data_export_privacy_link')}
+          </a>
+        </div>
       </div>
 
       {/* ── XP HISTORY ── */}

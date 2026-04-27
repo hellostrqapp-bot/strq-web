@@ -162,6 +162,12 @@
     "paywall_title": "Twin freischalten",
     "paywall_description": "Lerne deinen digitalen Trainingspartner kennen. Twin wächst mit jedem Training und sagt dein Rennen voraus.",
     "paywall_cta": "Upgrade: €{price}/Mon.",
-    "paywall_cancel": "Jederzeit kündbar"
+    "paywall_cancel": "Jederzeit kündbar",
+    "data_export_title": "Meine Daten (DSGVO)",
+    "data_export_description": "Nach der DSGVO hast du Auskunfts- und Datenübertragbarkeitsrecht. Lade deinen vollständigen strQ-Datensatz als JSON herunter.",
+    "data_export_button": "Meine Daten herunterladen",
+    "data_export_loading": "Sammeln...",
+    "data_export_error": "Download fehlgeschlagen. Versuche es erneut oder schreib an hello@strq.app.",
+    "data_export_privacy_link": "Datenschutzerklärung lesen →"
   }
 }

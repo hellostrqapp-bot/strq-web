@@ -162,6 +162,12 @@
     "paywall_title": "Desbloquear Twin",
     "paywall_description": "Conoce a tu compañero de entrenamiento digital. Twin crece con cada entreno y predice tu carrera.",
     "paywall_cta": "Upgrade: €{price}/mes",
-    "paywall_cancel": "Cancela en cualquier momento"
+    "paywall_cancel": "Cancela en cualquier momento",
+    "data_export_title": "Mis datos (RGPD)",
+    "data_export_description": "Bajo el RGPD tienes derecho de acceso y portabilidad. Descarga tu conjunto de datos strQ completo en JSON.",
+    "data_export_button": "Descargar mis datos",
+    "data_export_loading": "Recopilando...",
+    "data_export_error": "Descarga fallida. Inténtalo de nuevo o escribe a hello@strq.app.",
+    "data_export_privacy_link": "Lee nuestra política de privacidad →"
   }
 }

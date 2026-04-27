@@ -162,6 +162,12 @@
     "paywall_title": "Unlock Twin",
     "paywall_description": "Meet your digital training partner. Twin grows with every workout and predicts your race.",
     "paywall_cta": "Upgrade: €{price}/mo",
-    "paywall_cancel": "Cancel anytime"
+    "paywall_cancel": "Cancel anytime",
+    "data_export_title": "My data (GDPR)",
+    "data_export_description": "Under GDPR you have the right of access and data portability. Download your full strQ dataset as JSON.",
+    "data_export_button": "Download my data",
+    "data_export_loading": "Collecting...",
+    "data_export_error": "Download failed. Please try again or email hello@strq.app.",
+    "data_export_privacy_link": "Read our privacy policy →"
   }
 }

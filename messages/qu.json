@@ -162,6 +162,12 @@
     "paywall_title": "Twin kichay",
     "paywall_description": "Digital yachachiq masiykita riqsiy. Twin sapa entrenamiyntuwan wiñan.",
     "paywall_cta": "Upgrade: €{price}/killa",
-    "paywall_cancel": "Mayk'aqpas haqiyta atikunki"
+    "paywall_cancel": "Mayk'aqpas haqiyta atikunki",
+    "data_export_title": "Datoyniy (AVG)",
+    "data_export_description": "AVG nisqapi qhawanaykipaqmi atinki, datoykita aparikunaykipaqpas. Llapan strQ datoykita JSON-pi uraykachiy.",
+    "data_export_button": "Datoyta uraykachiy",
+    "data_export_loading": "Huñumushan...",
+    "data_export_error": "Mana uraykakurqachu. Yapamanta ruway icha hello@strq.app-man qillqay.",
+    "data_export_privacy_link": "Pakaykuy kamachiyniykuta ñawiriy →"
   }
 }
