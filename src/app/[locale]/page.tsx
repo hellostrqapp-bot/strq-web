@@ -1147,11 +1147,11 @@ export default function Landing() {
           {/* Legal entity (Kok Confidential B.V.) — required for Apple Developer org-website check */}
           <address
             style={{
-              marginTop: 20,
-              paddingTop: 16,
-              borderTop: "1px solid rgba(255,255,255,0.06)",
-              color: "rgba(255,255,255,0.32)",
-              fontSize: 11,
+              marginTop: 16,
+              paddingTop: 12,
+              borderTop: "1px solid rgba(255,255,255,0.05)",
+              color: "rgba(255,255,255,0.22)",
+              fontSize: 10,
               lineHeight: 1.6,
               fontStyle: "normal",
               fontWeight: 400,
@@ -1159,18 +1159,7 @@ export default function Landing() {
           >
             <div>{t("footer.legal_entity")}</div>
             <div>{t("footer.legal_kvk")}</div>
-            <div style={{ marginTop: 4 }}>
-              {t("footer.legal_contact").replace(/arnoud@cvp-plus\.nl/, "")}
-              <a
-                href="mailto:arnoud@cvp-plus.nl"
-                style={{
-                  color: "rgba(165,105,189,0.55)",
-                  textDecoration: "none",
-                }}
-              >
-                arnoud@cvp-plus.nl
-              </a>
-            </div>
+            <div>{t("footer.legal_contact")}</div>
           </address>
         </div>
       </div>
