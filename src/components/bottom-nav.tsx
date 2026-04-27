@@ -6,7 +6,7 @@
 'use client';
 
 import { usePathname } from 'next/navigation';
-import { IconStreak, IconFinish, IconProfile } from '@/components/icons';
+import { IconStreak, IconFinish, IconProfile, IconTrophy } from '@/components/icons';
 
 const P = '#6C3483';
 const PL = '#A569BD';
@@ -40,6 +40,12 @@ export function BottomNav({ locale }: { locale: string }) {
       icon: <IconFinish size={22} />,
       activeIcon: <IconFinish size={26} />,
       label: 'Event',
+    },
+    {
+      href: `/${locale}/app/trophies`,
+      icon: <IconTrophy size={22} />,
+      activeIcon: <IconTrophy size={26} />,
+      label: 'Trofeeën',
     },
     {
       href: `/${locale}/app/profile`,
@@ -110,8 +116,9 @@ export function BottomNav({ locale }: { locale: string }) {
                 alignItems: 'center',
                 gap: 3,
                 textDecoration: 'none',
-                padding: '6px 20px',
-                minWidth: 72,
+                padding: '6px 14px',
+                minWidth: 60,
+                flex: 1,
                 position: 'relative',
               }}
             >

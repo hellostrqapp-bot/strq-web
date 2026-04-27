@@ -299,6 +299,45 @@ export function IconEarnedRest({ size = 22, progress = 0, tier = 'locked' }: Ico
   );
 }
 
+/** Trophy — purple cup with rainbow band on the rim */
+export function IconTrophy({ size = 22 }: IconProps) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none">
+      {/* Side handles */}
+      <path d="M5 7 C2.5 7, 2.5 11, 5.5 11.5" stroke={PL} strokeWidth="1.6" fill="none" strokeLinecap="round" />
+      <path d="M19 7 C21.5 7, 21.5 11, 18.5 11.5" stroke={PL} strokeWidth="1.6" fill="none" strokeLinecap="round" />
+      {/* Cup body */}
+      <path
+        d="M6 4 H18 V10 C18 13.5, 15.3 16, 12 16 C8.7 16, 6 13.5, 6 10 Z"
+        fill={P}
+      />
+      {/* Inner highlight */}
+      <path
+        d="M8 5 H16 V9 C16 12, 14 14, 12 14 C10 14, 8 12, 8 9 Z"
+        fill={PL}
+        opacity="0.35"
+      />
+      {/* Rainbow band on the rim */}
+      {RB.map((c, i) => (
+        <rect
+          key={i}
+          x={6 + i * 2}
+          y={4}
+          width={2}
+          height={1.4}
+          fill={c}
+          opacity="0.85"
+        />
+      ))}
+      {/* Stem */}
+      <rect x="10.5" y="16" width="3" height="3" rx="0.6" fill={P} />
+      {/* Base */}
+      <rect x="7.5" y="19" width="9" height="2.4" rx="1" fill={PD} />
+      <rect x="7.5" y="19" width="9" height="0.8" rx="0.4" fill={PL} opacity="0.5" />
+    </svg>
+  );
+}
+
 /** Multiplier fire — smaller, for inline use */
 export function IconMultiplier({ size = 14 }: IconProps) {
   return (

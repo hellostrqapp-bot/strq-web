@@ -3,9 +3,12 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useTranslations, useLocale } from 'next-intl';
 import { createBrowserClient } from '@/lib/supabase-browser';
-import { IconSeedling } from '@/components/icons';
+import { IconSeedling, IconTrophy } from '@/components/icons';
 import { getLevelInfo } from '@/lib/levels';
 import { LevelBadge } from '@/components/level-badge';
+import { useTrophies } from '@/hooks/use-trophies';
+import { TrophyCard } from '@/components/trophies/trophy-card';
+import { Link } from '@/i18n/routing';
 
 // ═══════════════════════════════════════════════════════════
 // strQ — Profile Page
@@ -39,8 +42,11 @@ interface StreakState {
 
 export default function ProfilePage() {
   const t = useTranslations('profile');
+  const tTrophies = useTranslations('trophies');
   const locale = useLocale();
   const supabase = createBrowserClient();
+  const { trophies: allTrophies, loading: trophiesLoading } = useTrophies();
+  const trophyPreview = allTrophies.slice(0, 3);
 
   const [loading, setLoading] = useState(true);
   const [signingOut, setSigningOut] = useState(false);
@@ -397,6 +403,61 @@ export default function ProfilePage() {
           {signingOut ? '...' : t('sign_out')}
         </button>
       </div>
+
+      {/* ── TROPHY PREVIEW ── */}
+      {!trophiesLoading && trophyPreview.length > 0 && (
+        <div style={{ marginBottom: 24 }}>
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: 8,
+              marginBottom: 12,
+            }}
+          >
+            <IconTrophy size={18} />
+            <div
+              style={{
+                fontSize: 15,
+                fontWeight: 700,
+                color: W,
+                letterSpacing: '-0.01em',
+              }}
+            >
+              {tTrophies('profile_recent_title')}
+            </div>
+          </div>
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              gap: 12,
+              marginBottom: 14,
+            }}
+          >
+            {trophyPreview.map((trophy) => (
+              <TrophyCard key={trophy.id} event={trophy} />
+            ))}
+          </div>
+          <Link
+            href="/app/trophies"
+            style={{
+              display: 'block',
+              textAlign: 'center',
+              padding: '10px 16px',
+              fontSize: 13,
+              fontWeight: 700,
+              background: 'rgba(165, 105, 189, 0.12)',
+              color: PL,
+              border: '1px solid rgba(165, 105, 189, 0.25)',
+              borderRadius: 10,
+              textDecoration: 'none',
+            }}
+          >
+            {tTrophies('open_trophies')}
+          </Link>
+        </div>
+      )}
 
       {/* ── DATA EXPORT (GDPR art. 15 + 20) ── */}
       <div
