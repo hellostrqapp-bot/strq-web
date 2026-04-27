@@ -37,8 +37,14 @@
   },
   "footer": {
     "privacy": "No cookies. No tracking. Just a turtle with glasses.",
+    "privacy_link": "Privacy policy",
     "copyright": "© {year} strQ.app",
     "login": "Already a tester? Log in →"
+  },
+  "privacy_page": {
+    "title": "Privacy policy",
+    "description": "What strQ collects, why, how long, and what you can do with it.",
+    "back": "Back to strQ.app"
   },
   "language": {
     "label": "Language"

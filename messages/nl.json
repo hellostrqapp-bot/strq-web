@@ -37,8 +37,14 @@
   },
   "footer": {
     "privacy": "Geen cookies. Geen tracking. Wel een schildpad met een bril.",
+    "privacy_link": "Privacy policy",
     "copyright": "© {year} strQ.app",
     "login": "Al tester? Log in →"
+  },
+  "privacy_page": {
+    "title": "Privacy policy",
+    "description": "Wat strQ verzamelt, waarom, hoe lang en wat jij ermee kunt.",
+    "back": "Terug naar strQ.app"
   },
   "language": {
     "label": "Taal"

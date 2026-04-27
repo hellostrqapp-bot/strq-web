@@ -1077,6 +1077,21 @@ export default function Landing() {
           <div style={{ marginTop: 16, color: "rgba(255,255,255,0.12)" }}>
             {t("footer.privacy")}
             <br />
+            <a
+              href={`/${locale}/privacy`}
+              style={{
+                color: "rgba(165,105,189,0.45)",
+                textDecoration: "none",
+                fontSize: 12,
+                fontWeight: 500,
+                transition: "color 0.2s",
+              }}
+              onMouseEnter={(e) => (e.currentTarget.style.color = "#A569BD")}
+              onMouseLeave={(e) => (e.currentTarget.style.color = "rgba(165,105,189,0.45)")}
+            >
+              {t("footer.privacy_link")}
+            </a>
+            <span style={{ margin: "0 8px", color: "rgba(255,255,255,0.1)" }}>·</span>
             {t("footer.copyright", { year: new Date().getFullYear() })}
           </div>
         </div>

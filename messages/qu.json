@@ -37,8 +37,14 @@
   },
   "footer": {
     "privacy": "Mana cookies. Mana rastreamiento. Huk tortuga lentesyuqlla.",
+    "privacy_link": "Pakaykuyninchik",
     "copyright": "© {year} strQ.app",
     "login": "Ñam tester kanki? Yaykuy →"
+  },
+  "privacy_page": {
+    "title": "Pakaykuy kamachiy",
+    "description": "Ima strQ huñukun, imaraykutaq, hayk'a tiempopaqmi, qantaqsi imata ruwankiman.",
+    "back": "strQ.app-man kutiy"
   },
   "language": {
     "label": "Simi"

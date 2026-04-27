@@ -37,8 +37,14 @@
   },
   "footer": {
     "privacy": "Keine Cookies. Kein Tracking. Nur eine Schildkröte mit Brille.",
+    "privacy_link": "Datenschutz",
     "copyright": "© {year} strQ.app",
     "login": "Schon Tester? Einloggen →"
+  },
+  "privacy_page": {
+    "title": "Datenschutzerklärung",
+    "description": "Was strQ erfasst, warum, wie lange und was du damit tun kannst.",
+    "back": "Zurück zu strQ.app"
   },
   "language": {
     "label": "Sprache"

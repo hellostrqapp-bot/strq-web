@@ -37,8 +37,14 @@
   },
   "footer": {
     "privacy": "Pas de cookies. Pas de tracking. Juste une tortue avec des lunettes.",
+    "privacy_link": "Confidentialité",
     "copyright": "© {year} strQ.app",
     "login": "Déjà testeur ? Connectez-vous →"
+  },
+  "privacy_page": {
+    "title": "Politique de confidentialité",
+    "description": "Ce que strQ collecte, pourquoi, combien de temps et ce que tu peux en faire.",
+    "back": "Retour à strQ.app"
   },
   "language": {
     "label": "Langue"

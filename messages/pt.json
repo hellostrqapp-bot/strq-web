@@ -37,8 +37,14 @@
   },
   "footer": {
     "privacy": "Sem cookies. Sem rastreamento. Só uma tartaruga de óculos.",
+    "privacy_link": "Privacidade",
     "copyright": "© {year} strQ.app",
     "login": "Já és tester? Entrar →"
+  },
+  "privacy_page": {
+    "title": "Política de privacidade",
+    "description": "O que a strQ recolhe, porquê, durante quanto tempo e o que podes fazer.",
+    "back": "Voltar a strQ.app"
   },
   "language": {
     "label": "Idioma"
