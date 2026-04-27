@@ -38,6 +38,7 @@
   "footer": {
     "privacy": "No cookies. No tracking. Just a turtle with glasses.",
     "privacy_link": "Privacy policy",
+    "transparency_link": "Algorithms",
     "copyright": "© {year} strQ.app",
     "login": "Already a tester? Log in →"
   },
@@ -45,6 +46,12 @@
     "title": "Privacy policy",
     "description": "What strQ collects, why, how long, and what you can do with it.",
     "back": "Back to strQ.app"
+  },
+  "transparency_page": {
+    "title": "Algorithmic transparency",
+    "description": "How strQ calculates your XP, streak and bonuses. No black box.",
+    "back": "Back to strQ.app",
+    "privacy_link": "Privacy policy"
   },
   "language": {
     "label": "Language"

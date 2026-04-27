@@ -38,6 +38,7 @@
   "footer": {
     "privacy": "Sem cookies. Sem rastreamento. Só uma tartaruga de óculos.",
     "privacy_link": "Privacidade",
+    "transparency_link": "Algoritmos",
     "copyright": "© {year} strQ.app",
     "login": "Já és tester? Entrar →"
   },
@@ -45,6 +46,12 @@
     "title": "Política de privacidade",
     "description": "O que a strQ recolhe, porquê, durante quanto tempo e o que podes fazer.",
     "back": "Voltar a strQ.app"
+  },
+  "transparency_page": {
+    "title": "Transparência algorítmica",
+    "description": "Como a strQ calcula os teus XP, racha e bónus. Sem caixa preta.",
+    "back": "Voltar a strQ.app",
+    "privacy_link": "Privacidade"
   },
   "language": {
     "label": "Idioma"

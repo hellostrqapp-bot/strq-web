@@ -38,6 +38,7 @@
   "footer": {
     "privacy": "Mana cookies. Mana rastreamiento. Huk tortuga lentesyuqlla.",
     "privacy_link": "Pakaykuyninchik",
+    "transparency_link": "Algoritmokuna",
     "copyright": "© {year} strQ.app",
     "login": "Ñam tester kanki? Yaykuy →"
   },
@@ -45,6 +46,12 @@
     "title": "Pakaykuy kamachiy",
     "description": "Ima strQ huñukun, imaraykutaq, hayk'a tiempopaqmi, qantaqsi imata ruwankiman.",
     "back": "strQ.app-man kutiy"
+  },
+  "transparency_page": {
+    "title": "Algoritmika sut'inchakuy",
+    "description": "Imaynataq strQ XP-niykita, racha-niykita hinaspa bonus-kunata yupan. Mana yana caja.",
+    "back": "strQ.app-man kutiy",
+    "privacy_link": "Pakaykuyninchik"
   },
   "language": {
     "label": "Simi"

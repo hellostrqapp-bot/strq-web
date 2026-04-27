@@ -38,6 +38,7 @@
   "footer": {
     "privacy": "Geen cookies. Geen tracking. Wel een schildpad met een bril.",
     "privacy_link": "Privacy policy",
+    "transparency_link": "Algoritmes",
     "copyright": "© {year} strQ.app",
     "login": "Al tester? Log in →"
   },
@@ -45,6 +46,12 @@
     "title": "Privacy policy",
     "description": "Wat strQ verzamelt, waarom, hoe lang en wat jij ermee kunt.",
     "back": "Terug naar strQ.app"
+  },
+  "transparency_page": {
+    "title": "Algoritmische transparantie",
+    "description": "Hoe strQ je XP, streak en bonussen berekent. Geen black box.",
+    "back": "Terug naar strQ.app",
+    "privacy_link": "Privacy policy"
   },
   "language": {
     "label": "Taal"

@@ -38,6 +38,7 @@
   "footer": {
     "privacy": "Keine Cookies. Kein Tracking. Nur eine Schildkröte mit Brille.",
     "privacy_link": "Datenschutz",
+    "transparency_link": "Algorithmen",
     "copyright": "© {year} strQ.app",
     "login": "Schon Tester? Einloggen →"
   },
@@ -45,6 +46,12 @@
     "title": "Datenschutzerklärung",
     "description": "Was strQ erfasst, warum, wie lange und was du damit tun kannst.",
     "back": "Zurück zu strQ.app"
+  },
+  "transparency_page": {
+    "title": "Algorithmische Transparenz",
+    "description": "Wie strQ deine XP, Streak und Boni berechnet. Keine Black Box.",
+    "back": "Zurück zu strQ.app",
+    "privacy_link": "Datenschutz"
   },
   "language": {
     "label": "Sprache"
