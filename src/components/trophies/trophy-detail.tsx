@@ -10,6 +10,7 @@ import {
   tierQuoteKey,
   sportLabelKey,
   formatTime,
+  computedBonusXp,
 } from '@/lib/trophies';
 import { QCelebratingLarge } from '@/components/q-poses/q-celebrating-large';
 import { QProud } from '@/components/q-poses/q-proud';
@@ -187,13 +188,23 @@ export function TrophyDetail({ event }: { event: TrophyEvent }) {
           }
           highlight
         />
-        {event.fuzzy_bonus_xp != null && event.fuzzy_bonus_xp > 0 && (
-          <FactBox
-            label={t('detail_bonus')}
-            value={`+${event.fuzzy_bonus_xp} XP`}
-            wide
-          />
-        )}
+        {(() => {
+          // Prefer the stored value when the schema gains it later. For
+          // now, fall back to the deterministic computed value so the
+          // user still sees a meaningful bonus on the detail card.
+          const bonus =
+            event.fuzzy_bonus_xp != null && event.fuzzy_bonus_xp > 0
+              ? event.fuzzy_bonus_xp
+              : computedBonusXp(event);
+          if (bonus == null || bonus <= 0) return null;
+          return (
+            <FactBox
+              label={t('detail_bonus')}
+              value={`+${bonus} XP`}
+              wide
+            />
+          );
+        })()}
       </div>
 
       {/* Q quote */}

@@ -44,7 +44,7 @@ export function useTrophies(): UseTrophiesResult {
       const { data, error: queryError } = await supabase
         .from('events')
         .select(
-          'id, user_id, name, sport_type, event_date, target_time_minutes, result_time_minutes, status, fuzzy_bonus_xp, satisfaction, created_at'
+          'id, user_id, name, sport_type, event_date, target_time_minutes, result_time_minutes, status, created_at'
         )
         .eq('user_id', user.id)
         .eq('status', 'completed')

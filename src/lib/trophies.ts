@@ -25,9 +25,31 @@ export interface TrophyEvent {
   target_time_minutes: number | null;
   result_time_minutes: number | null;
   status: string;
-  fuzzy_bonus_xp: number | null;
-  satisfaction: number | null;
   created_at: string;
+  // Optional: present when the schema later adds these columns. Today
+  // they are not stored on the events table, so callers should treat
+  // them as undefined.
+  fuzzy_bonus_xp?: number | null;
+  satisfaction?: number | null;
+}
+
+/**
+ * Computed XP bonus for a completed event. Mirrors the logic that
+ * was applied at race time (calculateFuzzyBonus). Returns null when
+ * target or result is missing so the detail page can hide the field.
+ */
+export function computedBonusXp(event: TrophyEvent): number | null {
+  if (
+    event.target_time_minutes == null ||
+    event.result_time_minutes == null ||
+    event.target_time_minutes <= 0
+  ) {
+    return null;
+  }
+  return calculateFuzzyBonus(
+    event.target_time_minutes,
+    event.result_time_minutes
+  ).xp;
 }
 
 /**
