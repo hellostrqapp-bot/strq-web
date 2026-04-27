@@ -1,5 +1,5 @@
 // ============================================================
-// strQ — Launch Announcement Edge Function
+// strQ Launch Announcement Edge Function
 // One-shot email blast to the waitlist when strQ goes public.
 // Idempotent: rows in drip_log with drip_day=999 are skipped on
 // subsequent calls so re-running won't double-send.
@@ -48,29 +48,35 @@ const ctaText: Record<string, string> = {
 // One CTA, one link to the login page where users go straight in.
 const body: Record<string, { subject: string; render: (unsub: UnsubInfo) => string }> = {
   nl: {
-    subject: "strQ is open",
+    subject: "Q hier. strQ is open",
     render: (unsub) => wrap(`
-      <p style="color:#FFFFFF;font-size:16px;line-height:1.6;margin:0 0 16px;">Het is zo ver. strQ is open voor iedereen, ook voor jou.</p>
-      <p style="color:rgba(255,255,255,0.78);font-size:15px;line-height:1.6;margin:0 0 16px;">Jij stond op de lijst en wij hebben woord gehouden. Een streak-app die rustdagen meetelt, geen schuldgevoel verkoopt, en weet dat jij het werk doet, niet de app.</p>
-      <p style="color:rgba(255,255,255,0.78);font-size:15px;line-height:1.6;margin:0 0 16px;">Inloggen gaat met je e-mailadres en een magic link. Geen wachtwoord, geen onzin. Even bevestigen dat je 16+ bent en je bent erin.</p>
+      <p style="color:#FFFFFF;font-size:17px;line-height:1.6;margin:0 0 16px;font-weight:600;">Q hier.</p>
+      <p style="color:rgba(255,255,255,0.82);font-size:15.5px;line-height:1.65;margin:0 0 16px;">Ik heb wat dingen gedaan terwijl jij wachtte.</p>
+      <p style="color:rgba(255,255,255,0.78);font-size:15px;line-height:1.65;margin:0 0 16px;">Op 23 april heeft mijn baasje me naar de finish van Hyrox Paris gesleept in 1:27:15. Een paar minuten over de streeftijd, maar de fuzzy-bonus noemt het een warm landing. Voor mij is elke dag dat ik er was een goede dag.</p>
+      <p style="color:rgba(255,255,255,0.78);font-size:15px;line-height:1.65;margin:0 0 16px;">Daarna heb ik een paar dingen verbouwd die niet helemaal klopten. De rust-knop staat nu naast de train-knop. Allebei tellen voor je streak. Geen oplading meer nodig. Geen schuldgevoel. Slow and steady, weet je nog?</p>
+      <p style="color:rgba(255,255,255,0.78);font-size:15px;line-height:1.65;margin:0 0 16px;">En we hebben de privacy-belofte zwart op wit gezet, met een knop "Download mijn gegevens". Want we beloven graag dingen, maar we doen ze ook.</p>
+      <p style="color:#FFFFFF;font-size:15.5px;line-height:1.65;margin:0 0 16px;font-weight:600;">strQ is sinds vandaag open. Jij was een van de eersten op de lijst. Tijd om binnen te komen.</p>
       <div style="text-align:center;margin:28px 0 20px;">
         <a href="${APP_URL}/login" style="display:inline-block;background:linear-gradient(135deg,#6C3483,#7D3C98,#A569BD);color:#fff;padding:14px 32px;border-radius:12px;font-weight:800;font-size:15px;text-decoration:none;">${ctaText.nl} →</a>
       </div>
-      <p style="color:rgba(255,255,255,0.55);font-size:13px;line-height:1.55;margin:0 0 8px;">Eerlijk gezegd zijn we benieuwd wat je ervan vindt. Reageer gerust op deze mail.</p>
-      <p style="color:rgba(255,255,255,0.55);font-size:13px;margin:18px 0 0;">Slow and steady,<br>Arnoud &amp; Q</p>
+      <p style="color:rgba(255,255,255,0.55);font-size:13px;line-height:1.55;margin:0 0 8px;">Reageer gerust op deze mail. Arnoud leest mee.</p>
+      <p style="color:rgba(255,255,255,0.55);font-size:13px;margin:18px 0 0;">Slow and steady,<br>Q 🐢</p>
     `, unsub),
   },
   en: {
-    subject: "strQ is open",
+    subject: "It's Q. strQ is open",
     render: (unsub) => wrap(`
-      <p style="color:#FFFFFF;font-size:16px;line-height:1.6;margin:0 0 16px;">It's time. strQ is open to everyone, including you.</p>
-      <p style="color:rgba(255,255,255,0.78);font-size:15px;line-height:1.6;margin:0 0 16px;">You were on the list and we kept our word. A streak app that counts rest days, never sells guilt, and knows you do the work, not the app.</p>
-      <p style="color:rgba(255,255,255,0.78);font-size:15px;line-height:1.6;margin:0 0 16px;">Sign in with your email and a magic link. No password, no nonsense. Confirm you're 16+ and you're in.</p>
+      <p style="color:#FFFFFF;font-size:17px;line-height:1.6;margin:0 0 16px;font-weight:600;">It's Q.</p>
+      <p style="color:rgba(255,255,255,0.82);font-size:15.5px;line-height:1.65;margin:0 0 16px;">I've been busy while you were waiting.</p>
+      <p style="color:rgba(255,255,255,0.78);font-size:15px;line-height:1.65;margin:0 0 16px;">On 23 April my human dragged me across the finish line of Hyrox Paris in 1:27:15. A few minutes over the target, but the fuzzy bonus calls it a warm landing. For me, every day I showed up was a good day.</p>
+      <p style="color:rgba(255,255,255,0.78);font-size:15px;line-height:1.65;margin:0 0 16px;">After that I rebuilt a few things that didn't quite fit. The rest button now sits next to the train button. Both count toward your streak. No charging up. No guilt. Slow and steady, remember?</p>
+      <p style="color:rgba(255,255,255,0.78);font-size:15px;line-height:1.65;margin:0 0 16px;">And we put the privacy promise in writing, with a "Download my data" button. Because we like making promises, but we keep them too.</p>
+      <p style="color:#FFFFFF;font-size:15.5px;line-height:1.65;margin:0 0 16px;font-weight:600;">strQ went open today. You were one of the first on the list. Time to come in.</p>
       <div style="text-align:center;margin:28px 0 20px;">
         <a href="${APP_URL}/en/login" style="display:inline-block;background:linear-gradient(135deg,#6C3483,#7D3C98,#A569BD);color:#fff;padding:14px 32px;border-radius:12px;font-weight:800;font-size:15px;text-decoration:none;">${ctaText.en} →</a>
       </div>
-      <p style="color:rgba(255,255,255,0.55);font-size:13px;line-height:1.55;margin:0 0 8px;">Honestly, we'd love to hear what you think. Just reply to this email.</p>
-      <p style="color:rgba(255,255,255,0.55);font-size:13px;margin:18px 0 0;">Slow and steady,<br>Arnoud &amp; Q</p>
+      <p style="color:rgba(255,255,255,0.55);font-size:13px;line-height:1.55;margin:0 0 8px;">Reply if you feel like it. Arnoud reads along.</p>
+      <p style="color:rgba(255,255,255,0.55);font-size:13px;margin:18px 0 0;">Slow and steady,<br>Q 🐢</p>
     `, unsub),
   },
   fr: {
@@ -178,7 +184,7 @@ function wrap(content: string, unsub: UnsubInfo): string {
 // ── Handler ──
 // Note: this endpoint has no Authorization gate. It is safe to leave open
 // because:
-// (1) The function is idempotent — drip_log with drip_day=999 is checked
+// (1) The function is idempotent: drip_log with drip_day=999 is checked
 //     before every send, so re-runs cannot double-send.
 // (2) The function only sends to addresses already on the waitlist who
 //     opted in to receive updates from strQ.
