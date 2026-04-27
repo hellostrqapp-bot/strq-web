@@ -8,6 +8,10 @@
     "subtitle": "En plein entraînement, et le canapé gagne.",
     "cta": "strQ t'aide à tenir bon."
   },
+  "about": {
+    "heading": "C'est quoi strQ",
+    "intro": "strQ est une appli fitness ludique qui récompense la constance sur le chemin de ton événement sportif. Pas de coach, pas de log, pas de plan d'entraînement. Juste une streak qui te garde dans le rythme. Pour les sportifs amateurs ambitieux qui refusent de lâcher en pleine prépa. Lancement public en 2026."
+  },
   "waitlist": {
     "placeholder": "toi@email.fr",
     "button": "Rejoindre",
@@ -40,7 +44,10 @@
     "privacy_link": "Confidentialité",
     "transparency_link": "Algorithmes",
     "copyright": "© {year} strQ.app",
-    "login": "Déjà testeur ? Connectez-vous →"
+    "login": "C'est parti →",
+    "legal_entity": "strQ est un produit de Kok Confidential B.V.",
+    "legal_kvk": "Registre du commerce néerlandais 93917074 · Schinkelweg 27 H, 2712 AZ Zoetermeer, Pays-Bas",
+    "legal_contact": "Contact: arnoud@cvp-plus.nl"
   },
   "privacy_page": {
     "title": "Politique de confidentialité",
@@ -70,6 +77,7 @@
     "sent_description": "Nous vous avons envoyé un lien. Cliquez dessus pour vous connecter.",
     "error": "Une erreur est survenue. Réessayez.",
     "not_allowed": "Tu es encore sur la liste d'attente. On te prévient dès que tu peux tester.",
+    "age_confirmation": "J'ai 16 ans ou plus. strQ traite des données liées à la santé et s'adresse aux sportifs de 16 ans et plus.",
     "back": "Retour à strQ.app"
   },
   "app": {
@@ -80,6 +88,11 @@
     "log_rest": "Repos",
     "rest_counts_for_streak": "Compte pour le streak",
     "q_choice_nudge": "Les deux comptent. Qu'est-ce qui te fait du bien aujourd'hui ?",
+    "welcome_title": "Bienvenue chez strQ !",
+    "welcome_subtitle": "Slow and steady. Q est là. D'abord : quel sport pratiques-tu ?",
+    "welcome_sport_label": "Ton sport",
+    "welcome_sport_placeholder": "Choisis un sport",
+    "welcome_cta": "C'est parti",
     "already_logged": "Aujourd'hui c'est fait !",
     "come_back_tomorrow": "Revenez demain pour votre prochain strQ.",
     "tap_to_reveal": "Appuyez pour révéler",

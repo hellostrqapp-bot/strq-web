@@ -2,7 +2,6 @@ import { NextResponse, type NextRequest } from 'next/server';
 import { createServerClient } from '@supabase/ssr';
 import createIntlMiddleware from 'next-intl/middleware';
 import { routing } from './i18n/routing';
-import { isAllowedTester } from './lib/allowed-testers';
 
 const intlMiddleware = createIntlMiddleware(routing);
 
@@ -23,11 +22,15 @@ function getLocale(pathname: string): string {
   return match ? match[1] : 'nl';
 }
 
+// Public launch (27 apr 2026): the beta whitelist gate has been removed.
+// Anyone with a confirmed magic-link can use /app. allowed-testers.ts is
+// kept for potential admin-only flags later.
+
 export async function middleware(request: NextRequest) {
   // First: run i18n middleware for locale routing
   const response = intlMiddleware(request);
 
-  // If this is a protected route, check auth + whitelist
+  // Auth-only gate on protected paths
   if (isProtectedPath(request.nextUrl.pathname)) {
     const supabase = createServerClient(
       process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -56,16 +59,6 @@ export async function middleware(request: NextRequest) {
     if (!user) {
       const loginUrl = new URL(`/${locale}/login`, request.url);
       loginUrl.searchParams.set('redirect', request.nextUrl.pathname);
-      return NextResponse.redirect(loginUrl);
-    }
-
-    // Authenticated but not on whitelist → redirect to login
-    // Server-side gate: prevents bypass via direct API calls
-    if (!isAllowedTester(user.email || '')) {
-      // Sign them out so they don't get stuck in a loop
-      await supabase.auth.signOut();
-      const loginUrl = new URL(`/${locale}/login`, request.url);
-      loginUrl.searchParams.set('error', 'not_allowed');
       return NextResponse.redirect(loginUrl);
     }
   }

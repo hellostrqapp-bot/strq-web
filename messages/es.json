@@ -8,6 +8,10 @@
     "subtitle": "A mitad del entrenamiento, y el sofá gana.",
     "cta": "strQ te ayuda a seguir."
   },
+  "about": {
+    "heading": "Qué es strQ",
+    "intro": "strQ es una app de fitness gamificada que recompensa la constancia en el camino hacia tu evento deportivo. Sin coach, sin registro, sin plan de entrenamiento. Solo una racha que te mantiene en marcha. Para deportistas amateur ambiciosos que no quieren rendirse a mitad de la preparación. Lanzamiento público en 2026."
+  },
   "waitlist": {
     "placeholder": "tu@email.es",
     "button": "Apuntarme",
@@ -40,7 +44,10 @@
     "privacy_link": "Privacidad",
     "transparency_link": "Algoritmos",
     "copyright": "© {year} strQ.app",
-    "login": "¿Ya eres tester? Inicia sesión →"
+    "login": "Empieza ya →",
+    "legal_entity": "strQ es un producto de Kok Confidential B.V.",
+    "legal_kvk": "Registro Mercantil Neerlandés 93917074 · Schinkelweg 27 H, 2712 AZ Zoetermeer, Países Bajos",
+    "legal_contact": "Contacto: arnoud@cvp-plus.nl"
   },
   "privacy_page": {
     "title": "Política de privacidad",
@@ -70,6 +77,7 @@
     "sent_description": "Te enviamos un enlace. Haz clic para iniciar sesión.",
     "error": "Algo salió mal. Inténtalo de nuevo.",
     "not_allowed": "Todavía estás en la lista de espera. Te avisaremos cuando puedas probar.",
+    "age_confirmation": "Tengo 16 años o más. strQ procesa datos relacionados con la salud y está pensada para deportistas de 16+.",
     "back": "Volver a strQ.app"
   },
   "app": {
@@ -80,6 +88,11 @@
     "log_rest": "Descanso",
     "rest_counts_for_streak": "Cuenta para la racha",
     "q_choice_nudge": "Ambos cuentan. ¿Qué te sienta bien hoy?",
+    "welcome_title": "¡Bienvenido a strQ!",
+    "welcome_subtitle": "Slow and steady. Q te acompaña. Primero: ¿qué deporte practicas?",
+    "welcome_sport_label": "Tu deporte",
+    "welcome_sport_placeholder": "Elige un deporte",
+    "welcome_cta": "Vamos",
     "already_logged": "¡Hoy está registrado!",
     "come_back_tomorrow": "Vuelve mañana para tu próximo strQ.",
     "tap_to_reveal": "Toca para revelar",

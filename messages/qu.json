@@ -8,6 +8,10 @@
     "subtitle": "Yachachikuy chawpinpi, samana tiyanayki atipasunki.",
     "cta": "strQ yanapasunki ñawpaqman rinaykipaq."
   },
+  "about": {
+    "heading": "Iman strQ",
+    "intro": "strQ huk pukllana fitness app, deporte eventoman rinaykipaq sapa p'unchawpi yachachikusqaykita kusichikun. Mana coach, mana logger, mana yachachikuy plan. Streak nisqalla, qanta puriykachachisunki. Yachachikuq amateurkuna chawpipi mana saqirqachu munanchu. 2026 watapi qhawakuykusunchik runamasinchik."
+  },
   "waitlist": {
     "placeholder": "qam@email.com",
     "button": "Suyay listaman yaykuy",
@@ -40,7 +44,10 @@
     "privacy_link": "Pakaykuyninchik",
     "transparency_link": "Algoritmokuna",
     "copyright": "© {year} strQ.app",
-    "login": "Ñam tester kanki? Yaykuy →"
+    "login": "Kunan qallariy →",
+    "legal_entity": "strQ Kok Confidential B.V. ruwasqan kachkan.",
+    "legal_kvk": "Países Bajos Comercio Cámaranpi 93917074 · Schinkelweg 27 H, 2712 AZ Zoetermeer, Países Bajos",
+    "legal_contact": "Tinkuy: arnoud@cvp-plus.nl"
   },
   "privacy_page": {
     "title": "Pakaykuy kamachiy",
@@ -70,6 +77,7 @@
     "sent_description": "Huk enlaceta kachayku. Chayta ñit'iy yaykunaykipaq.",
     "error": "Imapas pantay karqan. Watiqmanta ruway.",
     "not_allowed": "Suyasqa listapim kachkanki. Willasqaykiku pruebanapaq atiptiyki.",
+    "age_confirmation": "16 watay icha aswanmi kani. strQ salud-datospi llamk'an, 16+ watayuq deportistakunapaqmi.",
     "back": "strQ.app-man kutiy"
   },
   "app": {
@@ -80,6 +88,11 @@
     "log_rest": "Samay",
     "rest_counts_for_streak": "Streak-paq yupakun",
     "q_choice_nudge": "Iskayninku yupakunku. Imatas kunan munanki?",
+    "welcome_title": "¡strQ-pi allin hamusqayki!",
+    "welcome_subtitle": "Slow and steady. Q-mi yanapasunki. Ñawpaqta: ima deporteta ruwanki?",
+    "welcome_sport_label": "Deporteyki",
+    "welcome_sport_placeholder": "Huk deporteta akllay",
+    "welcome_cta": "Qallarisun",
     "already_logged": "¡Kunan punchaypaq qillqasqaña!",
     "come_back_tomorrow": "Paqarin kutimuy qatiq strQ-niykipaq.",
     "tap_to_reveal": "Ñit'iy rikuchinaykipaq",

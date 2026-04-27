@@ -796,6 +796,40 @@ export default function Landing() {
           }} />
         </div>
 
+        {/* About strQ — short product description (also satisfies Apple Developer review) */}
+        <section
+          aria-labelledby="about-strq-heading"
+          style={{
+            maxWidth: 360,
+            marginBottom: 28,
+            textAlign: "center",
+          }}
+        >
+          <h2
+            id="about-strq-heading"
+            style={{
+              color: "rgba(255,255,255,0.55)",
+              fontSize: 13,
+              fontWeight: 700,
+              letterSpacing: 1.2,
+              textTransform: "uppercase",
+              marginBottom: 10,
+            }}
+          >
+            {t("about.heading")}
+          </h2>
+          <p
+            style={{
+              color: "rgba(255,255,255,0.55)",
+              fontSize: 14,
+              lineHeight: 1.7,
+              fontWeight: 400,
+            }}
+          >
+            {t("about.intro")}
+          </p>
+        </section>
+
         {/* Launch Countdown */}
         <LaunchCountdown t={t} />
 
@@ -1109,6 +1143,35 @@ export default function Landing() {
             <span style={{ margin: "0 8px", color: "rgba(255,255,255,0.1)" }}>·</span>
             {t("footer.copyright", { year: new Date().getFullYear() })}
           </div>
+
+          {/* Legal entity (Kok Confidential B.V.) — required for Apple Developer org-website check */}
+          <address
+            style={{
+              marginTop: 20,
+              paddingTop: 16,
+              borderTop: "1px solid rgba(255,255,255,0.06)",
+              color: "rgba(255,255,255,0.32)",
+              fontSize: 11,
+              lineHeight: 1.6,
+              fontStyle: "normal",
+              fontWeight: 400,
+            }}
+          >
+            <div>{t("footer.legal_entity")}</div>
+            <div>{t("footer.legal_kvk")}</div>
+            <div style={{ marginTop: 4 }}>
+              {t("footer.legal_contact").replace(/arnoud@cvp-plus\.nl/, "")}
+              <a
+                href="mailto:arnoud@cvp-plus.nl"
+                style={{
+                  color: "rgba(165,105,189,0.55)",
+                  textDecoration: "none",
+                }}
+              >
+                arnoud@cvp-plus.nl
+              </a>
+            </div>
+          </address>
         </div>
       </div>
     </div>

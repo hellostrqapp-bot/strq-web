@@ -37,14 +37,33 @@ import { useDashboard } from '@/hooks/use-dashboard';
 
 export default function DashboardPage() {
   const t = useTranslations('app');
+  const tWaitlist = useTranslations('waitlist');
   const locale = useLocale();
 
   // All state + data logic lives in the hook
   const {
     state, streak, todayLogged, todayType,
-    reveal, totalXp, showConfetti, event, error,
-    logActivity, doReveal, clearError,
+    reveal, totalXp, showConfetti, event, profile, error,
+    logActivity, doReveal, clearError, completeOnboarding,
   } = useDashboard();
+
+  // Welcome banner: show when the user has never logged anything yet AND
+  // hasn't completed onboarding. The banner disappears as soon as the user
+  // picks a sport (which flips profile.onboarded to true) or after their
+  // first activity (longestStreak > 0).
+  const isFreshUser =
+    profile != null &&
+    !profile.onboarded &&
+    (streak?.longestStreak ?? 0) === 0;
+  const [welcomeSport, setWelcomeSport] = useState<string>('');
+  const [welcomeSaving, setWelcomeSaving] = useState(false);
+
+  const handleWelcomeStart = async () => {
+    if (!welcomeSport) return;
+    setWelcomeSaving(true);
+    await completeOnboarding(welcomeSport);
+    setWelcomeSaving(false);
+  };
 
   // UI-only state (animation triggers)
   const [qSpinning, setQSpinning] = useState(false);
@@ -123,6 +142,140 @@ export default function DashboardPage() {
       </div>
 
       {/* XP counter removed — now shown in LevelBadge below streak */}
+
+      {/* ── WELCOME CARD ── (first-time user, before any streak/xp) */}
+      {isFreshUser && (
+        <div
+          style={{
+            background: `linear-gradient(135deg, ${PD}, ${P}cc, ${PM}aa)`,
+            borderRadius: 18,
+            padding: '24px 22px',
+            marginBottom: 24,
+            border: `1px solid ${PL}33`,
+            boxShadow: `0 4px 24px ${P}44, 0 0 60px ${P}22`,
+            position: 'relative',
+            overflow: 'hidden',
+          }}
+        >
+          {/* sparkle particles */}
+          <div style={{ position: 'absolute', inset: 0, pointerEvents: 'none' }}>
+            {[
+              { x: 8, y: 16, d: 0 }, { x: 88, y: 12, d: 0.7 },
+              { x: 14, y: 78, d: 1.4 }, { x: 92, y: 70, d: 2.1 },
+              { x: 50, y: 6, d: 2.8 },
+            ].map((s, i) => (
+              <div key={i} style={{
+                position: 'absolute',
+                left: `${s.x}%`,
+                top: `${s.y}%`,
+                width: 4,
+                height: 4,
+                borderRadius: '50%',
+                background: SL,
+                animation: `landing-sparkle 4s ease-in-out ${s.d}s infinite`,
+              }} />
+            ))}
+          </div>
+
+          <div style={{
+            display: 'flex',
+            gap: 14,
+            alignItems: 'center',
+            position: 'relative',
+            marginBottom: 14,
+          }}>
+            <div style={{
+              flexShrink: 0,
+              animation: 'wig 3s ease-in-out infinite',
+            }}>
+              <QMiniButton pose="ready" size={56} excited={false} />
+            </div>
+            <div>
+              <div style={{
+                fontSize: 19,
+                fontWeight: 800,
+                color: W,
+                letterSpacing: '-0.01em',
+                marginBottom: 4,
+              }}>
+                {t('welcome_title')}
+              </div>
+              <div style={{
+                fontSize: 13,
+                color: 'rgba(255,255,255,0.78)',
+                lineHeight: 1.45,
+              }}>
+                {t('welcome_subtitle')}
+              </div>
+            </div>
+          </div>
+
+          <label
+            style={{
+              fontSize: 11,
+              color: 'rgba(255,255,255,0.6)',
+              fontWeight: 700,
+              letterSpacing: '0.06em',
+              textTransform: 'uppercase',
+              display: 'block',
+              marginBottom: 6,
+              position: 'relative',
+            }}
+          >
+            {t('welcome_sport_label')}
+          </label>
+          <select
+            value={welcomeSport}
+            onChange={(e) => setWelcomeSport(e.target.value)}
+            style={{
+              width: '100%',
+              padding: '12px 14px',
+              borderRadius: 10,
+              border: `1.5px solid ${PL}55`,
+              background: 'rgba(0,0,0,0.25)',
+              color: W,
+              fontSize: 14,
+              fontFamily: 'inherit',
+              appearance: 'none',
+              WebkitAppearance: 'none',
+              cursor: 'pointer',
+              backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='rgba(255,255,255,0.6)' stroke-width='2' fill='none'/%3E%3C/svg%3E")`,
+              backgroundRepeat: 'no-repeat',
+              backgroundPosition: 'right 14px center',
+              marginBottom: 12,
+              position: 'relative',
+            }}
+          >
+            <option value="" style={{ background: BG }}>{t('welcome_sport_placeholder')}</option>
+            <option value="hyrox" style={{ background: BG }}>{tWaitlist('sport_options.hyrox')}</option>
+            <option value="running" style={{ background: BG }}>{tWaitlist('sport_options.running')}</option>
+            <option value="triathlon" style={{ background: BG }}>{tWaitlist('sport_options.triathlon')}</option>
+            <option value="cycling" style={{ background: BG }}>{tWaitlist('sport_options.cycling')}</option>
+            <option value="other" style={{ background: BG }}>{tWaitlist('sport_options.other')}</option>
+          </select>
+
+          <button
+            onClick={handleWelcomeStart}
+            disabled={!welcomeSport || welcomeSaving}
+            style={{
+              width: '100%',
+              padding: '12px',
+              borderRadius: 10,
+              border: 'none',
+              background: welcomeSport ? W : 'rgba(255,255,255,0.15)',
+              color: welcomeSport ? P : 'rgba(255,255,255,0.4)',
+              fontSize: 14,
+              fontWeight: 800,
+              cursor: welcomeSport && !welcomeSaving ? 'pointer' : 'not-allowed',
+              fontFamily: 'inherit',
+              transition: 'all 0.2s',
+              position: 'relative',
+            }}
+          >
+            {welcomeSaving ? '...' : t('welcome_cta')}
+          </button>
+        </div>
+      )}
 
       {/* ── STREAK COUNTER ── (het grootste element) */}
       <div style={{ textAlign: 'center', marginBottom: 32, position: 'relative' }}>

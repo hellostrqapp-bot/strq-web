@@ -39,6 +39,11 @@ export interface EventData {
   result_time_minutes: number | null;
 }
 
+export interface ProfileData {
+  sport_type: string;
+  onboarded: boolean;
+}
+
 export function useDashboard() {
   const [state, setState] = useState<DashState>('loading');
   const [streak, setStreak] = useState<StreakResult | null>(null);
@@ -48,6 +53,7 @@ export function useDashboard() {
   const [totalXp, setTotalXp] = useState(0);
   const [showConfetti, setShowConfetti] = useState(false);
   const [event, setEvent] = useState<EventData | null>(null);
+  const [profile, setProfile] = useState<ProfileData | null>(null);
   const [error, setError] = useState<DashError | null>(null);
 
   const supabase = createBrowserClient();
@@ -63,7 +69,7 @@ export function useDashboard() {
       const sixtyDaysAgo = new Date();
       sixtyDaysAgo.setDate(sixtyDaysAgo.getDate() - 60);
 
-      const [activitiesRes, streakStateRes, revealRes, eventRes] =
+      const [activitiesRes, streakStateRes, revealRes, eventRes, profileRes] =
         await Promise.all([
           supabase
             .from('activities')
@@ -90,6 +96,11 @@ export function useDashboard() {
             .order('event_date', { ascending: true })
             .limit(1)
             .single(),
+          supabase
+            .from('profiles')
+            .select('sport_type, onboarded')
+            .eq('id', user.id)
+            .single(),
         ]);
 
       const activities = activitiesRes.data || [];
@@ -98,6 +109,7 @@ export function useDashboard() {
       setStreak(streakResult);
       setTotalXp(streakStateRes.data?.total_xp || 0);
       setEvent(upcomingEvent);
+      setProfile(profileRes.data || null);
 
       // Check if today is already logged
       const todayEntry = activities.find(
@@ -291,6 +303,27 @@ export function useDashboard() {
   // ── Dismiss error ──
   const clearError = () => setError(null);
 
+  // ── Onboarding: persist sport choice + flip onboarded flag ──
+  const completeOnboarding = async (sportType: string) => {
+    try {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      if (!user) return;
+      const { error: upErr } = await supabase
+        .from('profiles')
+        .update({ sport_type: sportType, onboarded: true })
+        .eq('id', user.id);
+      if (upErr) {
+        console.warn('[useDashboard] completeOnboarding failed:', upErr);
+        return;
+      }
+      setProfile({ sport_type: sportType, onboarded: true });
+    } catch (err) {
+      console.warn('[useDashboard] completeOnboarding error:', err);
+    }
+  };
+
   return {
     // State
     state,
@@ -301,10 +334,12 @@ export function useDashboard() {
     totalXp,
     showConfetti,
     event,
+    profile,
     error,
     // Actions
     logActivity,
     doReveal,
     clearError,
+    completeOnboarding,
   };
 }

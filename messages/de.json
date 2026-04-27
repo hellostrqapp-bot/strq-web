@@ -8,6 +8,10 @@
     "subtitle": "Mitten im Training, und die Couch gewinnt.",
     "cta": "strQ hilft dir durchzuhalten."
   },
+  "about": {
+    "heading": "Was ist strQ",
+    "intro": "strQ ist eine gamifizierte Fitness-App, die Konsistenz auf dem Weg zu deinem Sportevent belohnt. Kein Coach, kein Logger, kein Trainingsplan. Nur eine Streak, die dich am Ball hält. Für ambitionierte Hobbysportler, die mitten in der Vorbereitung nicht aufgeben wollen. Öffentlicher Launch im Jahr 2026."
+  },
   "waitlist": {
     "placeholder": "du@email.de",
     "button": "Anmelden",
@@ -40,7 +44,10 @@
     "privacy_link": "Datenschutz",
     "transparency_link": "Algorithmen",
     "copyright": "© {year} strQ.app",
-    "login": "Schon Tester? Einloggen →"
+    "login": "Sofort loslegen →",
+    "legal_entity": "strQ ist ein Produkt von Kok Confidential B.V.",
+    "legal_kvk": "Niederländische Handelskammer 93917074 · Schinkelweg 27 H, 2712 AZ Zoetermeer, Niederlande",
+    "legal_contact": "Kontakt: arnoud@cvp-plus.nl"
   },
   "privacy_page": {
     "title": "Datenschutzerklärung",
@@ -70,6 +77,7 @@
     "sent_description": "Wir haben dir einen Link geschickt. Klicke darauf zum Einloggen.",
     "error": "Etwas ist schiefgelaufen. Versuche es erneut.",
     "not_allowed": "Du stehst noch auf der Warteliste. Wir melden uns, sobald du testen kannst.",
+    "age_confirmation": "Ich bin 16 Jahre oder älter. strQ verarbeitet gesundheitsbezogene Daten und ist für Sportler ab 16 gedacht.",
     "back": "Zurück zu strQ.app"
   },
   "app": {
@@ -80,6 +88,11 @@
     "log_rest": "Ruhe",
     "rest_counts_for_streak": "Zählt für die Streak",
     "q_choice_nudge": "Beides zählt. Was fühlt sich heute richtig an?",
+    "welcome_title": "Willkommen bei strQ!",
+    "welcome_subtitle": "Slow and steady. Q ist da. Zuerst: Welchen Sport machst du?",
+    "welcome_sport_label": "Dein Sport",
+    "welcome_sport_placeholder": "Sport wählen",
+    "welcome_cta": "Los geht's",
     "already_logged": "Heute ist eingetragen!",
     "come_back_tomorrow": "Komm morgen wieder für deinen nächsten strQ.",
     "tap_to_reveal": "Tippen zum Enthüllen",

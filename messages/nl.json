@@ -8,6 +8,10 @@
     "subtitle": "Halverwege de voorbereiding, en de bank wint.",
     "cta": "strQ helpt je vol te houden."
   },
+  "about": {
+    "heading": "Wat is strQ",
+    "intro": "strQ is een gamified fitness-app die consistentie beloont op weg naar je sportevenement. Geen coach, geen logger, geen trainingsschema. Wel een streak die je vol houdt. Voor ambitieuze recreanten die halverwege de voorbereiding niet willen afhaken. Publieke lancering in 2026."
+  },
   "waitlist": {
     "placeholder": "je@email.nl",
     "button": "Meld aan",
@@ -40,7 +44,10 @@
     "privacy_link": "Privacy policy",
     "transparency_link": "Algoritmes",
     "copyright": "© {year} strQ.app",
-    "login": "Al tester? Log in →"
+    "login": "Direct beginnen →",
+    "legal_entity": "strQ is een product van Kok Confidential B.V.",
+    "legal_kvk": "KvK 93917074 · Schinkelweg 27 H, 2712 AZ Zoetermeer",
+    "legal_contact": "Contact: arnoud@cvp-plus.nl"
   },
   "privacy_page": {
     "title": "Privacy policy",
@@ -70,6 +77,7 @@
     "sent_description": "We hebben je een link gestuurd. Klik erop om in te loggen.",
     "error": "Er ging iets mis. Probeer het opnieuw.",
     "not_allowed": "Je staat nog op de waitlist. We laten je weten wanneer je kunt testen.",
+    "age_confirmation": "Ik ben 16 jaar of ouder. strQ verwerkt gezondheidsgerelateerde data en is bedoeld voor sporters van 16+.",
     "back": "Terug naar strQ.app"
   },
   "app": {
@@ -80,6 +88,11 @@
     "log_rest": "Rust",
     "rest_counts_for_streak": "Telt voor streak",
     "q_choice_nudge": "Beide tellen. Wat voelt goed vandaag?",
+    "welcome_title": "Welkom bij strQ!",
+    "welcome_subtitle": "Slow and steady. Q wijst je de weg. Eerst even: welke sport beoefen je?",
+    "welcome_sport_label": "Jouw sport",
+    "welcome_sport_placeholder": "Kies een sport",
+    "welcome_cta": "Laten we beginnen",
     "already_logged": "Vandaag staat erin!",
     "come_back_tomorrow": "Kom morgen terug voor je volgende strQ.",
     "tap_to_reveal": "Tik om te onthullen",

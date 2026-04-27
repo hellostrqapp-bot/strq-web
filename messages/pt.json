@@ -8,6 +8,10 @@
     "subtitle": "No meio do treino, o sofá vence.",
     "cta": "strQ te ajuda a continuar."
   },
+  "about": {
+    "heading": "O que é strQ",
+    "intro": "strQ é um app fitness gamificado que recompensa a consistência rumo ao seu evento esportivo. Sem coach, sem logger, sem plano de treino. Apenas uma streak que te mantém no ritmo. Para atletas amadores ambiciosos que não querem desistir no meio da preparação. Lançamento público em 2026."
+  },
   "waitlist": {
     "placeholder": "voce@email.com.br",
     "button": "Entrar na lista",
@@ -40,7 +44,10 @@
     "privacy_link": "Privacidade",
     "transparency_link": "Algoritmos",
     "copyright": "© {year} strQ.app",
-    "login": "Já és tester? Entrar →"
+    "login": "Começar agora →",
+    "legal_entity": "strQ é um produto da Kok Confidential B.V.",
+    "legal_kvk": "Câmara de Comércio Neerlandesa 93917074 · Schinkelweg 27 H, 2712 AZ Zoetermeer, Países Baixos",
+    "legal_contact": "Contato: arnoud@cvp-plus.nl"
   },
   "privacy_page": {
     "title": "Política de privacidade",
@@ -70,6 +77,7 @@
     "sent_description": "Enviamos um link. Clique nele para entrar.",
     "error": "Algo deu errado. Tente novamente.",
     "not_allowed": "Ainda estás na lista de espera. Avisamos quando puderes testar.",
+    "age_confirmation": "Tenho 16 anos ou mais. A strQ processa dados de saúde e destina-se a desportistas a partir dos 16 anos.",
     "back": "Voltar para strQ.app"
   },
   "app": {
@@ -80,6 +88,11 @@
     "log_rest": "Descanso",
     "rest_counts_for_streak": "Conta para a racha",
     "q_choice_nudge": "Ambos contam. O que te faz bem hoje?",
+    "welcome_title": "Bem-vindo à strQ!",
+    "welcome_subtitle": "Slow and steady. A Q acompanha-te. Primeiro: que desporto fazes?",
+    "welcome_sport_label": "O teu desporto",
+    "welcome_sport_placeholder": "Escolhe um desporto",
+    "welcome_cta": "Vamos",
     "already_logged": "Hoje está registrado!",
     "come_back_tomorrow": "Volte amanhã para seu próximo strQ.",
     "tap_to_reveal": "Toque para revelar",

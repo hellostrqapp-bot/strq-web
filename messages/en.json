@@ -8,6 +8,10 @@
     "subtitle": "Halfway through training, and the couch wins.",
     "cta": "strQ helps you keep going."
   },
+  "about": {
+    "heading": "What is strQ",
+    "intro": "strQ is a gamified fitness app that rewards consistency on the road to your sports event. No coach, no logger, no training plan. Just a streak that keeps you going. For ambitious recreational athletes who refuse to drop off halfway through. Public launch in 2026."
+  },
   "waitlist": {
     "placeholder": "you@email.com",
     "button": "Join waitlist",
@@ -40,7 +44,10 @@
     "privacy_link": "Privacy policy",
     "transparency_link": "Algorithms",
     "copyright": "© {year} strQ.app",
-    "login": "Already a tester? Log in →"
+    "login": "Get started →",
+    "legal_entity": "strQ is a product of Kok Confidential B.V.",
+    "legal_kvk": "Dutch Chamber of Commerce 93917074 · Schinkelweg 27 H, 2712 AZ Zoetermeer, the Netherlands",
+    "legal_contact": "Contact: arnoud@cvp-plus.nl"
   },
   "privacy_page": {
     "title": "Privacy policy",
@@ -70,6 +77,7 @@
     "sent_description": "We sent you a link. Click it to sign in.",
     "error": "Something went wrong. Please try again.",
     "not_allowed": "You're still on the waitlist. We'll let you know when you can test.",
+    "age_confirmation": "I am 16 or older. strQ processes health-related data and is intended for athletes aged 16+.",
     "back": "Back to strQ.app"
   },
   "app": {
@@ -80,6 +88,11 @@
     "log_rest": "Rest",
     "rest_counts_for_streak": "Counts for streak",
     "q_choice_nudge": "Both count. What feels right today?",
+    "welcome_title": "Welcome to strQ!",
+    "welcome_subtitle": "Slow and steady. Q's got you. First: which sport do you train?",
+    "welcome_sport_label": "Your sport",
+    "welcome_sport_placeholder": "Pick a sport",
+    "welcome_cta": "Let's go",
     "already_logged": "Today is locked in!",
     "come_back_tomorrow": "Come back tomorrow for your next strQ.",
     "tap_to_reveal": "Tap to reveal",

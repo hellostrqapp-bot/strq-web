@@ -3,13 +3,13 @@
 import { useState } from 'react';
 import { useTranslations, useLocale } from 'next-intl';
 import { createBrowserClient } from '@/lib/supabase-browser';
-import { isAllowedTester } from '@/lib/allowed-testers';
 import { IconEnvelope } from '@/components/icons';
 
 // ═══════════════════════════════════════════════════════════
 // strQ — Login Page
 // Magic link only. No passwords. Simple.
-// Beta gate: only whitelisted testers can log in (Fase 1).
+// Public launch (27 apr 2026): beta whitelist removed, age 16+
+// confirmation required on signup per DPIA.
 // ═══════════════════════════════════════════════════════════
 
 const P = '#6C3483';
@@ -22,21 +22,17 @@ export default function LoginPage() {
   const t = useTranslations('login');
   const locale = useLocale();
   const [email, setEmail] = useState('');
+  const [ageConfirmed, setAgeConfirmed] = useState(false);
   const [sent, setSent] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!ageConfirmed) return; // belt-and-braces, the input is also `required`
+
     setLoading(true);
     setError('');
-
-    // Beta gate: only whitelisted testers can log in
-    if (!isAllowedTester(email)) {
-      setLoading(false);
-      setError(t('not_allowed'));
-      return;
-    }
 
     const supabase = createBrowserClient();
 
@@ -44,7 +40,12 @@ export default function LoginPage() {
       email,
       options: {
         emailRedirectTo: `${window.location.origin}/auth/callback?redirect=/${locale}/app`,
-        data: { locale },
+        // The age confirmation timestamp lands in raw_user_meta_data and is
+        // copied into profiles.age_confirmed_at by the auth callback handler.
+        data: {
+          locale,
+          age_confirmed_at: new Date().toISOString(),
+        },
       },
     });
 
@@ -148,9 +149,52 @@ export default function LoginPage() {
                 borderRadius: 12,
                 color: W,
                 outline: 'none',
-                marginBottom: 12,
+                marginBottom: 16,
               }}
             />
+
+            {/* ── 16+ confirmation (DPIA requirement) ── */}
+            <label
+              style={{
+                display: 'flex',
+                alignItems: 'flex-start',
+                gap: 10,
+                padding: '12px 14px',
+                background: 'rgba(255,255,255,0.03)',
+                border: ageConfirmed
+                  ? `1.5px solid ${PL}66`
+                  : '1.5px solid rgba(255,255,255,0.08)',
+                borderRadius: 10,
+                marginBottom: 14,
+                cursor: 'pointer',
+                textAlign: 'left',
+                transition: 'border-color 0.2s',
+              }}
+            >
+              <input
+                type="checkbox"
+                checked={ageConfirmed}
+                onChange={(e) => setAgeConfirmed(e.target.checked)}
+                required
+                style={{
+                  marginTop: 2,
+                  width: 16,
+                  height: 16,
+                  accentColor: P,
+                  cursor: 'pointer',
+                  flexShrink: 0,
+                }}
+              />
+              <span
+                style={{
+                  fontSize: 13,
+                  color: 'rgba(255,255,255,0.75)',
+                  lineHeight: 1.45,
+                }}
+              >
+                {t('age_confirmation')}
+              </span>
+            </label>
 
             {error && (
               <p
@@ -166,7 +210,7 @@ export default function LoginPage() {
 
             <button
               type="submit"
-              disabled={loading || !email}
+              disabled={loading || !email || !ageConfirmed}
               style={{
                 width: '100%',
                 padding: '14px',
@@ -176,8 +220,8 @@ export default function LoginPage() {
                 color: W,
                 border: 'none',
                 borderRadius: 8,
-                cursor: loading ? 'wait' : 'pointer',
-                opacity: !email ? 0.5 : 1,
+                cursor: loading || !ageConfirmed ? 'not-allowed' : 'pointer',
+                opacity: !email || !ageConfirmed ? 0.5 : 1,
                 transition: 'all 0.2s',
               }}
             >
