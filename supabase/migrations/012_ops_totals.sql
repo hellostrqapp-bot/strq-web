@@ -9,10 +9,11 @@
 -- (TRAIN of RUST) in activities.
 --
 -- Toegang: de functie is aan te roepen met de publieke anon-key,
--- maar weigert zonder de juiste header x-ops-token. Het token zelf
--- staat nergens in de code; alleen de SHA-256-hash staat hieronder.
--- Het token staat als API-credential op de cloudomgeving van James,
--- zodat ook James het niet kan zien.
+-- maar weigert zonder de juiste header x-ops-token. De sleutel zelf
+-- staat nergens in de code. Arnoud kiest hem zelf en zet hem op twee
+-- plekken: als hash in ops_access (stap onderaan dit bestand) en als
+-- API-credential op de cloudomgeving van James, zodat ook James hem
+-- niet kan zien. Zolang ops_access leeg is, weigert de functie alles.
 --
 -- 011 is gereserveerd voor de challenge-migratie uit strq-2.0.
 -- ============================================================
@@ -27,11 +28,6 @@ CREATE TABLE IF NOT EXISTS ops_access (
 -- RLS aan zonder policies: niemand leest deze tabel via de API.
 ALTER TABLE ops_access ENABLE ROW LEVEL SECURITY;
 REVOKE ALL ON ops_access FROM anon, authenticated;
-
-INSERT INTO ops_access (id, token_sha256)
-VALUES (1, '7b62d5be1f4633c152db0dedda42f74a9e7ab4f682edc6dfd99a1ab37cdc455e')
-ON CONFLICT (id) DO UPDATE
-  SET token_sha256 = EXCLUDED.token_sha256, created_at = now();
 
 -- ── Totalen ────────────────────────────────────────────────
 -- Security definer: telt over alle rijen heen, maar geeft
@@ -77,3 +73,13 @@ $$;
 REVOKE ALL ON FUNCTION get_ops_totals() FROM PUBLIC;
 REVOKE EXECUTE ON FUNCTION get_ops_totals() FROM authenticated;
 GRANT EXECUTE ON FUNCTION get_ops_totals() TO anon;
+
+-- ── Laatste stap, apart en met de hand ─────────────────────
+-- Vervang JOUW-SLEUTEL door een lange willekeurige code (bijvoorbeeld
+-- uit je wachtwoordmanager) en draai alleen deze regel. Dezelfde code
+-- zet je daarna als API-credential op James' cloudomgeving.
+--
+-- INSERT INTO ops_access (id, token_sha256)
+-- VALUES (1, encode(sha256(convert_to('JOUW-SLEUTEL', 'UTF8')), 'hex'))
+-- ON CONFLICT (id) DO UPDATE
+--   SET token_sha256 = EXCLUDED.token_sha256, created_at = now();
