@@ -37,6 +37,24 @@ export function IconStreak({ size = 22 }: IconProps) {
   );
 }
 
+/** Co-op — two friends under one rainbow */
+export function IconCoop({ size = 22 }: IconProps) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none">
+      {/* Rainbow arc over the pair */}
+      <path d="M4 12a8 8 0 0 1 16 0" fill="none" stroke={RB[0]} strokeWidth="1.6" strokeLinecap="round" />
+      <path d="M6 12a6 6 0 0 1 12 0" fill="none" stroke={RB[3]} strokeWidth="1.6" strokeLinecap="round" />
+      <path d="M8 12a4 4 0 0 1 8 0" fill="none" stroke={RB[5]} strokeWidth="1.6" strokeLinecap="round" />
+      {/* Two heads */}
+      <circle cx="9" cy="16" r="2.2" fill={PL} />
+      <circle cx="15" cy="16" r="2.2" fill={SK} />
+      {/* Two bodies */}
+      <path d="M5.8 22a3.2 3.2 0 0 1 6.4 0Z" fill={PL} opacity="0.85" />
+      <path d="M11.8 22a3.2 3.2 0 0 1 6.4 0Z" fill={SK} opacity="0.85" />
+    </svg>
+  );
+}
+
 /** Training — flexed arm in Q green */
 export function IconTraining({ size = 22 }: IconProps) {
   return (

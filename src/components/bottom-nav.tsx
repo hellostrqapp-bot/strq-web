@@ -6,7 +6,7 @@
 'use client';
 
 import { usePathname } from 'next/navigation';
-import { IconStreak, IconFinish, IconProfile, IconTrophy } from '@/components/icons';
+import { IconStreak, IconFinish, IconProfile, IconTrophy, IconCoop } from '@/components/icons';
 
 const P = '#6C3483';
 const PL = '#A569BD';
@@ -40,6 +40,12 @@ export function BottomNav({ locale }: { locale: string }) {
       icon: <IconFinish size={22} />,
       activeIcon: <IconFinish size={26} />,
       label: 'Event',
+    },
+    {
+      href: `/${locale}/app/coop`,
+      icon: <IconCoop size={22} />,
+      activeIcon: <IconCoop size={26} />,
+      label: 'Samen',
     },
     {
       href: `/${locale}/app/trophies`,
