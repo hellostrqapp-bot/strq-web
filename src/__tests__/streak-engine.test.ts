@@ -65,9 +65,9 @@ describe('calculateStreak', () => {
     expect(result.multiplier).toBe(1);
   });
 
-  // ── CORE RULE: earned rest doesn't break streak ──
+  // ── CORE RULE (Spoor A, 27 apr 2026): rest counts for the streak ──
 
-  it('preserves streak when rest day follows training', () => {
+  it('counts a rest day after training for the streak', () => {
     const activities = makeActivities([
       { daysAgo: 0, type: 'training' },
       { daysAgo: 1, type: 'rest' },
@@ -75,12 +75,12 @@ describe('calculateStreak', () => {
       { daysAgo: 3, type: 'training' },
     ]);
     const result = calculateStreak(activities);
-    // Rest day at daysAgo=1 should not break streak
-    // Training days: 0, 2, 3 = 3 training days
-    expect(result.currentStreak).toBe(3);
+    // Rest day at daysAgo=1 does not break the streak and counts +1
+    // Logged days: 0, 1, 2, 3 = 4
+    expect(result.currentStreak).toBe(4);
   });
 
-  it('preserves streak with rest day between training blocks', () => {
+  it('counts a rest day between training blocks for the streak', () => {
     const activities = makeActivities([
       { daysAgo: 0, type: 'training' },
       { daysAgo: 1, type: 'training' },
@@ -89,7 +89,7 @@ describe('calculateStreak', () => {
       { daysAgo: 4, type: 'training' },
     ]);
     const result = calculateStreak(activities);
-    expect(result.currentStreak).toBe(4);
+    expect(result.currentStreak).toBe(5);
   });
 
   // ── Gap days (unlogged) break streak ──
@@ -138,8 +138,9 @@ describe('calculateStreak', () => {
       { daysAgo: 3, type: 'training' },
     ]);
     const result = calculateStreak(activities);
-    // Rest day resets gapDays, so gapDays never reaches 2
-    expect(result.currentStreak).toBe(2);
+    // Rest day resets gapDays, so gapDays never reaches 2.
+    // Logged days: 1 (rest), 2, 3 = 3
+    expect(result.currentStreak).toBe(3);
   });
 
   // ── last7Days ──
@@ -270,11 +271,12 @@ describe('getBaseXP', () => {
     expect(getBaseXP('training')).toBe(50);
   });
 
-  it('gives 10 XP for unearned rest', () => {
-    expect(getBaseXP('rest')).toBe(10);
+  // Spoor A: rest yields 0 XP. It counts for the streak, never for XP.
+  it('gives 0 XP for rest', () => {
+    expect(getBaseXP('rest')).toBe(0);
   });
 
-  it('gives earned rest XP when available', () => {
+  it('gives 0 XP for rest, even when earned rest is available', () => {
     expect(
       getBaseXP('rest', {
         trainingDaysSinceRest: 3,
@@ -283,10 +285,10 @@ describe('getBaseXP', () => {
         xpReward: 40,
         tier: 'charged',
       })
-    ).toBe(40);
+    ).toBe(0);
   });
 
-  it('gives 10 XP for rest when earned rest is locked', () => {
+  it('gives 0 XP for rest when earned rest is locked', () => {
     expect(
       getBaseXP('rest', {
         trainingDaysSinceRest: 1,
@@ -295,7 +297,7 @@ describe('getBaseXP', () => {
         xpReward: 0,
         tier: 'locked',
       })
-    ).toBe(10);
+    ).toBe(0);
   });
 });
 
@@ -444,8 +446,8 @@ describe('taper mode', () => {
     ]);
     // Event on day +1 → today, yesterday, day-before, day-before-that all taper
     const result = calculateStreak(activities, { event_date: daysFromToday(1) });
-    // currentStreak counts only training days: 2
-    expect(result.currentStreak).toBe(2);
+    // Rest and training both count: 3 rest + 2 training = 5
+    expect(result.currentStreak).toBe(5);
     expect(result.taper.active).toBe(true);
   });
 
