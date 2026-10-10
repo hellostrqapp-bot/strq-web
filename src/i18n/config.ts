@@ -1,7 +1,9 @@
 // Voeg hier talen toe — dat is alles wat nodig is voor een nieuwe taal
 // (plus een JSON bestand in /messages/)
 export const locales = ['nl', 'en', 'fr', 'de', 'es', 'pt', 'qu'] as const;
-export const defaultLocale = 'nl' as const;
+// Engels is de voordeur: strq.app zonder prefix is Engels, /nl is Nederlands.
+// Een Nederlandse browser wordt door next-intl naar /nl gestuurd.
+export const defaultLocale = 'en' as const;
 
 export type Locale = (typeof locales)[number];
 

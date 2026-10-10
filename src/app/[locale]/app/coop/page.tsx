@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { useTranslations, useLocale } from 'next-intl';
 import { Link } from '@/i18n/routing';
+import { localePath } from '@/i18n/paths';
 import { RainbowRoad } from '@/components/rainbow-road';
 import { useCoop } from '@/hooks/use-coop';
 import {
@@ -85,9 +86,7 @@ export default function CoopPage() {
       const token = await createInvite(active.season_id);
       const origin =
         typeof window !== 'undefined' ? window.location.origin : '';
-      // localePrefix is 'as-needed': the default locale (nl) has no prefix
-      const prefix = locale === 'nl' ? '' : `/${locale}`;
-      const link = `${origin}${prefix}/app/coop/join?token=${token}`;
+      const link = `${origin}${localePath(locale, '/app/coop/join')}?token=${token}`;
       setInviteLink(link);
       try {
         await navigator.clipboard.writeText(link);
