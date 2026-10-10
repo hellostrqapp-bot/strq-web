@@ -2,6 +2,7 @@ import { NextResponse, type NextRequest } from 'next/server';
 import { createServerClient } from '@supabase/ssr';
 import createIntlMiddleware from 'next-intl/middleware';
 import { routing } from './i18n/routing';
+import { localeFromPath, localePath, stripLocale } from './i18n/paths';
 
 const intlMiddleware = createIntlMiddleware(routing);
 
@@ -10,16 +11,17 @@ const protectedPaths = ['/app'];
 
 function isProtectedPath(pathname: string): boolean {
   // Strip locale prefix to check the actual path
-  const pathWithoutLocale = pathname.replace(
-    /^\/(nl|en|fr|de|es|pt|qu)/,
-    ''
-  );
+  const pathWithoutLocale = stripLocale(pathname);
   return protectedPaths.some((p) => pathWithoutLocale.startsWith(p));
 }
 
-function getLocale(pathname: string): string {
-  const match = pathname.match(/^\/(nl|en|fr|de|es|pt|qu)/);
-  return match ? match[1] : 'nl';
+function getLocale(request: NextRequest): string {
+  // Prefix in het pad, anders de taal die next-intl koos (cookie of browser)
+  return (
+    localeFromPath(request.nextUrl.pathname) ??
+    request.cookies.get('NEXT_LOCALE')?.value ??
+    routing.defaultLocale
+  );
 }
 
 // Public launch (27 apr 2026): the beta whitelist gate has been removed.
@@ -29,6 +31,12 @@ function getLocale(pathname: string): string {
 export async function middleware(request: NextRequest) {
   // First: run i18n middleware for locale routing
   const response = intlMiddleware(request);
+
+  // Taalredirect (bijv. Nederlandse browser naar /nl) eerst laten gebeuren;
+  // het volgende verzoek komt met prefix terug en gaat dan langs de auth-check.
+  if (response.headers.get('location')) {
+    return response;
+  }
 
   // Auth-only gate on protected paths
   if (isProtectedPath(request.nextUrl.pathname)) {
@@ -53,11 +61,11 @@ export async function middleware(request: NextRequest) {
       data: { user },
     } = await supabase.auth.getUser();
 
-    const locale = getLocale(request.nextUrl.pathname);
+    const locale = getLocale(request);
 
     // Not authenticated → redirect to login
     if (!user) {
-      const loginUrl = new URL(`/${locale}/login`, request.url);
+      const loginUrl = new URL(localePath(locale, '/login'), request.url);
       loginUrl.searchParams.set('redirect', request.nextUrl.pathname);
       return NextResponse.redirect(loginUrl);
     }
@@ -68,7 +76,7 @@ export async function middleware(request: NextRequest) {
 
 export const config = {
   // Match all paths EXCEPT static files, api routes, and auth callback.
-  // Needed because localePrefix: 'as-needed' strips /nl/ from URLs,
+  // Needed because localePrefix: 'as-needed' strips /en/ from URLs,
   // so /login (without prefix) must also hit the middleware.
   matcher: ['/((?!api|_next|auth|.*\\..*).*)', '/(nl|en|fr|de|es|pt|qu)/:path*'],
 };

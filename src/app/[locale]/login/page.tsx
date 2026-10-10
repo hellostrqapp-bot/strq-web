@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { useTranslations, useLocale } from 'next-intl';
 import { createBrowserClient } from '@/lib/supabase-browser';
+import { localePath } from '@/i18n/paths';
 import { IconEnvelope } from '@/components/icons';
 
 // ═══════════════════════════════════════════════════════════
@@ -39,7 +40,7 @@ export default function LoginPage() {
     const { error: authError } = await supabase.auth.signInWithOtp({
       email,
       options: {
-        emailRedirectTo: `${window.location.origin}/auth/callback?redirect=/${locale}/app`,
+        emailRedirectTo: `${window.location.origin}/auth/callback?redirect=${localePath(locale, '/app')}`,
         // The age confirmation timestamp lands in raw_user_meta_data and is
         // copied into profiles.age_confirmed_at by the auth callback handler.
         data: {

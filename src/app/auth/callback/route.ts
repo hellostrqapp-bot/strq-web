@@ -10,7 +10,7 @@ import { createServerClient } from '@supabase/ssr';
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
   const code = searchParams.get('code');
-  const redirect = searchParams.get('redirect') || '/nl/app';
+  const redirect = searchParams.get('redirect') || '/app';
 
   if (code) {
     const response = NextResponse.redirect(new URL(redirect, request.url));

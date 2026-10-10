@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { supabase } from "@/lib/supabase";
 import { rateLimit } from "@/lib/rate-limit";
+import { defaultLocale } from "@/i18n/config";
+import { localeFromPath } from "@/i18n/paths";
 
 export async function POST(request: NextRequest) {
   try {
@@ -35,8 +37,13 @@ export async function POST(request: NextRequest) {
 
     // Detecteer taal uit referer
     const referer = request.headers.get("referer") || "";
-    const localeMatch = referer.match(/\/(en|fr|de|es)\/?/);
-    const locale = localeMatch ? localeMatch[1] : "nl";
+    let refererPath = "/";
+    try {
+      refererPath = new URL(referer).pathname;
+    } catch {
+      // geen of ongeldige referer: standaardtaal
+    }
+    const locale = localeFromPath(refererPath) ?? defaultLocale;
 
     // Bouw insert object — alleen niet-lege velden meesturen
     const insertData: Record<string, string> = {
